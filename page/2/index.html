@@ -256,6 +256,152 @@
   
   
   <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/SpringBoot Web开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="greek-zzf">
+      <meta itemprop="description" content="学过Java,Python">
+      <meta itemprop="image" content="/images/wallhaven-663071.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="greek-zzf">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2020/06/26/SpringBoot Web开发/" class="post-title-link" itemprop="url">SpringBoot Web开发</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-06-26 02:19:47" itemprop="dateCreated datePublished" datetime="2020-06-26T02:19:47+08:00">2020-06-26</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-17 17:40:43" itemprop="dateModified" datetime="2020-03-17T17:40:43+08:00">2020-03-17</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpingBoot/" itemprop="url" rel="index"><span itemprop="name">SpingBoot</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>首先了解一下规则：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxxxAutoConfiguration：帮我们给容器中自动配置组件；</span><br><span class="line">xxxxProperties:配置类来封装配置文件的内容；</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-SpringBoot对静态资源的映射规则"><a href="#1-SpringBoot对静态资源的映射规则" class="headerlink" title="1.SpringBoot对静态资源的映射规则"></a>1.SpringBoot对静态资源的映射规则</h2><p>1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">this</span>.resourceProperties.isAddMappings()) &#123;</span><br><span class="line">                logger.debug(<span class="string">"Default resource handling disabled"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Duration cachePeriod = <span class="keyword">this</span>.resourceProperties.getCache().getPeriod();</span><br><span class="line">                CacheControl cacheControl = <span class="keyword">this</span>.resourceProperties.getCache().getCachecontrol().toHttpCacheControl();</span><br><span class="line">            <span class="keyword">if</span> (!registry.hasMappingForPattern(<span class="string">"/webjars/**"</span>)) &#123;</span><br><span class="line"><span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;<span class="string">"/webjars/**"</span>&#125;).addResourceLocations(<span class="keyword">new</span> String[]&#123;<span class="string">"classpath:/META-INF/resources/webjars/"</span>&#125;).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            String staticPathPattern = <span class="keyword">this</span>.mvcProperties.getStaticPathPattern();</span><br><span class="line">            <span class="keyword">if</span> (!registry.hasMappingForPattern(staticPathPattern)) &#123;       <span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;staticPathPattern&#125;).addResourceLocations(WebMvcAutoConfiguration.getResourceLocations(<span class="keyword">this</span>.resourceProperties.getStaticLocations())).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>2)”/**”访问当前项目的任何资源(静态资源文件夹)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;classpath:/META-INF/resources/&quot;</span><br><span class="line">&quot;classpath:/resources/&quot;</span><br><span class="line">&quot;classpath:/static/&quot;</span><br><span class="line">&quot;classpath:/public/&quot;</span><br><span class="line">“/”:代表当前项目的根路径</span><br></pre></td></tr></table></figure>
+
+<p>3)欢迎页，静态资源文件夹下的所有index.html页面，被”/**”映射</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> WelcomePageHandlerMapping <span class="title">welcomePageHandlerMapping</span><span class="params">(ApplicationContext applicationContext, FormattingConversionService mvcConversionService, ResourceUrlProvider mvcResourceUrlProvider)</span> </span>&#123;</span><br><span class="line">          WelcomePageHandlerMapping welcomePageHandlerMapping = <span class="keyword">new</span> WelcomePageHandlerMapping(<span class="keyword">new</span> TemplateAvailabilityProviders(applicationContext), applicationContext, <span class="keyword">this</span>.getWelcomePage(), <span class="keyword">this</span>.mvcProperties.getStaticPathPattern());</span><br><span class="line">          welcomePageHandlerMapping.setInterceptors(<span class="keyword">this</span>.getInterceptors(mvcConversionService, mvcResourceUrlProvider));</span><br><span class="line">          <span class="keyword">return</span> welcomePageHandlerMapping;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">private</span> Optional&lt;Resource&gt; <span class="title">getWelcomePage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          String[] locations = WebMvcAutoConfiguration.getResourceLocations(<span class="keyword">this</span>.resourceProperties.getStaticLocations());</span><br><span class="line">          <span class="keyword">return</span> Arrays.stream(locations).map(<span class="keyword">this</span>::getIndexHtml).filter(<span class="keyword">this</span>::isReadable).findFirst();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">private</span> Resource <span class="title">getIndexHtml</span><span class="params">(String location)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.resourceLoader.getResource(location + <span class="string">"index.html"</span>);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Thymeleaf使用"><a href="#2-Thymeleaf使用" class="headerlink" title="2.Thymeleaf使用"></a>2.Thymeleaf使用</h2><p><strong>模板引擎的原理如图：</strong></p>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/template-engine.png" alt></p>
+<h3 id="1-引入thymeleaf"><a href="#1-引入thymeleaf" class="headerlink" title="1.引入thymeleaf"></a>1.引入thymeleaf</h3><p>在pom.xml文件中引入thymeleaf依赖</p>
+<h3 id="2-默认的配置和使用方法"><a href="#2-默认的配置和使用方法" class="headerlink" title="2.默认的配置和使用方法"></a>2.默认的配置和使用方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties</span>(</span><br><span class="line">    prefix = <span class="string">"spring.thymeleaf"</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThymeleafProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Charset DEFAULT_ENCODING;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_PREFIX = <span class="string">"classpath:/templates/"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_SUFFIX = <span class="string">".html"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> checkTemplate = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> checkTemplateLocation = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">private</span> String prefix = <span class="string">"classpath:/templates/"</span>;</span><br><span class="line">    <span class="keyword">private</span> String suffix = <span class="string">".html"</span>;</span><br><span class="line">    <span class="keyword">private</span> String mode = <span class="string">"HTML"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>只要我们把HTML页面放在classpath:/templates/，thymeleaf就能自动渲染，当然也可以自己在配置文件中修改路径；</p>
+<p>使用：</p>
+<p>1.导入thymeleaf的名称空间</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.使用thymeleaf语法完成开发，详情见<a href="https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html" target="_blank" rel="noopener">官方文档</a>或<a href="https://how2j.cn/k/springboot/springboot-eclipse/1640.html#nowhere" target="_blank" rel="noopener">how2j</a></p>
+<h2 id="3-SpringBoot国际化"><a href="#3-SpringBoot国际化" class="headerlink" title="3.SpringBoot国际化"></a>3.SpringBoot国际化</h2><p>步骤：</p>
+<p>1）、编写国际化配置文件，抽取页面需要显示的国际化消息</p>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/1.JPG" alt></p>
+<p>2)、SpringBoot自动配置好了管理国际化资源文件的组件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String basename = <span class="string">"messages"</span>;</span><br><span class="line"><span class="comment">//SpringbOot给的默认的文件基础名</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MessageSource <span class="title">messageSource</span><span class="params">(MessageSourceProperties properties)</span> </span>&#123;</span><br><span class="line">        ResourceBundleMessageSource messageSource = <span class="keyword">new</span> ResourceBundleMessageSource();</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.hasText(properties.getBasename())) &#123;</span><br><span class="line">         <span class="comment">//设置国际化文件的基础名</span></span><br><span class="line">         messageSource.setBasenames(StringUtils.commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(properties.getBasename())));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (properties.getEncoding() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            messageSource.setDefaultEncoding(properties.getEncoding().name());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        messageSource.setFallbackToSystemLocale(properties.isFallbackToSystemLocale());</span><br><span class="line">        Duration cacheDuration = properties.getCacheDuration();</span><br><span class="line">        <span class="keyword">if</span> (cacheDuration != <span class="keyword">null</span>) &#123;</span><br><span class="line">            messageSource.setCacheMillis(cacheDuration.toMillis());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        messageSource.setAlwaysUseMessageFormat(properties.isAlwaysUseMessageFormat());</span><br><span class="line">        messageSource.setUseCodeAsDefaultMessage(properties.isUseCodeAsDefaultMessage());</span><br><span class="line">        <span class="keyword">return</span> messageSource;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Thymeleaf中使用#{}来获取国际化信息，如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"h3 mb-3 font-weight-normal"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.tip&#125;"</span>&gt;</span>Please sign in<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"sr-only"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.username&#125;"</span>&gt;</span>Username<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">placeholder</span>=<span class="string">"Username"</span> <span class="attr">th:placeholder</span>=<span class="string">"#&#123;login.username&#125;"</span><span class="attr">required</span>=<span class="string">""</span> <span class="attr">autofocus</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"sr-only"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.password&#125;"</span>&gt;</span>Password<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">th:placeholder</span>=<span class="string">"#&#123;login.password&#125;"</span> <span class="attr">placeholder</span>=<span class="string">"Password"</span> <span class="attr">required</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"checkbox mb-3"</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"remember-me"</span>&gt;</span>[[#&#123;login.remember&#125;]]</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn btn-lg btn-primary btn-block"</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.btn&#125;"</span>&gt;</span>Sign in<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果：根据浏览器语言设置的信息切换了国际化；</p>
+<p>3)根据按钮来实现国际化</p>
+<ul>
+<li>原理：Locale(区域信息对象)，LocaleResolver（获取区域信息对象；</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"btn btn-sm"</span> <span class="attr">th:href</span>=<span class="string">"@&#123;/index.html(language='zh_CN')&#125;"</span>&gt;</span>中文<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"btn btn-sm"</span> <span class="attr">th:href</span>=<span class="string">"@&#123;/index.html(language='en_US')&#125;"</span>&gt;</span>English<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"spring.mvc"</span>, name = <span class="string">"locale"</span>)</span><br><span class="line">		<span class="function"><span class="keyword">public</span> LocaleResolver <span class="title">localeResolver</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.mvcProperties.getLocaleResolver() == WebMvcProperties.LocaleResolver.FIXED) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">new</span> FixedLocaleResolver(<span class="keyword">this</span>.mvcProperties.getLocale());</span><br><span class="line">			&#125;</span><br><span class="line">			AcceptHeaderLocaleResolver localeResolver = <span class="keyword">new</span> AcceptHeaderLocaleResolver();</span><br><span class="line">			localeResolver.setDefaultLocale(<span class="keyword">this</span>.mvcProperties.getLocale());</span><br><span class="line">			<span class="keyword">return</span> localeResolver;</span><br><span class="line">		&#125;</span><br><span class="line">默认的就是根据请求头带来的区域信息<span class="string">"Accept-Language"</span>获取Locale进行国际化</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>自己配置一个区域解析器</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLocaleResolver</span> <span class="keyword">implements</span> <span class="title">LocaleResolver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Locale <span class="title">resolveLocale</span><span class="params">(HttpServletRequest httpServletRequest)</span> </span>&#123;</span><br><span class="line">        String language = httpServletRequest.getParameter(<span class="string">"language"</span>);</span><br><span class="line">        Locale locale = Locale.getDefault();</span><br><span class="line">        <span class="keyword">if</span> (!StringUtils.isEmpty(language)) &#123;</span><br><span class="line">            String[] split = language.split(<span class="string">"_"</span>);</span><br><span class="line">            locale = <span class="keyword">new</span> Locale(split[<span class="number">0</span>], split[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> locale;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLocale</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale locale)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">解析地址栏中参数的值，来切换语言</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>加入Spring容器中、</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMvcConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> LocaleResolver <span class="title">localeResolver</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyLocaleResolver();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/SpringBoot与分布式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -380,152 +526,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1,编写一个Controller，用来测试</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConsumerController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/buy"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">buyBook</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用RestTemplate访问提供者的注册的服务，其中PROVIDER-BOOK是注册的时候，定义的名字</span></span><br><span class="line">        String bookName = restTemplate.getForObject(<span class="string">"http://PROVIDER-BOOK/book"</span>,String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="keyword">return</span> name+<span class="string">"购买了"</span>+bookName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//2,在配置文件中配置以下信息</span></span><br><span class="line">server:</span><br><span class="line">  port: <span class="number">8200</span>   <span class="comment">//消费者的端口号</span></span><br><span class="line"></span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: consumer-user    <span class="comment">//定义消费者的名字</span></span><br><span class="line">eureka:</span><br><span class="line">  instance:</span><br><span class="line">    prefer-ip-address: <span class="keyword">true</span>     <span class="comment">//注册服务的时候使用服务的ip地址</span></span><br><span class="line"></span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http:<span class="comment">//localhost:8761/eureka/   //要注册的服务中心地址</span></span><br></pre></td></tr></table></figure>
 
 <p>开始测试:先运行Eureka模块，在运行Provider模块，之后运行Consumer模块。浏览器输入<code>localhost:8200/buy?name=zzf</code>,返回结果<code>zzf购买了《代码大全》</code></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/SpringBoot Web开发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="greek-zzf">
-      <meta itemprop="description" content="学过Java,Python">
-      <meta itemprop="image" content="/images/wallhaven-663071.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="greek-zzf">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2020/06/26/SpringBoot Web开发/" class="post-title-link" itemprop="url">SpringBoot Web开发</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-06-26 02:19:47" itemprop="dateCreated datePublished" datetime="2020-06-26T02:19:47+08:00">2020-06-26</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-17 17:40:43" itemprop="dateModified" datetime="2020-03-17T17:40:43+08:00">2020-03-17</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpingBoot/" itemprop="url" rel="index"><span itemprop="name">SpingBoot</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>首先了解一下规则：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxxxAutoConfiguration：帮我们给容器中自动配置组件；</span><br><span class="line">xxxxProperties:配置类来封装配置文件的内容；</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-SpringBoot对静态资源的映射规则"><a href="#1-SpringBoot对静态资源的映射规则" class="headerlink" title="1.SpringBoot对静态资源的映射规则"></a>1.SpringBoot对静态资源的映射规则</h2><p>1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">this</span>.resourceProperties.isAddMappings()) &#123;</span><br><span class="line">                logger.debug(<span class="string">"Default resource handling disabled"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Duration cachePeriod = <span class="keyword">this</span>.resourceProperties.getCache().getPeriod();</span><br><span class="line">                CacheControl cacheControl = <span class="keyword">this</span>.resourceProperties.getCache().getCachecontrol().toHttpCacheControl();</span><br><span class="line">            <span class="keyword">if</span> (!registry.hasMappingForPattern(<span class="string">"/webjars/**"</span>)) &#123;</span><br><span class="line"><span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;<span class="string">"/webjars/**"</span>&#125;).addResourceLocations(<span class="keyword">new</span> String[]&#123;<span class="string">"classpath:/META-INF/resources/webjars/"</span>&#125;).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            String staticPathPattern = <span class="keyword">this</span>.mvcProperties.getStaticPathPattern();</span><br><span class="line">            <span class="keyword">if</span> (!registry.hasMappingForPattern(staticPathPattern)) &#123;       <span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;staticPathPattern&#125;).addResourceLocations(WebMvcAutoConfiguration.getResourceLocations(<span class="keyword">this</span>.resourceProperties.getStaticLocations())).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p>2)”/**”访问当前项目的任何资源(静态资源文件夹)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;classpath:/META-INF/resources/&quot;</span><br><span class="line">&quot;classpath:/resources/&quot;</span><br><span class="line">&quot;classpath:/static/&quot;</span><br><span class="line">&quot;classpath:/public/&quot;</span><br><span class="line">“/”:代表当前项目的根路径</span><br></pre></td></tr></table></figure>
-
-<p>3)欢迎页，静态资源文件夹下的所有index.html页面，被”/**”映射</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> WelcomePageHandlerMapping <span class="title">welcomePageHandlerMapping</span><span class="params">(ApplicationContext applicationContext, FormattingConversionService mvcConversionService, ResourceUrlProvider mvcResourceUrlProvider)</span> </span>&#123;</span><br><span class="line">          WelcomePageHandlerMapping welcomePageHandlerMapping = <span class="keyword">new</span> WelcomePageHandlerMapping(<span class="keyword">new</span> TemplateAvailabilityProviders(applicationContext), applicationContext, <span class="keyword">this</span>.getWelcomePage(), <span class="keyword">this</span>.mvcProperties.getStaticPathPattern());</span><br><span class="line">          welcomePageHandlerMapping.setInterceptors(<span class="keyword">this</span>.getInterceptors(mvcConversionService, mvcResourceUrlProvider));</span><br><span class="line">          <span class="keyword">return</span> welcomePageHandlerMapping;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">private</span> Optional&lt;Resource&gt; <span class="title">getWelcomePage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">          String[] locations = WebMvcAutoConfiguration.getResourceLocations(<span class="keyword">this</span>.resourceProperties.getStaticLocations());</span><br><span class="line">          <span class="keyword">return</span> Arrays.stream(locations).map(<span class="keyword">this</span>::getIndexHtml).filter(<span class="keyword">this</span>::isReadable).findFirst();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">private</span> Resource <span class="title">getIndexHtml</span><span class="params">(String location)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.resourceLoader.getResource(location + <span class="string">"index.html"</span>);</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-Thymeleaf使用"><a href="#2-Thymeleaf使用" class="headerlink" title="2.Thymeleaf使用"></a>2.Thymeleaf使用</h2><p><strong>模板引擎的原理如图：</strong></p>
-<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/template-engine.png" alt></p>
-<h3 id="1-引入thymeleaf"><a href="#1-引入thymeleaf" class="headerlink" title="1.引入thymeleaf"></a>1.引入thymeleaf</h3><p>在pom.xml文件中引入thymeleaf依赖</p>
-<h3 id="2-默认的配置和使用方法"><a href="#2-默认的配置和使用方法" class="headerlink" title="2.默认的配置和使用方法"></a>2.默认的配置和使用方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties</span>(</span><br><span class="line">    prefix = <span class="string">"spring.thymeleaf"</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThymeleafProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Charset DEFAULT_ENCODING;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_PREFIX = <span class="string">"classpath:/templates/"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_SUFFIX = <span class="string">".html"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> checkTemplate = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> checkTemplateLocation = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">private</span> String prefix = <span class="string">"classpath:/templates/"</span>;</span><br><span class="line">    <span class="keyword">private</span> String suffix = <span class="string">".html"</span>;</span><br><span class="line">    <span class="keyword">private</span> String mode = <span class="string">"HTML"</span>;</span><br></pre></td></tr></table></figure>
-
-<p>只要我们把HTML页面放在classpath:/templates/，thymeleaf就能自动渲染，当然也可以自己在配置文件中修改路径；</p>
-<p>使用：</p>
-<p>1.导入thymeleaf的名称空间</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2.使用thymeleaf语法完成开发，详情见<a href="https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html" target="_blank" rel="noopener">官方文档</a>或<a href="https://how2j.cn/k/springboot/springboot-eclipse/1640.html#nowhere" target="_blank" rel="noopener">how2j</a></p>
-<h2 id="3-SpringBoot国际化"><a href="#3-SpringBoot国际化" class="headerlink" title="3.SpringBoot国际化"></a>3.SpringBoot国际化</h2><p>步骤：</p>
-<p>1）、编写国际化配置文件，抽取页面需要显示的国际化消息</p>
-<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/1.JPG" alt></p>
-<p>2)、SpringBoot自动配置好了管理国际化资源文件的组件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String basename = <span class="string">"messages"</span>;</span><br><span class="line"><span class="comment">//SpringbOot给的默认的文件基础名</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MessageSource <span class="title">messageSource</span><span class="params">(MessageSourceProperties properties)</span> </span>&#123;</span><br><span class="line">        ResourceBundleMessageSource messageSource = <span class="keyword">new</span> ResourceBundleMessageSource();</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.hasText(properties.getBasename())) &#123;</span><br><span class="line">         <span class="comment">//设置国际化文件的基础名</span></span><br><span class="line">         messageSource.setBasenames(StringUtils.commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(properties.getBasename())));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (properties.getEncoding() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            messageSource.setDefaultEncoding(properties.getEncoding().name());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        messageSource.setFallbackToSystemLocale(properties.isFallbackToSystemLocale());</span><br><span class="line">        Duration cacheDuration = properties.getCacheDuration();</span><br><span class="line">        <span class="keyword">if</span> (cacheDuration != <span class="keyword">null</span>) &#123;</span><br><span class="line">            messageSource.setCacheMillis(cacheDuration.toMillis());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        messageSource.setAlwaysUseMessageFormat(properties.isAlwaysUseMessageFormat());</span><br><span class="line">        messageSource.setUseCodeAsDefaultMessage(properties.isUseCodeAsDefaultMessage());</span><br><span class="line">        <span class="keyword">return</span> messageSource;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>Thymeleaf中使用#{}来获取国际化信息，如下</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"h3 mb-3 font-weight-normal"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.tip&#125;"</span>&gt;</span>Please sign in<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"sr-only"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.username&#125;"</span>&gt;</span>Username<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">placeholder</span>=<span class="string">"Username"</span> <span class="attr">th:placeholder</span>=<span class="string">"#&#123;login.username&#125;"</span><span class="attr">required</span>=<span class="string">""</span> <span class="attr">autofocus</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">"sr-only"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.password&#125;"</span>&gt;</span>Password<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">th:placeholder</span>=<span class="string">"#&#123;login.password&#125;"</span> <span class="attr">placeholder</span>=<span class="string">"Password"</span> <span class="attr">required</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"checkbox mb-3"</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"remember-me"</span>&gt;</span>[[#&#123;login.remember&#125;]]</span><br><span class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn btn-lg btn-primary btn-block"</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">th:text</span>=<span class="string">"#&#123;login.btn&#125;"</span>&gt;</span>Sign in<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>效果：根据浏览器语言设置的信息切换了国际化；</p>
-<p>3)根据按钮来实现国际化</p>
-<ul>
-<li>原理：Locale(区域信息对象)，LocaleResolver（获取区域信息对象；</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"btn btn-sm"</span> <span class="attr">th:href</span>=<span class="string">"@&#123;/index.html(language='zh_CN')&#125;"</span>&gt;</span>中文<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"btn btn-sm"</span> <span class="attr">th:href</span>=<span class="string">"@&#123;/index.html(language='en_US')&#125;"</span>&gt;</span>English<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"spring.mvc"</span>, name = <span class="string">"locale"</span>)</span><br><span class="line">		<span class="function"><span class="keyword">public</span> LocaleResolver <span class="title">localeResolver</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>.mvcProperties.getLocaleResolver() == WebMvcProperties.LocaleResolver.FIXED) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">new</span> FixedLocaleResolver(<span class="keyword">this</span>.mvcProperties.getLocale());</span><br><span class="line">			&#125;</span><br><span class="line">			AcceptHeaderLocaleResolver localeResolver = <span class="keyword">new</span> AcceptHeaderLocaleResolver();</span><br><span class="line">			localeResolver.setDefaultLocale(<span class="keyword">this</span>.mvcProperties.getLocale());</span><br><span class="line">			<span class="keyword">return</span> localeResolver;</span><br><span class="line">		&#125;</span><br><span class="line">默认的就是根据请求头带来的区域信息<span class="string">"Accept-Language"</span>获取Locale进行国际化</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>自己配置一个区域解析器</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLocaleResolver</span> <span class="keyword">implements</span> <span class="title">LocaleResolver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Locale <span class="title">resolveLocale</span><span class="params">(HttpServletRequest httpServletRequest)</span> </span>&#123;</span><br><span class="line">        String language = httpServletRequest.getParameter(<span class="string">"language"</span>);</span><br><span class="line">        Locale locale = Locale.getDefault();</span><br><span class="line">        <span class="keyword">if</span> (!StringUtils.isEmpty(language)) &#123;</span><br><span class="line">            String[] split = language.split(<span class="string">"_"</span>);</span><br><span class="line">            locale = <span class="keyword">new</span> Locale(split[<span class="number">0</span>], split[<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> locale;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLocale</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale locale)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">解析地址栏中参数的值，来切换语言</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>加入Spring容器中、</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMvcConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> LocaleResolver <span class="title">localeResolver</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyLocaleResolver();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
         
       
