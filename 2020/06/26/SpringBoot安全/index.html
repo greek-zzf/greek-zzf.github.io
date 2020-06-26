@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="greek-zzf" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Spring Security整体概念:  应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动">
+<meta name="keywords" content="Spring Security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot安全">
+<meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot安全/index.html">
+<meta property="og:site_name" content="greek-zzf">
+<meta property="og:description" content="Spring Security整体概念:  应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-11T03:53:47.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot安全">
+<meta name="twitter:description" content="Spring Security整体概念:  应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动">
+  <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot安全/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>SpringBoot安全 | greek-zzf</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">greek-zzf</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">记录学习成长博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/SpringBoot安全/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="greek-zzf">
+      <meta itemprop="description" content="学过Java,Python">
+      <meta itemprop="image" content="/images/wallhaven-663071.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="greek-zzf">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SpringBoot安全
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-06-26 02:19:47" itemprop="dateCreated datePublished" datetime="2020-06-26T02:19:47+08:00">2020-06-26</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-11 11:53:47" itemprop="dateModified" datetime="2020-04-11T11:53:47+08:00">2020-04-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpingBoot/" itemprop="url" rel="index"><span itemprop="name">SpingBoot</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h2><p>整体概念:</p>
+<ul>
+<li>应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。</li>
+<li>“认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。</li>
+<li>“授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动作的过程。为了抵达需要授权的店，主体的身份已经有认证过程建立。</li>
+</ul>
+<p>通俗一点:<strong>认证</strong>是为了证明你是谁，<strong>授权</strong>是你有拥有什么权限。</p>
+<h3 id="使用流程"><a href="#使用流程" class="headerlink" title="使用流程"></a>使用流程</h3><p>1.引入SpringSecurity依赖</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&lt;dependency&gt;</span></span><br><span class="line">            <span class="attr">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="attr">&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</span></span><br><span class="line"><span class="attr">&lt;/dependency&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.根据<a href="https://github.com/spring-projects/spring-security/blob/5.2.3.RELEASE/samples/boot/helloworld/src/main/java/org/springframework/security/samples/config/SecurityConfig.java" target="_blank" rel="noopener">官方示例代码</a>编写配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">mySecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">      <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//定制请求的授权规则</span></span><br><span class="line">        http.authorizeRequests().antMatchers(<span class="string">"/"</span>).permitAll()</span><br><span class="line">                .antMatchers(<span class="string">"/level1/**"</span>).hasRole(<span class="string">"VIP1"</span>)</span><br><span class="line">                .antMatchers(<span class="string">"/level2/**"</span>).hasRole(<span class="string">"VIP2"</span>)</span><br><span class="line">                .antMatchers(<span class="string">"/level3/**"</span>).hasRole(<span class="string">"VIP3"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//开启默认的登录功能</span></span><br><span class="line">        http.formLogin();</span><br><span class="line">          </span><br><span class="line">        <span class="comment">//开启默认的记住我功能</span></span><br><span class="line">        http.rememberMe();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//开启默认的注销功能、</span></span><br><span class="line">        http.logout();</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="comment">//使用内存的用户做测试</span></span><br><span class="line">     <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        auth.inMemoryAuthentication()</span><br><span class="line">                .withUser(<span class="string">"zzf"</span>).password(<span class="string">"&#123;noop&#125;123456"</span>).roles(<span class="string">"VIP1"</span>, <span class="string">"VIP2"</span>)</span><br><span class="line">                .and()</span><br><span class="line">                .withUser(<span class="string">"zzh"</span>).password(<span class="string">"123456"</span>).roles(<span class="string">"VIP3"</span>)</span><br><span class="line">                .and()</span><br><span class="line">                .withUser(<span class="string">"test"</span>).password(<span class="string">"test"</span>).roles(<span class="string">"VIP1"</span>, <span class="string">"VIP2"</span>, <span class="string">"VIP3"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Thymeleaf与Security"><a href="#Thymeleaf与Security" class="headerlink" title="Thymeleaf与Security"></a>Thymeleaf与Security</h2><p>要在Thymeleaf中使用Security中的属性就要引入相关依赖，其中thymeleaf-extras-springsecurity5版本根据springSecurity版本确定，此处用的是5.2.2版本，所以要用5版本</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&lt;dependency&gt;</span></span><br><span class="line">            <span class="attr">&lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;</span></span><br><span class="line">            <span class="attr">&lt;artifactId&gt;thymeleaf-extras-springsecurity5&lt;/artifactId&gt;</span></span><br><span class="line">            <span class="attr">&lt;version&gt;3.0.4.RELEASE&lt;/version&gt;</span></span><br><span class="line"><span class="attr">&lt;/dependency&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>并且在html页面上引入Security的名词空间，其中<code>http://www.thymeleaf.org/thymeleaf-extras-springsecurity5</code>版本根据springSecurity版本确定，此处用的是5.2.2版本，所以要用5版本</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">xmlns:sec</span>=<span class="string">"http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Security加密源码分析"><a href="#Security加密源码分析" class="headerlink" title="Security加密源码分析"></a>Security加密源码分析</h2><p>SpringSecurity5.0之后的版本默认使用的编码<code>BCryptPasswordEncoder</code>，引入<code>DelegatingPasswordEncoder</code>是为了管理好新旧密码不同的加密方法:例如，之前的密码加密是用scrypt，而为了安全使用新的加密方式bcrypt，为了验证之前使用scrypt加密后的密码，和新加密规则加密后的密码，就需要两种加密规则来分别验证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用PasswordEncoderFactories就会创建一个默认的DelegatingPasswordEncoder,并且Spring已经为我们配置好了多种加密方式，也可以在配置类中自己建一个DelegatingPasswordEncoder，添加自己所需要的加密规则。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> PasswordEncoder <span class="title">createDelegatingPasswordEncoder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		String encodingId = <span class="string">"bcrypt"</span>;</span><br><span class="line">		Map&lt;String, PasswordEncoder&gt; encoders = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		encoders.put(encodingId, <span class="keyword">new</span> BCryptPasswordEncoder());</span><br><span class="line">		encoders.put(<span class="string">"ldap"</span>, <span class="keyword">new</span> org.springframework.security.crypto.password.LdapShaPasswordEncoder());</span><br><span class="line">		encoders.put(<span class="string">"MD4"</span>, <span class="keyword">new</span> org.springframework.security.crypto.password.Md4PasswordEncoder());</span><br><span class="line">		encoders.put(<span class="string">"MD5"</span>, <span class="keyword">new</span> org.springframework.security.crypto.password.MessageDigestPasswordEncoder(<span class="string">"MD5"</span>));</span><br><span class="line">		encoders.put(<span class="string">"noop"</span>, org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance());</span><br><span class="line">		encoders.put(<span class="string">"pbkdf2"</span>, <span class="keyword">new</span> Pbkdf2PasswordEncoder());</span><br><span class="line">		encoders.put(<span class="string">"scrypt"</span>, <span class="keyword">new</span> SCryptPasswordEncoder());</span><br><span class="line">		encoders.put(<span class="string">"SHA-1"</span>, <span class="keyword">new</span> org.springframework.security.crypto.password.MessageDigestPasswordEncoder(<span class="string">"SHA-1"</span>));</span><br><span class="line">		encoders.put(<span class="string">"SHA-256"</span>, <span class="keyword">new</span> org.springframework.security.crypto.password.MessageDigestPasswordEncoder(<span class="string">"SHA-256"</span>));</span><br><span class="line">		encoders.put(<span class="string">"sha256"</span>, <span class="keyword">new</span> org.springframework.security.crypto.password.StandardPasswordEncoder());</span><br><span class="line">		encoders.put(<span class="string">"argon2"</span>, <span class="keyword">new</span> Argon2PasswordEncoder());</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> DelegatingPasswordEncoder(encodingId, encoders);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>密码加密解密流程</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//创建默认的DelegatingPasswordEncoder，如果不创建，springboot也会默认创建一个默认的			 //DelegatingPasswordEncoder</span></span><br><span class="line">    PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();</span><br><span class="line">    </span><br><span class="line">	<span class="comment">//创建一个用于测试的用户</span></span><br><span class="line">       auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)</span><br><span class="line">               .withUser(<span class="string">"zzf"</span>).password(<span class="string">"&#123;noop&#125;123456"</span>).roles(<span class="string">"VIP1"</span>, <span class="string">"VIP2"</span>)</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DelegatingPasswordEncoder源码分析</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PREFIX = <span class="string">"&#123;"</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SUFFIX = <span class="string">"&#125;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//登录界面输入的密码:rawPassword,prefixEncodedPassword就是我们自己设置的密码"&#123;noop&#125;123456"</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(CharSequence rawPassword, String prefixEncodedPassword)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (rawPassword == <span class="keyword">null</span> &amp;&amp; prefixEncodedPassword == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">    	<span class="comment">//通过调用extractId方法，传入"&#123;noop&#125;123456",通过extractId返回的是noop</span></span><br><span class="line">		String id = extractId(prefixEncodedPassword);</span><br><span class="line">    </span><br><span class="line">    	<span class="comment">//从默认的DelegatingPasswordEncoder获得key为"noop"的值:org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance()</span></span><br><span class="line">		PasswordEncoder delegate = <span class="keyword">this</span>.idToPasswordEncoder.get(id);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//判断DelegatingPasswordEncoder是否有该加密规则</span></span><br><span class="line">		<span class="keyword">if</span> (delegate == <span class="keyword">null</span>) &#123;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 *如果为空就使用defaultPasswordEncoderForMatches匹配密码，其中</span></span><br><span class="line"><span class="comment">	 *PasswordEncoder defaultPasswordEncoderForMatches = new UnmappedIdPasswordEncoder();</span></span><br><span class="line"><span class="comment">	 *所以实际上是调用UnmappedIdPasswordEncoder的match方法，该类是DelegatingPasswordEncoder内部	   *类，调用match方法后得到的id为空，就会抛出异常:throw new IllegalArgumentException("There is 	 *no PasswordEncoder mapped for the id \"" + id + "\"");浏览器就会显示:There is no			 *PasswordEncoder mapped for the id "null";</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">this</span>.defaultPasswordEncoderForMatches</span><br><span class="line">				.matches(rawPassword, prefixEncodedPassword);</span><br><span class="line">		&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//如果delegate不为空就使用extractEncodedPassword方法从"&#123;noop&#125;123456"提取出密码"123456"</span></span><br><span class="line">		String encodedPassword = extractEncodedPassword(prefixEncodedPassword);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//最后通过NoOpPasswordEncoder的matches方法完成密码的匹配</span></span><br><span class="line">		<span class="keyword">return</span> delegate.matches(rawPassword, encodedPassword);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//负责提取加密规则/方法</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">extractId</span><span class="params">(String prefixEncodedPassword)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (prefixEncodedPassword == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> start = prefixEncodedPassword.indexOf(PREFIX);</span><br><span class="line">		<span class="keyword">if</span> (start != <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> end = prefixEncodedPassword.indexOf(SUFFIX, start);</span><br><span class="line">		<span class="keyword">if</span> (end &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">    <span class="comment">//返回去除&#123;&#125;后的密码规则，由"&#123;noop&#125;123456"提取后变成了"noop"返回</span></span><br><span class="line">		<span class="keyword">return</span> prefixEncodedPassword.substring(start + <span class="number">1</span>, end);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//提取密码</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">extractEncodedPassword</span><span class="params">(String prefixEncodedPassword)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> start = prefixEncodedPassword.indexOf(SUFFIX);</span><br><span class="line">		<span class="keyword">return</span> prefixEncodedPassword.substring(start + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">UnmappedIdPasswordEncoder</span> <span class="keyword">implements</span> <span class="title">PasswordEncoder</span> </span>&#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> String <span class="title">encode</span><span class="params">(CharSequence rawPassword)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"encode is not supported"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(CharSequence rawPassword,</span></span></span><br><span class="line"><span class="function"><span class="params">			String prefixEncodedPassword)</span> </span>&#123;</span><br><span class="line">			String id = extractId(prefixEncodedPassword);</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"There is no PasswordEncoder mapped for the id \""</span> + id + <span class="string">"\""</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据以上原理:所以当我们需要明文密码的时候就要用<code>noop</code>规则,直接在密码前加上<code>{noop}</code>即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//创建一个用于测试的用户</span></span><br><span class="line">        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder)</span><br><span class="line">                .withUser(<span class="string">"zzf"</span>).password(<span class="string">"&#123;noop&#125;123456"</span>).roles(<span class="string">"VIP1"</span>, <span class="string">"VIP2"</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定制自己的登录注销，记住我功能"><a href="#定制自己的登录注销，记住我功能" class="headerlink" title="定制自己的登录注销，记住我功能"></a>定制自己的登录注销，记住我功能</h2><p>通过以上的原理，自定义登录等功能。</p>
+<p><strong>1.编写新的配置类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">mySecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//定制请求的授权规则</span></span><br><span class="line">        http.authorizeRequests().antMatchers(<span class="string">"/"</span>).permitAll()</span><br><span class="line">                .antMatchers(<span class="string">"/level1/**"</span>).hasRole(<span class="string">"VIP1"</span>)</span><br><span class="line">                .antMatchers(<span class="string">"/level2/**"</span>).hasRole(<span class="string">"VIP2"</span>)</span><br><span class="line">                .antMatchers(<span class="string">"/level3/**"</span>).hasRole(<span class="string">"VIP3"</span>);</span><br><span class="line">        <span class="comment">/*开启自动配置的登录功能,如果没有权限，没有登录就会来到登录界面，没有指定的情况下，使用的是				 *SpringSecurity默认的登录界面.</span></span><br><span class="line"><span class="comment">		 *配置了自定义的参数名称"user","pwd"，并且配置了自定义的登录页url"/userlogin"</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">  http.formLogin().usernameParameter(<span class="string">"user"</span>).passwordParameter(<span class="string">"pwd"</span>).loginPage(<span class="string">"/userlogin"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//开启自动配置的注销功能,并指定注销成功之后跳转的地址</span></span><br><span class="line">        http.logout().logoutSuccessUrl(<span class="string">"/"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//开启记住我功能</span></span><br><span class="line">        <span class="comment">/*原理:开启后登录会生成一个名为"remember-me"的cookie，默认的期限是14天。点击注销之后，会把该</span></span><br><span class="line"><span class="comment">        *cookie删除。</span></span><br><span class="line"><span class="comment">        *自定义了处理参数名为"myremember",自定义了cookie名"zzf"			</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        http.rememberMe().rememberMeParameter(<span class="string">"myremember"</span>).rememberMeCookieName(<span class="string">"zzf"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//定义认证规则</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        auth.inMemoryAuthentication()</span><br><span class="line">                .withUser(<span class="string">"zzf"</span>).password(<span class="string">"&#123;noop&#125;123456"</span>).roles(<span class="string">"VIP1"</span>, <span class="string">"VIP2"</span>)</span><br><span class="line">                .and()</span><br><span class="line">                .withUser(<span class="string">"zzh"</span>).password(<span class="string">"&#123;noop&#125;123456"</span>).roles(<span class="string">"VIP3"</span>)</span><br><span class="line">                .and()</span><br><span class="line">                .withUser(<span class="string">"test"</span>).password(<span class="string">"&#123;noop&#125;test"</span>).roles(<span class="string">"VIP1"</span>, <span class="string">"VIP2"</span>, <span class="string">"VIP3"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用自定义的登录页面,默认的登录参数规则，参数名称分别是username,和password</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">.usernameParameter(&amp;quot;username&amp;quot;) <span class="comment">// default is username*          .passwordParameter(&amp;quot;password&amp;quot;) // default is password</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//源码中关于默认的登录规则</span></span><br><span class="line">	/login GET - the login form</span><br><span class="line">	/login POST - process the credentials and <span class="keyword">if</span> valid authenticate the user </span><br><span class="line">	/login?error GET - redirect here <span class="keyword">for</span> failed authentication attempts</span><br><span class="line">	/login?logout GET - redirect here after successfully logging out</span><br><span class="line"></span><br><span class="line"><span class="comment">//源码中自己定制的登录规则</span></span><br><span class="line">If <span class="string">"/authenticate"</span> was passed to <span class="keyword">this</span> method it update the defaults as shown below:</span><br><span class="line">	/authenticate GET - the login form</span><br><span class="line">	/authenticate POST - process the credentials and <span class="keyword">if</span> valid authenticate the user</span><br><span class="line">    /authenticate?error GET - redirect here <span class="keyword">for</span> failed authentication attempts</span><br><span class="line">	/authenticate?logout GET - redirect here after successfully logging out</span><br><span class="line"></span><br><span class="line">简单总结:默认的get方式的/login请求，是访问登录界面</span><br><span class="line">	    默认的post方式的/login请求，是处理登录功能的</span><br><span class="line">		自定义的get方式的登录请求，是访问登录界面</span><br><span class="line">		自定义的post方式的登录请求，是处理登录功能的</span><br><span class="line">		错误和注销请求以此类推</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用自定义的rememberMe功能，查询源码得知默认的生成得cookie名是”remember-me”,默认的参数名称是”rememberMe”</li>
+</ul>
+<p><strong>2.新建一个简单的登录界面</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html xmlns:th=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;h1 align="center"&gt;欢迎使用自定义的登录界面&lt;/h1&gt;</span><br><span class="line">	&lt;hr&gt;</span><br><span class="line">	&lt;div align=<span class="string">"center"</span>&gt;</span><br><span class="line">		&lt;!--这里使用了自定义的登录请求<span class="string">"/userlogin"</span>，方法为post所以是处理登录功能--&gt;</span><br><span class="line">		&lt;form th:action=<span class="string">"@&#123;/userlogin&#125;"</span> method=<span class="string">"post"</span>&gt;</span><br><span class="line">		</span><br><span class="line">		&lt;!--使用了在登录功能中自定义的参数名<span class="string">"user"</span>和<span class="string">"pwd"</span>--&gt;</span><br><span class="line">			用户名:&lt;input name=<span class="string">"user"</span>/&gt;&lt;br&gt;</span><br><span class="line">			密码:&lt;input name=<span class="string">"pwd"</span>&gt;&lt;br/&gt;</span><br><span class="line">			</span><br><span class="line">		&lt;!--使用了在rememberMe功能中自定义的参数名<span class="string">"myremember"</span>--&gt;</span><br><span class="line">			&lt;input type=<span class="string">"checkbox"</span> name=<span class="string">"myremember"</span>&gt;记住我&lt;br/&gt;</span><br><span class="line">			&lt;input type=<span class="string">"submit"</span> value=<span class="string">"登陆"</span>&gt;</span><br><span class="line">		&lt;/form&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这样就简单实现了自定义的登录规则。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Spring-Security/" rel="tag"># Spring Security</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/06/26/SpringBoot消息/" rel="next" title="SpringBoot消息">
+                  <i class="fa fa-chevron-left"></i> SpringBoot消息
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/06/26/SpringBoot缓存/" rel="prev" title="SpringBoot 缓存">
+                  SpringBoot 缓存 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Security"><span class="nav-number">1.</span> <span class="nav-text">Spring Security</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用流程"><span class="nav-number">1.1.</span> <span class="nav-text">使用流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thymeleaf与Security"><span class="nav-number">2.</span> <span class="nav-text">Thymeleaf与Security</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Security加密源码分析"><span class="nav-number">3.</span> <span class="nav-text">Security加密源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定制自己的登录注销，记住我功能"><span class="nav-number">4.</span> <span class="nav-text">定制自己的登录注销，记住我功能</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/wallhaven-663071.jpg"
+      alt="greek-zzf">
+  <p class="site-author-name" itemprop="name">greek-zzf</p>
+  <div class="site-description" itemprop="description">学过Java,Python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">greek-zzf</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var id = element.id || '';
+    var src = element.src || '';
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (id !=='') {
+      script.id = element.id;
+    }
+    if (src !== '') {
+      script.src = src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="greek-zzf" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="消息的规范 JMS（Java Message Service）JAVA消息服务：  基于JVM消息代理的规范。ActiveMQ、HornetMQ是JMS实现   AMQP（Advanced Message Queuing Protocol）  高级消息队列协议，也是一个消息代理的规范，兼容JMS  RabbitMQ是AMQP的实现     Spring和SpringBoot对两种规范的支持Spri">
+<meta name="keywords" content="消息中间件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot消息">
+<meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot消息/index.html">
+<meta property="og:site_name" content="greek-zzf">
+<meta property="og:description" content="消息的规范 JMS（Java Message Service）JAVA消息服务：  基于JVM消息代理的规范。ActiveMQ、HornetMQ是JMS实现   AMQP（Advanced Message Queuing Protocol）  高级消息队列协议，也是一个消息代理的规范，兼容JMS  RabbitMQ是AMQP的实现     Spring和SpringBoot对两种规范的支持Spri">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/1.png">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/2.png">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/3.png">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/4.png">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/5.JPG">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/5.JPG">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/6.JPG">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/7.JPG">
+<meta property="og:updated_time" content="2020-04-06T05:29:45.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot消息">
+<meta name="twitter:description" content="消息的规范 JMS（Java Message Service）JAVA消息服务：  基于JVM消息代理的规范。ActiveMQ、HornetMQ是JMS实现   AMQP（Advanced Message Queuing Protocol）  高级消息队列协议，也是一个消息代理的规范，兼容JMS  RabbitMQ是AMQP的实现     Spring和SpringBoot对两种规范的支持Spri">
+<meta name="twitter:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/1.png">
+  <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot消息/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>SpringBoot消息 | greek-zzf</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">greek-zzf</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">记录学习成长博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/SpringBoot消息/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="greek-zzf">
+      <meta itemprop="description" content="学过Java,Python">
+      <meta itemprop="image" content="/images/wallhaven-663071.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="greek-zzf">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SpringBoot消息
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-06-26 02:19:47" itemprop="dateCreated datePublished" datetime="2020-06-26T02:19:47+08:00">2020-06-26</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-06 13:29:45" itemprop="dateModified" datetime="2020-04-06T13:29:45+08:00">2020-04-06</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpingBoot/" itemprop="url" rel="index"><span itemprop="name">SpingBoot</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="消息的规范"><a href="#消息的规范" class="headerlink" title="消息的规范"></a>消息的规范</h2><ul>
+<li><p>JMS（Java Message Service）JAVA消息服务：</p>
+<ul>
+<li>基于JVM消息代理的规范。ActiveMQ、HornetMQ是JMS实现</li>
+</ul>
+</li>
+<li><p>AMQP（Advanced Message Queuing Protocol）</p>
+<ul>
+<li><p>高级消息队列协议，也是一个消息代理的规范，兼容JMS</p>
+</li>
+<li><p><strong>RabbitMQ</strong>是AMQP的实现</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Spring和SpringBoot对两种规范的支持"><a href="#Spring和SpringBoot对两种规范的支持" class="headerlink" title="Spring和SpringBoot对两种规范的支持"></a>Spring和SpringBoot对两种规范的支持</h2><p><strong>Spring支持:</strong></p>
+<p>–spring-jms提供了对JMS的支持</p>
+<p>–spring-rabbit提供了对AMQP的支持</p>
+<p>–需要ConnectionFactory的实现来连接消息代理</p>
+<p>–提供JmsTemplate,RabbitTemplate来发送消息</p>
+<p>–@JmsListener(JMS),@RabbitListener(AMQP)注解在方法上监听消息代理发布的消息</p>
+<p>–@EnableJms,@EnableRabbit开启支持</p>
+<p><strong>SpringBoot自动配置:</strong></p>
+<p>–JmsAutoConfiguration</p>
+<p>–RabbitAutoConfiguration</p>
+<h2 id="使用RabbitMQ"><a href="#使用RabbitMQ" class="headerlink" title="使用RabbitMQ"></a>使用RabbitMQ</h2><h3 id="AMQP规范学习理解"><a href="#AMQP规范学习理解" class="headerlink" title="AMQP规范学习理解:"></a>AMQP规范学习理解:</h3><p>AMQP规范中消息的路由过程和Java开发者熟悉的JMS存在一些差别,AMQP中增加了<strong>Exchange</strong>和<strong>Binding</strong>的角色.生产者把消息发布到Exchange上,消息最终到达队列并被消费者接收,而 Binding 决定交换器的消息应该发送到那个队列。</p>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/1.png" alt></p>
+<p><strong>Exchange</strong>分发消息时根据类型的不同分发策略有区别，目前共四种类型:direct、fanout、topic<em>、</em>headers。headers 匹配AMQP消息的 header 而不是路由键,headers交换器和direct交换器完全一致,但性能差很多,目前几乎用不到了,所以直接了解其他三种类型:</p>
+<ul>
+<li>Direct Exchange:消息中的路由键(routingkey)如果和Binding中的bindingkey 一致,交换器就将消息发到对应的队列中。路由键与队列名完全匹配，如果一个队列绑定到交换机要求路由键为“dog”,则只转发routing key标记为“dog”的消息,不会转发“dog.puppy”,也不会转发“dog.guard”等等.它是完全匹配,单播的模式。</li>
+</ul>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/2.png" alt></p>
+<ul>
+<li>Fanout Exchange:每个发到fanout类型交换器的消息都会分到所有绑定的队列上去。fanout<br>交换器不处理路由键,只是简单的将队列绑定到交换器上,每个发送到交换器的消息都会被转发到与该交换器绑定的所有队列上。很像子网广播,每台子网内的主机都获得了一份复制的消息。fanout<br>类型转发消息是最快的。</li>
+</ul>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/3.png" alt></p>
+<ul>
+<li>Topic Exchange:topic交换器通过模式匹配分配消息的路由键属性,将路由键和某个模式进行匹配,此时队列需要绑定到一个模式上。它将路由键和绑定键的字符串切分成单词,这些单词之间用点隔开。它同样也会识别两个通配符:符号“#”和符号“<strong>”</strong>。<strong>#</strong>匹配<strong>0</strong>个或多个单词,*****匹配一个单词。</li>
+</ul>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/4.png" alt></p>
+<h3 id="使用Web页面管理消息"><a href="#使用Web页面管理消息" class="headerlink" title="使用Web页面管理消息:"></a>使用Web页面管理消息:</h3><ul>
+<li>通过在浏览器中输入:localhost:15672进入RabbitMQ管理界面,默认账号密码都是:guest</li>
+<li>添加三个用来测试的交换器:test.direct，test.fanout，test.topic</li>
+</ul>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/5.JPG" alt></p>
+<ul>
+<li>添加四个用来测试的消息队列:test，test.news，test.zzf，zzf.news</li>
+</ul>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/5.JPG" alt></p>
+<ul>
+<li>给这三个交换器分别绑定消息队列:direct和fanout相同图上,topic用图下</li>
+</ul>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/6.JPG" alt></p>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/springboot%E6%B6%88%E6%81%AF/7.JPG" alt></p>
+<p><strong>开始测试三种交换器:</strong></p>
+<p><strong>direct:</strong>步骤:使用direct交换器发送测试消息,路由键为<code>test</code>,结果: 只有test消息队列接收到消息</p>
+<p><strong>fanout:</strong>步骤:使用fanout交换器发送测试消息,路由键为<code>test</code>,结果: 所有消息队列接收到消息</p>
+<p><strong>topic:</strong></p>
+<ul>
+<li>步骤:使用topic交换器发送测试消息,路由键为<code>zzf.news</code>,结果: 只有<code>test.news</code>和<code>zzf.news</code>消息队列接收到消息</li>
+<li>步骤:使用topic交换器发送测试消息,路由键为<code>test.zzf</code>,结果: 只有<code>test.news</code>,<code>test</code>,<code>test.zzf</code>消息队列接收到消息</li>
+</ul>
+<h2 id="使用SpringBoot来整合测试RabbitMQ"><a href="#使用SpringBoot来整合测试RabbitMQ" class="headerlink" title="使用SpringBoot来整合测试RabbitMQ"></a>使用SpringBoot来整合测试RabbitMQ</h2><p>RabbitMQ自动配置原理(在自动配置类中:RabbitAutoConfiguration):</p>
+<p>1.自动配置了连接工厂:CachingConnectionFactory</p>
+<p>2.RabbitProperties封装了RabbitMQ的配置</p>
+<p>3.RabbitTemplate给RabbitMQ发送和接收消息的</p>
+<p>4.AmqpAdmin:RabbitMQ系统管理功能组件</p>
+<p><strong>使用RabbitTemplate来测试发送和接收消息:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>   <span class="comment">//发送消息测试</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">//Message需要自己构造一个,可以自己定制消息头和内容</span></span><br><span class="line">      <span class="comment">//rabbitTemplate.send(exchange,routeKey,message);</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">//object默认当做消息体，只需要传入要发送的对象，自动序列化发送给RabbitMQ</span></span><br><span class="line">      <span class="comment">//rabbitTemplate.convertAndSend(exchange,routeKey,object);</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">/*使用在web中创建好的test.direct交换器发送消息测试</span></span><br><span class="line"><span class="comment">      * map对象被默认序列化后发送出去*/</span></span><br><span class="line">      Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">      map.put(<span class="string">"msg"</span>,<span class="string">"direct消息测试"</span>);</span><br><span class="line">      rabbitTemplate.convertAndSend(<span class="string">"test.direct"</span>,<span class="string">"zzf.news"</span>,map);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Test</span>  <span class="comment">//接收消息测试，执行成功之后控制台打印输出:class java.util.HashMap,&#123;msg=direct消息测试&#125;</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">()</span></span>&#123;</span><br><span class="line">      Object o = rabbitTemplate.receiveAndConvert(<span class="string">"zzf.news"</span>);</span><br><span class="line">      <span class="comment">//打印接收到的数据类型</span></span><br><span class="line">      System.out.println(o.getClass());</span><br><span class="line">      <span class="comment">//打印收到的数据</span></span><br><span class="line">      System.out.println(o);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结论:发送的消息在web端查看是一大串字符，代码通过receiveAndConvert方法接收并且转化，可以正常显示。</p>
+<p><strong>改良版:使用把消息转化为json发送出去:</strong></p>
+<p><strong>1.</strong>通过看RabbitAutoConfiguration源码可以知道，在生成RabbitTemplate的时候给RabbitTemplate添加了MessageConvert，因此可以自定义一个MessageConvert添加进去。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">messageConverter.ifUnique(template::setMessageConverter);</span><br></pre></td></tr></table></figure>
+
+<p>添加了一个<code>Jackson2JsonMessageConverter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAMQPConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MessageConverter <span class="title">myMessageConvert</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MessageConverter m = <span class="keyword">new</span> Jackson2JsonMessageConverter();</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后继续测试发送，消息以json格式正常显示<code>{&quot;msg&quot;:&quot;direct消息测试&quot;}</code>。用receive方法测试也能反序列化回来，正常显示。</p>
+<p><strong>2.</strong>使用自定义的对象测试发送和接收,MessageConvert用的是第一步的<code>Jackson2JsonMessageConverter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//新建一个测试实体类Book</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  String bookName;</span><br><span class="line">    <span class="keyword">private</span>  String author;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>   <span class="comment">//发送消息测试</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       rabbitTemplate.convertAndSend(<span class="string">"test.direct"</span>,<span class="string">"zzf.news"</span>,<span class="keyword">new</span> Book(<span class="string">"Maven实战"</span>,<span class="string">"许晓斌"</span>));</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Object o = rabbitTemplate.receiveAndConvert(<span class="string">"zzf.news"</span>);</span><br><span class="line">       System.out.println(o.getClass());</span><br><span class="line">       System.out.println(o);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果:web管理页面正常显示<code>{&quot;bookName&quot;:&quot;Maven实战&quot;,&quot;author&quot;:&quot;许晓斌&quot;}</code>，接收测试:控制台打印<code>class com.zzf.springboot.bean.Book和com.zzf.springboot.bean.Book@7d3c09ec</code>反序列化也正常。</p>
+<p><strong>简单测试fanout交换器发送消息</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMsg</span><span class="params">()</span></span>&#123;</span><br><span class="line">    rabbitTemplate.convertAndSend(<span class="string">"test.fanout"</span>,<span class="string">""</span>,<span class="keyword">new</span> Book(<span class="string">"Maven实战"</span>,<span class="string">"许晓斌"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果:web管理页面fanout交换器所绑定的所有队列都收到消息且正常显示<code>{&quot;bookName&quot;:&quot;Maven实战&quot;,&quot;author&quot;:&quot;许晓斌&quot;}</code></p>
+<p><strong>@RabbitListener和@EnableRabbit</strong></p>
+<p>在主类上开启使用<code>@EnableRabbt</code>注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//开启基于注解的RabbitMQ</span></span><br><span class="line"><span class="meta">@EnableRabbit</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringbootAmqpApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(SpringbootAmqpApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>监听的队列和执行相应的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BookService</span> </span>&#123;</span><br><span class="line">    <span class="comment">//监听"zzf.news"队列，有消息就会执行receive方法</span></span><br><span class="line">    <span class="meta">@RabbitListener</span>(queues = <span class="string">"zzf.news"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receive</span><span class="params">(Book book)</span></span>&#123;</span><br><span class="line">        System.out.println(book);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//监听"test.zzf"队列，有消息就会打印消息信息Body和Properties</span></span><br><span class="line">    <span class="meta">@RabbitListener</span>(queues = <span class="string">"test.zzf"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receiveMsg</span><span class="params">(Message message)</span></span>&#123;</span><br><span class="line">        System.out.println(message.getBody());</span><br><span class="line">        System.out.println(message.getMessageProperties());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用AmqpAdmin创建和删除:Exchange,Queue,Binding</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//创建一个名为"zzf.direct"的direct类型的交换器</span></span><br><span class="line">    amqpAdmin.declareExchange(<span class="keyword">new</span> DirectExchange(<span class="string">"zzf.direct"</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//创建一个名为"zzf.queue"的持久化队列。</span></span><br><span class="line">    amqpAdmin.declareQueue(<span class="keyword">new</span> Queue(<span class="string">"zzf.queue"</span>,<span class="keyword">true</span>));</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//添加绑定规则:将"zzf.queue"队列绑定到"zzf.direct"交换器中，路由键设为"test"</span></span><br><span class="line">    amqpAdmin.declareBinding(<span class="keyword">new</span> Binding(<span class="string">"zzf.queue"</span>,Binding.DestinationType.QUEUE,<span class="string">"zzf.direct"</span>,<span class="string">"test"</span>,<span class="keyword">null</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/消息中间件/" rel="tag"># 消息中间件</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/06/26/SpringBoot日志/" rel="next" title="SpringBoot日志">
+                  <i class="fa fa-chevron-left"></i> SpringBoot日志
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/06/26/SpringBoot安全/" rel="prev" title="SpringBoot安全">
+                  SpringBoot安全 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#消息的规范"><span class="nav-number">1.</span> <span class="nav-text">消息的规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring和SpringBoot对两种规范的支持"><span class="nav-number">2.</span> <span class="nav-text">Spring和SpringBoot对两种规范的支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用RabbitMQ"><span class="nav-number">3.</span> <span class="nav-text">使用RabbitMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AMQP规范学习理解"><span class="nav-number">3.1.</span> <span class="nav-text">AMQP规范学习理解:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Web页面管理消息"><span class="nav-number">3.2.</span> <span class="nav-text">使用Web页面管理消息:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用SpringBoot来整合测试RabbitMQ"><span class="nav-number">4.</span> <span class="nav-text">使用SpringBoot来整合测试RabbitMQ</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/wallhaven-663071.jpg"
+      alt="greek-zzf">
+  <p class="site-author-name" itemprop="name">greek-zzf</p>
+  <div class="site-description" itemprop="description">学过Java,Python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">greek-zzf</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var id = element.id || '';
+    var src = element.src || '';
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (id !=='') {
+      script.id = element.id;
+    }
+    if (src !== '') {
+      script.src = src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+    </div>
+</body>
+</html>

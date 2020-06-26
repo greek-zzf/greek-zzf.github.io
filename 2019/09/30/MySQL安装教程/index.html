@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="greek-zzf" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="准备工作MySQL安装包zip格式的版本，Windows64/32。 步骤要点1.解压zip格式的MySQL到任意文件夹(不要有中文路径),并新建一个my.ini文件内容如下,其中basedir,datadir  ,以及[WinMySQLAdmin]中的D:\Mysql\mysql-8.0.16-winx64替换成你解压后MySQL文件夹的路径。替换之后保存my.ini文件，并放进解压后的文件夹下">
+<meta name="keywords" content="软件安装分享">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL安装教程">
+<meta property="og:url" content="http://yoursite.com/2019/09/30/MySQL安装教程/index.html">
+<meta property="og:site_name" content="greek-zzf">
+<meta property="og:description" content="准备工作MySQL安装包zip格式的版本，Windows64/32。 步骤要点1.解压zip格式的MySQL到任意文件夹(不要有中文路径),并新建一个my.ini文件内容如下,其中basedir,datadir  ,以及[WinMySQLAdmin]中的D:\Mysql\mysql-8.0.16-winx64替换成你解压后MySQL文件夹的路径。替换之后保存my.ini文件，并放进解压后的文件夹下">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/mysql.JPG">
+<meta property="og:updated_time" content="2020-06-22T09:37:45.837Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL安装教程">
+<meta name="twitter:description" content="准备工作MySQL安装包zip格式的版本，Windows64/32。 步骤要点1.解压zip格式的MySQL到任意文件夹(不要有中文路径),并新建一个my.ini文件内容如下,其中basedir,datadir  ,以及[WinMySQLAdmin]中的D:\Mysql\mysql-8.0.16-winx64替换成你解压后MySQL文件夹的路径。替换之后保存my.ini文件，并放进解压后的文件夹下">
+<meta name="twitter:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/mysql.JPG">
+  <link rel="canonical" href="http://yoursite.com/2019/09/30/MySQL安装教程/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>MySQL安装教程 | greek-zzf</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">greek-zzf</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">记录学习成长博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/MySQL安装教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="greek-zzf">
+      <meta itemprop="description" content="学过Java,Python">
+      <meta itemprop="image" content="/images/wallhaven-663071.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="greek-zzf">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">MySQL安装教程
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-30 22:29:58" itemprop="dateCreated datePublished" datetime="2019-09-30T22:29:58+08:00">2019-09-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-22 17:37:45" itemprop="dateModified" datetime="2020-06-22T17:37:45+08:00">2020-06-22</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/小技巧/" itemprop="url" rel="index"><span itemprop="name">小技巧</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>MySQL安装包zip格式的版本，Windows64/32。</p>
+<h3 id="步骤要点"><a href="#步骤要点" class="headerlink" title="步骤要点"></a>步骤要点</h3><p>1.解压zip格式的MySQL到任意文件夹(不要有中文路径),并新建一个<code>my.ini</code>文件内容如下,其中<code>basedir</code>,<code>datadir</code>  ,以及<code>[WinMySQLAdmin]</code>中的<code>D:\Mysql\mysql-8.0.16-winx64</code>替换成你解压后MySQL文件夹的路径。替换之后保存<code>my.ini</code>文件，并放进解压后的文件夹下。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">[client]</span></span><br><span class="line"><span class="attr">port</span> = <span class="number">3306</span></span><br><span class="line"><span class="attr">default-character-set</span> = utf8MB4</span><br><span class="line"> </span><br><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">port</span> = <span class="number">3306</span></span><br><span class="line"><span class="attr">character_set_server</span> = utf8MB4</span><br><span class="line"> </span><br><span class="line"><span class="attr">basedir</span>=D:\Mysql\mysql-<span class="number">8.0</span>.<span class="number">16</span>-winx64   </span><br><span class="line"><span class="attr">datadir</span>=D:\Mysql\mysql-<span class="number">8.0</span>.<span class="number">16</span>-winx64\data</span><br><span class="line"> </span><br><span class="line"><span class="attr">group_concat_max_len</span>=<span class="number">20000</span></span><br><span class="line"> </span><br><span class="line"><span class="section">[WinMySQLAdmin]</span></span><br><span class="line">D:\Mysql\mysql-8.0.16-winx64\bin\mysqld.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/mysql.JPG" alt></p>
+<p>2.以管理员身份打开cmd,并进入到解压后MySQL文件夹的bin目录。  </p>
+<p>3.输入并执行如下命令(该命令初始化的mysql第一次登陆没有密码)。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize-insecure</span><br></pre></td></tr></table></figure></p>
+<p>4.等待重新出现<strong>&gt;</strong>，接着输入。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld -install</span><br></pre></td></tr></table></figure></p>
+<p>5.执行后出现英文的服务安装成功字样。  </p>
+<p>6.启动mysql服务，会提示服务启动成功。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start mysql</span><br></pre></td></tr></table></figure></p>
+<p>7.输入命令登录mysql。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure></p>
+<p>8.提示输入密码，直接回车就可以了。</p>
+<p>9.登录成功后修改下MySQL密码。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER <span class="string">'root'</span>@<span class="string">'localhost'</span>IDENTIFIED WITH mysql_native_password BY <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>10.大功告成。</p>
+   <p align="left"><font color="red"><strong>注:</strong></font><font color="balck" size="3">运行第三步时，出现缺少dll文件提示，需要去微软官网下载较新的微软运行库。</font></p>
+   <p align="left"><font color="red"><strong>注:</strong></font><font color="balck" size="3">第四步出现服务已经存在先用命令:mysqld remove mysql。执行完再执行第四步。</font></p>
+---
+### CentOS7安装MySQL(以5.7版本举例，其他版本以此类推)
+
+
+<p>   1.去下载<a href="https://dev.mysql.com/downloads/file/?id=487589" target="_blank" rel="noopener">MySQL5.7安装包</a>，直接点击<code>No thanks,just start my download</code>就可以开始下载了。</p>
+<p>   2.通过<code>rpm -qa | grep mariadb</code>命令查看 mariadb 的安装包</p>
+<p>   3.通过<code>rpm -e mariadb-libs-5.5.56-2.el7.x86_64 --nodeps</code>命令装卸 mariadb。</p>
+<p>   4.通过 <code>cd /usr/local/</code> 命令进入根目录下的usr目录下的local目录，并创建mysql文件夹<code>mkdir mysql</code></p>
+<p>   5.把下载好的安装包上传到<code>mysql</code>文件夹,通过<code>tar -xvf  mysql-5.7.27-1.el7.x86_64.rpm-bundle.tar</code>解压安装包。</p>
+<p>   6.解压好后，依次执行如下命令。</p>
+<blockquote>
+<p><code>rpm -ivh mysql-community-common-5.7.27-1.el7.x86_64.rpm --nodeps --force</code></p>
+</blockquote>
+<blockquote>
+<p><code>rpm -ivh mysql-community-libs-5.7.27-1.el7.x86_64.rpm --nodeps --force</code></p>
+</blockquote>
+<blockquote>
+<p><code>rpm -ivh mysql-community-client-5.7.27-1.el7.x86_64.rpm --nodeps --force</code></p>
+</blockquote>
+<blockquote>
+<p><code>rpm -ivh mysql-community-server-5.7.27-1.el7.x86_64.rpm --nodeps --force</code></p>
+</blockquote>
+<p>   7.依次执行如下命令，执行MySQL的初始化和相关配置。</p>
+<blockquote>
+<p><code>mysqld --initialize;</code></p>
+</blockquote>
+<blockquote>
+<p><code>chown mysql:mysql /var/lib/mysql -R;</code></p>
+</blockquote>
+<blockquote>
+<p><code>systemctl start mysqld.service;</code></p>
+</blockquote>
+<blockquote>
+<p><code>systemctl  enable mysqld;</code></p>
+</blockquote>
+<p>   8.通过 <code>cat /var/log/mysqld.log | grep password</code>命令查看MySQL数据库的密码</p>
+<p>   9.之后同Windows一样登录MySQL即可,修改密码指令也和Windows一样。</p>
+<hr>
+<h3 id="忘记MySQL密码？"><a href="#忘记MySQL密码？" class="headerlink" title="忘记MySQL密码？"></a>忘记MySQL密码？</h3><p>   <font color="red"><strong>注:</strong></font>8.0以上忘记MySQl密码解决方案。<br>   1.关闭mysql服务。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop mysql</span><br></pre></td></tr></table></figure></p>
+<p>   2.打开mysql安装路径。</p>
+<p>   3.按住shift键，右键在此处打开cmd命令，输入如下命令。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --console --skip-grant-tables --shared-memory</span><br></pre></td></tr></table></figure></p>
+<p>   4.在mysql的安装路径开启一个新的cmd输入：mysql回车即可登录。</p>
+<p>   5.登录成功后输入如下命令用来刷新权限。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure></p>
+<p>   7.用命令修改mysql的密码。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER <span class="string">'root'</span>@<span class="string">'localhost'</span>IDENTIFIED WITH mysql_native_password BY <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>   8.修改后退出mysql。<br>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span>;</span><br></pre></td></tr></table></figure></p>
+<p>   9.关闭第一个cmd。</p>
+<p>   10.用第二个cmd命令开启mysql 服务<br>    <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net start mysql</span><br></pre></td></tr></table></figure></p>
+<p>   11.用改好的密码进行登录即可</p>
+<p>   ```</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/软件安装分享/" rel="tag"># 软件安装分享</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/02/Effective-Java/" rel="prev" title="《Effective Java》开篇">
+                  《Effective Java》开篇 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤要点"><span class="nav-number">2.</span> <span class="nav-text">步骤要点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#忘记MySQL密码？"><span class="nav-number">3.</span> <span class="nav-text">忘记MySQL密码？</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/wallhaven-663071.jpg"
+      alt="greek-zzf">
+  <p class="site-author-name" itemprop="name">greek-zzf</p>
+  <div class="site-description" itemprop="description">学过Java,Python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">greek-zzf</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var id = element.id || '';
+    var src = element.src || '';
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (id !=='') {
+      script.id = element.id;
+    }
+    if (src !== '') {
+      script.src = src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+    </div>
+</body>
+</html>

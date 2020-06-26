@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="greek-zzf" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="应用访问缓存流程:  Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发； •Cache接口为缓存的组件规范定义，包含缓存的各种操作集合； •Cache接口下Spring提供">
+<meta name="keywords" content="缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot 缓存">
+<meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot缓存/index.html">
+<meta property="og:site_name" content="greek-zzf">
+<meta property="og:description" content="应用访问缓存流程:  Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发； •Cache接口为缓存的组件规范定义，包含缓存的各种操作集合； •Cache接口下Spring提供">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/cache.png">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/%E5%9B%BE%E7%89%872.png">
+<meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/%E5%9B%BE%E7%89%873.png">
+<meta property="og:updated_time" content="2020-04-04T08:31:59.690Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot 缓存">
+<meta name="twitter:description" content="应用访问缓存流程:  Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发； •Cache接口为缓存的组件规范定义，包含缓存的各种操作集合； •Cache接口下Spring提供">
+<meta name="twitter:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/cache.png">
+  <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot缓存/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>SpringBoot 缓存 | greek-zzf</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">greek-zzf</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">记录学习成长博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/26/SpringBoot缓存/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="greek-zzf">
+      <meta itemprop="description" content="学过Java,Python">
+      <meta itemprop="image" content="/images/wallhaven-663071.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="greek-zzf">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">SpringBoot 缓存
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-06-26 02:19:47" itemprop="dateCreated datePublished" datetime="2020-06-26T02:19:47+08:00">2020-06-26</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-04 16:31:59" itemprop="dateModified" datetime="2020-04-04T16:31:59+08:00">2020-04-04</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/SpingBoot/" itemprop="url" rel="index"><span itemprop="name">SpingBoot</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>应用访问缓存流程:</p>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/cache.png" alt></p>
+<h2 id="Spring缓存抽象"><a href="#Spring缓存抽象" class="headerlink" title="Spring缓存抽象"></a>Spring缓存抽象</h2><p>一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发；</p>
+<p>•Cache接口为缓存的组件规范定义，包含缓存的各种操作集合；</p>
+<p>•Cache接口下Spring提供了各种xxxCache的实现；如RedisCache，EhCacheCache , ConcurrentMapCache等；</p>
+<p>•每次调用需要缓存功能的方法时，Spring会检查检查指定参数的指定的目标方法是否已经被调用过；如果有就直接从缓存中获取方法调用后的结果，如果没有就调用方法并缓存结果后返回给用户。下次调用直接从缓存中获取。</p>
+<p>•使用Spring缓存抽象时我们需要关注以下两点；</p>
+<p>1、确定方法需要被缓存以及他们的缓存策略</p>
+<p>2、从缓存中读取之前缓存存储的数据</p>
+<p>二、几个重要概念&amp;缓存注解</p>
+<table>
+<thead>
+<tr>
+<th align="center">Cache</th>
+<th align="center">缓存接口,定义缓存操作.实现有:RedisCache、EhCacheCache、ConcurrentMapCache等</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>CacheManager</strong></td>
+<td align="center"><strong>缓存管理器,管理各种缓存（Cache）组件</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>@Cacheable</strong></td>
+<td align="center"><strong>主要针对方法配置，能够根据方法的请求参数对其结果进行缓存</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>@CacheEvict</strong></td>
+<td align="center"><strong>清空缓存</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>@CachePut</strong></td>
+<td align="center"><strong>保证方法被调用，又希望结果被缓存</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>@EnableCaching</strong></td>
+<td align="center"><strong>开启基于注解的缓存</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>keyGenerator</strong></td>
+<td align="center"><strong>缓存数据时key生成策略</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>serialize</strong></td>
+<td align="center"><strong>缓存数据时value序列化策略</strong></td>
+</tr>
+</tbody></table>
+<p>三、缓存的属性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@AliasFor</span>(<span class="string">"cacheNames"</span>)</span><br><span class="line">   String[] value() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@AliasFor</span>(<span class="string">"value"</span>)</span><br><span class="line">   String[] cacheNames() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"><span class="comment">//cacheNames/value 指定缓存组件的名字</span></span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">key</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"><span class="comment">//缓存的key,可以为空,如果指定要按照SPEL表达式编写,如果不指定,则缺省按照方法的所有参数进行组合</span></span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">keyGenerator</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"><span class="comment">//keyGenerator:key的生成器,可以指定key的生成器组件id  keyGenerator/key 二选一使用</span></span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">cacheManager</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"><span class="comment">//cacheManager:指定缓存管理器</span></span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">cacheResolver</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"><span class="comment">//cacheResolver:指定缓存解析器</span></span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">condition</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"><span class="comment">//condition:符合条件的情况下才缓存</span></span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">unless</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line"><span class="comment">//unless:否定缓存,当unless指定的条件为true，方法的返回值不会被缓存,可以获取到结果进行判断</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">boolean</span> <span class="title">sync</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"><span class="comment">//是否使用异步模式</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/%E5%9B%BE%E7%89%872.png" alt></p>
+<p>SPEL表达式编写规则:</p>
+<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/%E5%9B%BE%E7%89%873.png" alt></p>
+<p>四、缓存的工作原理</p>
+<ul>
+<li>自动配置类:CacheAutoConfiguration</li>
+<li>缓存配置类如下:</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.cache.GenericCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.JCacheCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.EhCacheCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.HazelcastCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.InfinispanCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.CouchbaseCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.RedisCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.CaffeineCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.SimpleCacheConfiguration</span><br><span class="line">org.springframework.boot.autoconfigure.cache.NoOpCacheConfiguration</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>通过在配置文件中加入<code>debug=true</code>查看默认生效的类是:SimpleCacheConfiguration</p>
+</li>
+<li><p>SimpleCacheConfiguration给容器中注册了一个CacheManager:ConcurrentMapCacheManager</p>
+</li>
+<li><p>可以获取和创建ConcurrentMapCache类型的缓存组件,他的作用将数据保存在ConcurrentMap中;</p>
+</li>
+</ul>
+<p>五、缓存运行流程</p>
+<p><strong>@Cacheable:</strong></p>
+<p>1.方法运行之前,先去查询Cache(缓存组件),按照CacheNames指定的名字获取:(CacheManager先获取相应的缓存),第一次获取缓存如果没有Cache组件会自动创建</p>
+<p>2.去Cache中查找缓存的内容,使用一个key,默认就是方法的参数;key是按照某种策略生成的,默认是使用keyGenerator生成的,默认使用SimplekeyGenerator生成key的默认策略:</p>
+<p>​            如果没有参数:key = new SimpleKey()；</p>
+<p>​            如果有一个参数: key = 参数的值</p>
+<p>​            如果有多个参数: key = new SimpleKey(params)</p>
+<p>3.没有查到缓存就调用目标方法</p>
+<p>4.将目标方法返回的结果,放进缓存中</p>
+<p><strong>@CachePut:</strong></p>
+<p>既调用方法,又更新缓存数据</p>
+<p>运行时机:</p>
+<p>​        1.先调用目标方法</p>
+<p>​        2.将目标方法的结果缓存起</p>
+<p>使用场景举例:</p>
+<pre><code>-  查询一号员工的数据,@Cacheable注解将数据存入缓存中
+-  之后修改一号员工的数据
+-  再次查询一号员工的数据不会变，还是原来的缓存数据，缓存没有更新
+-  使用@CachePut注解,在更新一号员工的时候,将更新后的结果放入缓存中
+-  注意一点:@Cacheable和@CachePut应该使用相同的key,这样才能确保修改的内容是同一个</code></pre><p><strong>@CacheEvict:</strong>缓存清除</p>
+<p>key:指定要清除的数据</p>
+<p>allEntries:清除所有数据,默认为false</p>
+<p>beforeInvocation:缓存的方法是否在执行方法之前。默认是在执行方法之后执行,如果出现错误就不会清除。</p>
+<p><strong>@Caching</strong>:用于定义更为复杂的缓存规则</p>
+<p><strong>@CacheConfig</strong>全局缓存配置(抽取缓存的公共配置)</p>
+<h2 id="整合Redis"><a href="#整合Redis" class="headerlink" title="整合Redis"></a>整合Redis</h2><p>Redis常见的五大数据类型:String(字符串),List(列表),Set(集合),Hash(散列),ZSet(有序集合)。</p>
+<p>常见的数据类类型相关操作:<a href="http://www.redis.cn/commands.html" target="_blank" rel="noopener">Redis命令官方文档</a></p>
+<p>1.导入Redis的stater</p>
+<p>2.使用RedisTemplate,StringRedisTemplate两个Template来操作数据库</p>
+<ul>
+<li>RedisTemplate k-v都是对象的</li>
+<li>StringRedisTemplate k-v都是字符串的</li>
+</ul>
+<p>3.在使用redistemplate往Redis添加对象时需要将对象序列化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Employee emp = employeeMapper.getEmpById(<span class="number">1</span>);</span><br><span class="line">redisTemplate.opsForValue().set(<span class="string">"emp"</span>,emp);</span><br></pre></td></tr></table></figure>
+
+<p>解决方法:</p>
+<ul>
+<li><p>让Employee implements  Serializable,该方法使用的是jdk的序列化机制，将序列化后的数据保存到Redis中</p>
+</li>
+<li><p>将数据以json的方式保存,自己使用工具转json</p>
+</li>
+<li><p>Redis默认使用的就是jdk的序列化机制,可以配置Redis的序列化机制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span>(name = <span class="string">"redisTemplate"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedisTemplate&lt;Object, Employee&gt; <span class="title">empRedisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> UnknownHostException </span>&#123;</span><br><span class="line">        RedisTemplate&lt;Object, Employee&gt; template = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Employee&gt; jackson2JsonRedisSerializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer&lt;Employee&gt;(Employee<span class="class">.<span class="keyword">class</span></span></span><br><span class="line"><span class="class">        )</span>;</span><br><span class="line">        template.setDefaultSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//此处使用的就是Jackson2JsonRedisSerializer</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="自定义CacheManager"><a href="#自定义CacheManager" class="headerlink" title="自定义CacheManager"></a>自定义CacheManager</h2><p>1.原来SpringBoot使用的是<code>SimpleCacheConfiguration</code>,引入Redis之后使用的就是<code>RedisCacheConfiguration</code>,原来的<code>ConcurrentMapCacheManager</code>也变成<code>RedisCacheManager</code></p>
+<p>2.<code>RedisCacheManager</code>帮我们创建<code>RedisCache</code>来作为缓存组件,<code>RedisCache</code>通过操作redis缓存数据的</p>
+<p>3.默认保存数据都是 k-v 都是Object,利用序列化保存</p>
+<p>4.在SpringBoot2x版本中，自定义CacheManager</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CacheManager <span class="title">cacheManager</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//初始化一个RedisCacheWriter</span></span><br><span class="line">        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);</span><br><span class="line">        <span class="comment">//设置CacheManager的值序列化方式为json序列化</span></span><br><span class="line">        RedisSerializer&lt;Object&gt; jsonSerializer = <span class="keyword">new</span> GenericJackson2JsonRedisSerializer();</span><br><span class="line">        RedisSerializationContext.SerializationPair&lt;Object&gt; pair = RedisSerializationContext.SerializationPair</span><br><span class="line">                .fromSerializer(jsonSerializer);</span><br><span class="line">        RedisCacheConfiguration defaultCacheConfig=RedisCacheConfiguration.defaultCacheConfig()</span><br><span class="line">                .serializeValuesWith(pair);</span><br><span class="line">        <span class="comment">//让Redis数据库中以json数据存储,取出数据也正常.</span></span><br><span class="line">        <span class="comment">//初始化RedisCacheManager</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RedisCacheManager(redisCacheWriter, defaultCacheConfig);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/缓存/" rel="tag"># 缓存</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/06/26/SpringBoot安全/" rel="next" title="SpringBoot安全">
+                  <i class="fa fa-chevron-left"></i> SpringBoot安全
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring缓存抽象"><span class="nav-number">1.</span> <span class="nav-text">Spring缓存抽象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整合Redis"><span class="nav-number">2.</span> <span class="nav-text">整合Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义CacheManager"><span class="nav-number">3.</span> <span class="nav-text">自定义CacheManager</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/wallhaven-663071.jpg"
+      alt="greek-zzf">
+  <p class="site-author-name" itemprop="name">greek-zzf</p>
+  <div class="site-description" itemprop="description">学过Java,Python</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">greek-zzf</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.0</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/pjax/pjax.min.js?v=0.2.8"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var id = element.id || '';
+    var src = element.src || '';
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (id !=='') {
+      script.id = element.id;
+    }
+    if (src !== '') {
+      script.src = src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+    </div>
+</body>
+</html>
