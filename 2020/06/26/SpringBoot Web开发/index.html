@@ -55,20 +55,20 @@
   };
 </script>
 
-  <meta name="description" content="首先了解一下规则：  12xxxxAutoConfiguration：帮我们给容器中自动配置组件；xxxxProperties:配置类来封装配置文件的内容；  1.SpringBoot对静态资源的映射规则1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源 123456789101112131415public void">
+  <meta name="description" content="首先了解一下规则： 12xxxxAutoConfiguration：帮我们给容器中自动配置组件；xxxxProperties:配置类来封装配置文件的内容；1.SpringBoot对静态资源的映射规则1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源">
 <meta name="keywords" content="web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot Web开发">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot Web开发/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="首先了解一下规则：  12xxxxAutoConfiguration：帮我们给容器中自动配置组件；xxxxProperties:配置类来封装配置文件的内容；  1.SpringBoot对静态资源的映射规则1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源 123456789101112131415public void">
+<meta property="og:description" content="首先了解一下规则： 12xxxxAutoConfiguration：帮我们给容器中自动配置组件；xxxxProperties:配置类来封装配置文件的内容；1.SpringBoot对静态资源的映射规则1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/template-engine.png">
 <meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/1.JPG">
 <meta property="og:updated_time" content="2020-03-17T09:40:43.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot Web开发">
-<meta name="twitter:description" content="首先了解一下规则：  12xxxxAutoConfiguration：帮我们给容器中自动配置组件；xxxxProperties:配置类来封装配置文件的内容；  1.SpringBoot对静态资源的映射规则1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源 123456789101112131415public void">
+<meta name="twitter:description" content="首先了解一下规则： 12xxxxAutoConfiguration：帮我们给容器中自动配置组件；xxxxProperties:配置类来封装配置文件的内容；1.SpringBoot对静态资源的映射规则1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源">
 <meta name="twitter:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/template-engine.png">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot Web开发/">
 
@@ -331,10 +331,10 @@
       
         <ul>
 <li>首先了解一下规则：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxxxAutoConfiguration：帮我们给容器中自动配置组件；</span><br><span class="line">xxxxProperties:配置类来封装配置文件的内容；</span><br></pre></td></tr></table></figure>
+</ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxxxAutoConfiguration：帮我们给容器中自动配置组件；</span><br><span class="line">xxxxProperties:配置类来封装配置文件的内容；</span><br></pre></td></tr></table></figure><h2 id="1-SpringBoot对静态资源的映射规则"><a href="#1-SpringBoot对静态资源的映射规则" class="headerlink" title="1.SpringBoot对静态资源的映射规则"></a>1.SpringBoot对静态资源的映射规则</h2><p>1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源</p><a id="more"></a>
 
-<h2 id="1-SpringBoot对静态资源的映射规则"><a href="#1-SpringBoot对静态资源的映射规则" class="headerlink" title="1.SpringBoot对静态资源的映射规则"></a>1.SpringBoot对静态资源的映射规则</h2><p>1）所有 /webjars/** ，都去 classpath:/META-INF/resources/webjars/ 找资源</p>
+
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">this</span>.resourceProperties.isAddMappings()) &#123;</span><br><span class="line">                logger.debug(<span class="string">"Default resource handling disabled"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Duration cachePeriod = <span class="keyword">this</span>.resourceProperties.getCache().getPeriod();</span><br><span class="line">                CacheControl cacheControl = <span class="keyword">this</span>.resourceProperties.getCache().getCachecontrol().toHttpCacheControl();</span><br><span class="line">            <span class="keyword">if</span> (!registry.hasMappingForPattern(<span class="string">"/webjars/**"</span>)) &#123;</span><br><span class="line"><span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;<span class="string">"/webjars/**"</span>&#125;).addResourceLocations(<span class="keyword">new</span> String[]&#123;<span class="string">"classpath:/META-INF/resources/webjars/"</span>&#125;).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            String staticPathPattern = <span class="keyword">this</span>.mvcProperties.getStaticPathPattern();</span><br><span class="line">            <span class="keyword">if</span> (!registry.hasMappingForPattern(staticPathPattern)) &#123;       <span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;staticPathPattern&#125;).addResourceLocations(WebMvcAutoConfiguration.getResourceLocations(<span class="keyword">this</span>.resourceProperties.getStaticLocations())).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
 <p>2)”/**”访问当前项目的任何资源(静态资源文件夹)</p>
@@ -390,6 +390,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -397,7 +407,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/web/" rel="tag"># web</a>
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
             
           </div>
         
@@ -487,7 +497,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

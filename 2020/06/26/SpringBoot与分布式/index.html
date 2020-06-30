@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:Zookper + Dubbo，SpringBoot + SpringCloud 使用Zookper + Dubbo做简单的分布式测试 zookper:是一个分布式的，开放源码的分布式应用程序协调服务。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、">
+  <meta name="description" content="​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:Zookper + Dubbo，SpringBoot + SpringCloud使用Zookper + Dubbo做简单的分布式测试 zookper:是一个分布式的，开放源码的分布式应用程序协调服务。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域">
 <meta name="keywords" content="分布式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot与分布式">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot与分布式/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:Zookper + Dubbo，SpringBoot + SpringCloud 使用Zookper + Dubbo做简单的分布式测试 zookper:是一个分布式的，开放源码的分布式应用程序协调服务。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、">
+<meta property="og:description" content="​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:Zookper + Dubbo，SpringBoot + SpringCloud使用Zookper + Dubbo做简单的分布式测试 zookper:是一个分布式的，开放源码的分布式应用程序协调服务。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/SpringBoot%E5%88%86%E5%B8%83%E5%BC%8F/%E5%9B%BE%E7%89%871.png">
 <meta property="og:updated_time" content="2020-04-16T11:14:33.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot与分布式">
-<meta name="twitter:description" content="​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:Zookper + Dubbo，SpringBoot + SpringCloud 使用Zookper + Dubbo做简单的分布式测试 zookper:是一个分布式的，开放源码的分布式应用程序协调服务。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、">
+<meta name="twitter:description" content="​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:Zookper + Dubbo，SpringBoot + SpringCloud使用Zookper + Dubbo做简单的分布式测试 zookper:是一个分布式的，开放源码的分布式应用程序协调服务。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域">
 <meta name="twitter:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/SpringBoot%E5%88%86%E5%B8%83%E5%BC%8F/%E5%9B%BE%E7%89%871.png">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot与分布式/">
 
@@ -328,11 +328,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:<code>Zookper</code> + <code>Dubbo</code>，<code>SpringBoot</code> + <code>SpringCloud</code></p>
-<h2 id="使用Zookper-Dubbo做简单的分布式测试"><a href="#使用Zookper-Dubbo做简单的分布式测试" class="headerlink" title="使用Zookper + Dubbo做简单的分布式测试"></a>使用Zookper + Dubbo做简单的分布式测试</h2><ul>
+        <p>​        随着应用规模的扩大，对付不了大服务的访问，所以有了分布式来解决这些问题。根据使不同的软件和技术组合分成两个流派:<code>Zookper</code> + <code>Dubbo</code>，<code>SpringBoot</code> + <code>SpringCloud</code></p><h2 id="使用Zookper-Dubbo做简单的分布式测试"><a href="#使用Zookper-Dubbo做简单的分布式测试" class="headerlink" title="使用Zookper + Dubbo做简单的分布式测试"></a>使用Zookper + Dubbo做简单的分布式测试</h2><ul>
 <li><code>zookper</code>:是一个分布式的，开放源码的分布式应用程序协调服务。它是一个为分布式应用提供一致性服务的软件，提供的功能包括：配置维护、域名服务、分布式同步、组服务等.</li>
 <li><code>Dubbo</code>是Alibaba开源的分布式服务框架，它最大的特点是按照分层的方式来架构，使用这种方式可以使各个层之间解耦合（或者最大限度地松耦合）。从服务模型的角度来看，Dubbo采用的是一种非常简单的模型，要么是提供方提供服务，要么是消费方消费服务，所以基于这一点可以抽象出服务提供方（Provider）和服务消费方（Consumer）两个角色。</li>
-</ul>
+</ul><a id="more"></a>
+
 <p>原理和流程:</p>
 <p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/SpringBoot%E5%88%86%E5%B8%83%E5%BC%8F/%E5%9B%BE%E7%89%871.png" alt></p>
 <p>​    Dubbo的Contanier(服务容器)在启动的时候，负责启动,加载和运行Provider(服务提供者)。当Provider启动之后，将自己能提供的服务信息注册到Registry(注册中心)中去。Consumer(服务消费者)在启动的时候会从Registry中订阅自己所需要的服务。Registry会把Consumer所需要的服务地址列表返回给Consumer，Consum需要调用就从返回的地址列表中，通过负载均衡机制找到某一个Provider,如果调用失败，就从地址列表中找下一个Provider,直到调用成功。Monitor(监控中心)可以查看Consumer调用次数和调用时间等等信息。</p>
@@ -391,6 +391,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -398,7 +408,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/分布式/" rel="tag"># 分布式</a>
+              <a href="/tags/分布式/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>
             
           </div>
         
@@ -488,7 +498,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

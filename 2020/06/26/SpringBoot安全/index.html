@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="Spring Security整体概念:  应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动">
+  <meta name="description" content="Spring Security整体概念: 应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动作">
 <meta name="keywords" content="Spring Security">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot安全">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot安全/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="Spring Security整体概念:  应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动">
+<meta property="og:description" content="Spring Security整体概念: 应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动作">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2020-04-11T03:53:47.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot安全">
-<meta name="twitter:description" content="Spring Security整体概念:  应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动">
+<meta name="twitter:description" content="Spring Security整体概念: 应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。 “认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。 “授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动作">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot安全/">
 
 
@@ -326,12 +326,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h2><p>整体概念:</p>
-<ul>
+        <h2 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h2><p>整体概念:</p><ul>
 <li>应用程序的两个主要区域是“认证”和“授权”(或者访问控制)这两个主要区域是Spring Security 的两个目标。</li>
 <li>“认证”(Authentication)，是建立一个他声明的主体的过程(一个“主体”一般是指用户，设备或一些可以在你的应用程序中执行动作的其他系统)。</li>
 <li>“授权”(Authorization)指确定一个主体是否允许在你的应用程序执行一个动作的过程。为了抵达需要授权的店，主体的身份已经有认证过程建立。</li>
-</ul>
+</ul><a id="more"></a>
+
 <p>通俗一点:<strong>认证</strong>是为了证明你是谁，<strong>授权</strong>是你有拥有什么权限。</p>
 <h3 id="使用流程"><a href="#使用流程" class="headerlink" title="使用流程"></a>使用流程</h3><p>1.引入SpringSecurity依赖</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&lt;dependency&gt;</span></span><br><span class="line">            <span class="attr">&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line">            <span class="attr">&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</span></span><br><span class="line"><span class="attr">&lt;/dependency&gt;</span></span><br></pre></td></tr></table></figure>
@@ -382,6 +382,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -389,7 +399,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/Spring-Security/" rel="tag"># Spring Security</a>
+              <a href="/tags/Spring-Security/" rel="tag"><i class="fa fa-tag"></i> Spring Security</a>
             
           </div>
         
@@ -408,6 +418,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/06/26/hexo博客迁移和Gitee部署/" rel="prev" title="hexo博客迁移和Gitee部署">
+                  hexo博客迁移和Gitee部署 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -475,7 +489,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

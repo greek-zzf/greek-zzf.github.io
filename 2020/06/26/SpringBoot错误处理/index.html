@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="SpringBoot默认的错误处理机制 浏览器访问,发送一个默认错误的页面 客户端访问,默认响应一个json数据  原理： ​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置; ​        给容器中添加了一下以下组件: ​        1.DefaultErrorAttributes(默认的错误属性) 12345678public Map&amp;lt">
+  <meta name="description" content="SpringBoot默认的错误处理机制 浏览器访问,发送一个默认错误的页面 客户端访问,默认响应一个json数据 原理：​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置;​        给容器中添加了一下以下组件:​        1.DefaultErrorAttributes(默认的错误属性)">
 <meta name="keywords" content="错误异常处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot错误处理">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot错误处理/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="SpringBoot默认的错误处理机制 浏览器访问,发送一个默认错误的页面 客户端访问,默认响应一个json数据  原理： ​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置; ​        给容器中添加了一下以下组件: ​        1.DefaultErrorAttributes(默认的错误属性) 12345678public Map&amp;lt">
+<meta property="og:description" content="SpringBoot默认的错误处理机制 浏览器访问,发送一个默认错误的页面 客户端访问,默认响应一个json数据 原理：​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置;​        给容器中添加了一下以下组件:​        1.DefaultErrorAttributes(默认的错误属性)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-22T04:58:25.112Z">
+<meta property="og:updated_time" content="2020-06-26T15:20:49.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot错误处理">
-<meta name="twitter:description" content="SpringBoot默认的错误处理机制 浏览器访问,发送一个默认错误的页面 客户端访问,默认响应一个json数据  原理： ​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置; ​        给容器中添加了一下以下组件: ​        1.DefaultErrorAttributes(默认的错误属性) 12345678public Map&amp;lt">
+<meta name="twitter:description" content="SpringBoot默认的错误处理机制 浏览器访问,发送一个默认错误的页面 客户端访问,默认响应一个json数据 原理：​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置;​        给容器中添加了一下以下组件:​        1.DefaultErrorAttributes(默认的错误属性)">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot错误处理/">
 
 
@@ -286,19 +286,11 @@
                 
               
 
-              <time title="创建时间：2020-06-26 02:19:47" itemprop="dateCreated datePublished" datetime="2020-06-26T02:19:47+08:00">2020-06-26</time>
+              <time title="创建时间：2020-06-26 02:19:47 / 修改时间：23:20:49" itemprop="dateCreated datePublished" datetime="2020-06-26T02:19:47+08:00">2020-06-26</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-22 12:58:25" itemprop="dateModified" datetime="2020-03-22T12:58:25+08:00">2020-03-22</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -326,14 +318,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="SpringBoot默认的错误处理机制"><a href="#SpringBoot默认的错误处理机制" class="headerlink" title="SpringBoot默认的错误处理机制"></a>SpringBoot默认的错误处理机制</h2><ul>
+        <h3 id="SpringBoot默认的错误处理机制"><a href="#SpringBoot默认的错误处理机制" class="headerlink" title="SpringBoot默认的错误处理机制"></a>SpringBoot默认的错误处理机制</h3><ul>
 <li>浏览器访问,发送一个默认错误的页面</li>
 <li>客户端访问,默认响应一个json数据</li>
-</ul>
-<p>原理：</p>
-<p>​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置;</p>
-<p>​        给容器中添加了一下以下组件:</p>
-<p>​        1.DefaultErrorAttributes(默认的错误属性)</p>
+</ul><p>原理：</p><p>​        可以参照ErrorMvcAutoConfiguration;错误处理的自动配置;</p><p>​        给容器中添加了一下以下组件:</p><p>​        1.DefaultErrorAttributes(默认的错误属性)</p><a id="more"></a>
+
+
+
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title">getErrorAttributes</span><span class="params">(WebRequest webRequest, <span class="keyword">boolean</span>  includeStackTrace)</span> </span>&#123;</span><br><span class="line">       Map&lt;String, Object&gt; errorAttributes = <span class="keyword">new</span> LinkedHashMap();</span><br><span class="line">       errorAttributes.put(<span class="string">"timestamp"</span>, <span class="keyword">new</span> Date());</span><br><span class="line">       <span class="keyword">this</span>.addStatus(errorAttributes, webRequest);</span><br><span class="line">       <span class="keyword">this</span>.addErrorDetails(errorAttributes, webRequest, includeStackTrace);</span><br><span class="line">       <span class="keyword">this</span>.addPath(errorAttributes, webRequest);</span><br><span class="line">       <span class="keyword">return</span> errorAttributes;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
 <p>​        2.BasicErrorController(基本的错误控制器)</p>
@@ -402,6 +394,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -409,7 +411,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/错误异常处理/" rel="tag"># 错误异常处理</a>
+              <a href="/tags/错误异常处理/" rel="tag"><i class="fa fa-tag"></i> 错误异常处理</a>
             
           </div>
         
@@ -480,7 +482,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot默认的错误处理机制"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot默认的错误处理机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定制错误响应"><span class="nav-number">2.</span> <span class="nav-text">定制错误响应</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringBoot默认的错误处理机制"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot默认的错误处理机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定制错误响应"><span class="nav-number"></span> <span class="nav-text">定制错误响应</span></a></div>
         
       </div>
       <!--/noindex-->
@@ -499,7 +501,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

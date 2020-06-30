@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="1.@Autowired，@Qualifier，@Primary的使用@Autowired自动注入  默认按照类型去容器中查找 如果有多个相同类型组件，再将属性的名称作为组件id去容器中查找 如果容器中没有要注入的bean，可以使用@Autowired(required = false)默认为true，表示有这个bean就装配，没有就不装配。  12345678910111213141516171">
+  <meta name="description" content="1.@Autowired，@Qualifier，@Primary的使用@Autowired自动注入 默认按照类型去容器中查找 如果有多个相同类型组件，再将属性的名称作为组件id去容器中查找 如果容器中没有要注入的bean，可以使用@Autowired(required = false)默认为true，表示有这个bean就装配，没有就不装配。">
 <meta name="keywords" content="自动装配">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring自动装配">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/Spring属性赋值和自动装配/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="1.@Autowired，@Qualifier，@Primary的使用@Autowired自动注入  默认按照类型去容器中查找 如果有多个相同类型组件，再将属性的名称作为组件id去容器中查找 如果容器中没有要注入的bean，可以使用@Autowired(required = false)默认为true，表示有这个bean就装配，没有就不装配。  12345678910111213141516171">
+<meta property="og:description" content="1.@Autowired，@Qualifier，@Primary的使用@Autowired自动注入 默认按照类型去容器中查找 如果有多个相同类型组件，再将属性的名称作为组件id去容器中查找 如果容器中没有要注入的bean，可以使用@Autowired(required = false)默认为true，表示有这个bean就装配，没有就不装配。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2020-04-20T06:02:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring自动装配">
-<meta name="twitter:description" content="1.@Autowired，@Qualifier，@Primary的使用@Autowired自动注入  默认按照类型去容器中查找 如果有多个相同类型组件，再将属性的名称作为组件id去容器中查找 如果容器中没有要注入的bean，可以使用@Autowired(required = false)默认为true，表示有这个bean就装配，没有就不装配。  12345678910111213141516171">
+<meta name="twitter:description" content="1.@Autowired，@Qualifier，@Primary的使用@Autowired自动注入 默认按照类型去容器中查找 如果有多个相同类型组件，再将属性的名称作为组件id去容器中查找 如果容器中没有要注入的bean，可以使用@Autowired(required = false)默认为true，表示有这个bean就装配，没有就不装配。">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/Spring属性赋值和自动装配/">
 
 
@@ -326,12 +326,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="1-Autowired，-Qualifier，-Primary的使用"><a href="#1-Autowired，-Qualifier，-Primary的使用" class="headerlink" title="1.@Autowired，@Qualifier，@Primary的使用"></a>1.@Autowired，@Qualifier，@Primary的使用</h3><p><strong><code>@Autowired</code>自动注入</strong></p>
-<ul>
+        <h3 id="1-Autowired，-Qualifier，-Primary的使用"><a href="#1-Autowired，-Qualifier，-Primary的使用" class="headerlink" title="1.@Autowired，@Qualifier，@Primary的使用"></a>1.@Autowired，@Qualifier，@Primary的使用</h3><p><strong><code>@Autowired</code>自动注入</strong></p><ul>
 <li>默认按照类型去容器中查找</li>
 <li>如果有多个相同类型组件，再将属性的名称作为组件id去容器中查找</li>
 <li>如果容器中没有要注入的bean，可以使用@Autowired(required = false)默认为true，表示有这个bean就装配，没有就不装配。</li>
-</ul>
+</ul><a id="more"></a>
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用一个简单例子说明</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@Repository</span>    <span class="comment">//标注这是一个bean,默认id是类名首字母小写，即:book</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String bookName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//再配置类中添加一个bean</span></span><br><span class="line">   <span class="meta">@Bean</span>(<span class="string">"book1"</span>)    <span class="comment">//设置bean的id为"book1"</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Book <span class="title">getBook</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Book book = <span class="keyword">new</span> Book();</span><br><span class="line">        book.setBookName(<span class="string">"zzf"</span>);</span><br><span class="line">        <span class="keyword">return</span> book;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用@Autowired注入bean</span></span><br><span class="line"><span class="meta">@Autowired</span>   </span><br><span class="line">Book book1;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    System.out.println(book1.getBookName());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//因为有两个Book类型的bean,所以就按照注入bean的id去找对应的bean，此处注入的bean的id是"book1"，所以</span></span><br><span class="line"><span class="comment">//去找bean的名字为"book1"的，打印输出为"zzf"</span></span><br></pre></td></tr></table></figure>
 
 <p><strong><code>@Qualifier</code>指定需要转配的组件id，而不根据属性名去装配</strong></p>
@@ -400,6 +400,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -407,7 +417,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/自动装配/" rel="tag"># 自动装配</a>
+              <a href="/tags/自动装配/" rel="tag"><i class="fa fa-tag"></i> 自动装配</a>
             
           </div>
         
@@ -497,7 +507,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

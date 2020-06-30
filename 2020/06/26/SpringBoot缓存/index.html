@@ -55,13 +55,13 @@
   };
 </script>
 
-  <meta name="description" content="应用访问缓存流程:  Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发； •Cache接口为缓存的组件规范定义，包含缓存的各种操作集合； •Cache接口下Spring提供">
+  <meta name="description" content="应用访问缓存流程:Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发；•Cache接口为缓存的组件规范定义，包含缓存的各种操作集合；">
 <meta name="keywords" content="缓存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot 缓存">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot缓存/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="应用访问缓存流程:  Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发； •Cache接口为缓存的组件规范定义，包含缓存的各种操作集合； •Cache接口下Spring提供">
+<meta property="og:description" content="应用访问缓存流程:Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发；•Cache接口为缓存的组件规范定义，包含缓存的各种操作集合；">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/cache.png">
 <meta property="og:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/%E5%9B%BE%E7%89%872.png">
@@ -69,7 +69,7 @@
 <meta property="og:updated_time" content="2020-04-04T08:31:59.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot 缓存">
-<meta name="twitter:description" content="应用访问缓存流程:  Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发； •Cache接口为缓存的组件规范定义，包含缓存的各种操作集合； •Cache接口下Spring提供">
+<meta name="twitter:description" content="应用访问缓存流程:Spring缓存抽象一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发；•Cache接口为缓存的组件规范定义，包含缓存的各种操作集合；">
 <meta name="twitter:image" content="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/cache.png">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot缓存/">
 
@@ -330,10 +330,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>应用访问缓存流程:</p>
-<p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/cache.png" alt></p>
-<h2 id="Spring缓存抽象"><a href="#Spring缓存抽象" class="headerlink" title="Spring缓存抽象"></a>Spring缓存抽象</h2><p>一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发；</p>
-<p>•Cache接口为缓存的组件规范定义，包含缓存的各种操作集合；</p>
+        <p>应用访问缓存流程:</p><p><img src="https://wszzf.oss-cn-shenzhen.aliyuncs.com/%E5%9B%BE%E5%BA%8A/cache.png" alt></p><h2 id="Spring缓存抽象"><a href="#Spring缓存抽象" class="headerlink" title="Spring缓存抽象"></a>Spring缓存抽象</h2><p>一、Spring从3.1开始定义了org.springframework.cache.Cache和org.springframework.cache.CacheManager接口来统一不同的缓存技术;并支持使用JCache(JSR-107)注解简化我们开发；</p><p>•Cache接口为缓存的组件规范定义，包含缓存的各种操作集合；</p><a id="more"></a>
+
+
+
 <p>•Cache接口下Spring提供了各种xxxCache的实现；如RedisCache，EhCacheCache , ConcurrentMapCache等；</p>
 <p>•每次调用需要缓存功能的方法时，Spring会检查检查指定参数的指定的目标方法是否已经被调用过；如果有就直接从缓存中获取方法调用后的结果，如果没有就调用方法并缓存结果后返回给用户。下次调用直接从缓存中获取。</p>
 <p>•使用Spring缓存抽象时我们需要关注以下两点；</p>
@@ -460,6 +460,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -467,7 +477,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/缓存/" rel="tag"># 缓存</a>
+              <a href="/tags/缓存/" rel="tag"><i class="fa fa-tag"></i> 缓存</a>
             
           </div>
         
@@ -557,7 +567,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

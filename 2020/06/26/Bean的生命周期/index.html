@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="Bean的生命周期 bean创建—bean初始化—bean销毁的过程  构造(对象创建)  单实例:在容器启动的时候创建对象 多实例:在每次获取的时候创建对象   初始化  对象创建完成，并赋值好，调用初始化方法   销毁  单实例:容器关闭的时候，调用销毁方法 多实例:容器不会调用销毁方法。    可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。">
+  <meta name="description" content="Bean的生命周期bean创建—bean初始化—bean销毁的过程 构造(对象创建)  单实例:在容器启动的时候创建对象 多实例:在每次获取的时候创建对象   初始化  对象创建完成，并赋值好，调用初始化方法   销毁  单实例:容器关闭的时候，调用销毁方法 多实例:容器不会调用销毁方法。   可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。接下来">
 <meta name="keywords" content="Bean">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bean的生命周期">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/Bean的生命周期/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="Bean的生命周期 bean创建—bean初始化—bean销毁的过程  构造(对象创建)  单实例:在容器启动的时候创建对象 多实例:在每次获取的时候创建对象   初始化  对象创建完成，并赋值好，调用初始化方法   销毁  单实例:容器关闭的时候，调用销毁方法 多实例:容器不会调用销毁方法。    可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。">
+<meta property="og:description" content="Bean的生命周期bean创建—bean初始化—bean销毁的过程 构造(对象创建)  单实例:在容器启动的时候创建对象 多实例:在每次获取的时候创建对象   初始化  对象创建完成，并赋值好，调用初始化方法   销毁  单实例:容器关闭的时候，调用销毁方法 多实例:容器不会调用销毁方法。   可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。接下来">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2020-04-19T07:31:38.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bean的生命周期">
-<meta name="twitter:description" content="Bean的生命周期 bean创建—bean初始化—bean销毁的过程  构造(对象创建)  单实例:在容器启动的时候创建对象 多实例:在每次获取的时候创建对象   初始化  对象创建完成，并赋值好，调用初始化方法   销毁  单实例:容器关闭的时候，调用销毁方法 多实例:容器不会调用销毁方法。    可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。">
+<meta name="twitter:description" content="Bean的生命周期bean创建—bean初始化—bean销毁的过程 构造(对象创建)  单实例:在容器启动的时候创建对象 多实例:在每次获取的时候创建对象   初始化  对象创建完成，并赋值好，调用初始化方法   销毁  单实例:容器关闭的时候，调用销毁方法 多实例:容器不会调用销毁方法。   可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。接下来">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/Bean的生命周期/">
 
 
@@ -326,9 +326,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>Bean的生命周期</strong></p>
-<p>bean创建—bean初始化—bean销毁的过程</p>
-<ul>
+        <p><strong>Bean的生命周期</strong></p><p>bean创建—bean初始化—bean销毁的过程</p><ul>
 <li><p>构造(对象创建)</p>
 <ul>
 <li>单实例:在容器启动的时候创建对象</li>
@@ -346,8 +344,10 @@
 <li>多实例:容器不会调用销毁方法。</li>
 </ul>
 </li>
-</ul>
-<p>可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。接下来使用几种方式，来自定义初始化和销毁方法。</p>
+</ul><p>可以自己定义初始化和销毁方法：容器在bean进行到相应的生命周期的时候，就会调用我们自定义的方法。接下来使用几种方式，来自定义初始化和销毁方法。</p><a id="more"></a>
+
+
+
 <h3 id="1，指定初始化和销毁方法"><a href="#1，指定初始化和销毁方法" class="headerlink" title="1，指定初始化和销毁方法"></a>1，指定初始化和销毁方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Scope</span>(<span class="string">"prototype"</span>)   <span class="comment">//开启多实例，默认为单实例</span></span><br><span class="line">    <span class="meta">@Bean</span>(initMethod = <span class="string">"myInit"</span>,destroyMethod = <span class="string">"myDestroy"</span>)  <span class="comment">//选择自定义的初始化和销毁方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Book <span class="title">getbook</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Book();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Book</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Book对象创建"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//自定义初始化方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myInit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Book--初始化方法被调用"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//自定义销毁方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">myDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Book--销毁方法被调用"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -413,6 +413,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -420,7 +430,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/Bean/" rel="tag"># Bean</a>
+              <a href="/tags/Bean/" rel="tag"><i class="fa fa-tag"></i> Bean</a>
             
           </div>
         
@@ -430,8 +440,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/06/21/流/" rel="next" title="I/O,流与文件">
-                  <i class="fa fa-chevron-left"></i> I/O,流与文件
+                <a href="/2020/06/26/Docker常用命令大全/" rel="next" title="Docker常用命令">
+                  <i class="fa fa-chevron-left"></i> Docker常用命令
                 </a>
               
             </div>
@@ -440,8 +450,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2020/06/26/Docker常用命令大全/" rel="prev" title="Docker常用命令">
-                  Docker常用命令 <i class="fa fa-chevron-right"></i>
+                <a href="/2020/06/26/SpringBoot和SpringMVC关系/" rel="prev" title="SpringBoot中SpringMVC自动配置原理">
+                  SpringBoot中SpringMVC自动配置原理 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -510,7 +520,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

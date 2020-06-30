@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="1.简单使用builder模式使用前提：构造方法参数足够多，4个或以上 使用方法：1.调用构造方法，并使用所必需的参数，获得一个builder对象 ​                   2.调用builder的setter方法设置可选参数 ​                   3.最后调用一个无参的构造方法生成对象 代码示例： 123456789101112131415161718192021">
+  <meta name="description" content="1.简单使用builder模式使用前提：构造方法参数足够多，4个或以上使用方法：1.调用构造方法，并使用所必需的参数，获得一个builder对象​                   2.调用builder的setter方法设置可选参数​                   3.最后调用一个无参的构造方法生成对象">
 <meta name="keywords" content="看书心得笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Effective Java》开篇">
 <meta property="og:url" content="http://yoursite.com/2019/10/02/Effective-Java/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="1.简单使用builder模式使用前提：构造方法参数足够多，4个或以上 使用方法：1.调用构造方法，并使用所必需的参数，获得一个builder对象 ​                   2.调用builder的setter方法设置可选参数 ​                   3.最后调用一个无参的构造方法生成对象 代码示例： 123456789101112131415161718192021">
+<meta property="og:description" content="1.简单使用builder模式使用前提：构造方法参数足够多，4个或以上使用方法：1.调用构造方法，并使用所必需的参数，获得一个builder对象​                   2.调用builder的setter方法设置可选参数​                   3.最后调用一个无参的构造方法生成对象">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2020-04-29T07:07:24.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《Effective Java》开篇">
-<meta name="twitter:description" content="1.简单使用builder模式使用前提：构造方法参数足够多，4个或以上 使用方法：1.调用构造方法，并使用所必需的参数，获得一个builder对象 ​                   2.调用builder的setter方法设置可选参数 ​                   3.最后调用一个无参的构造方法生成对象 代码示例： 123456789101112131415161718192021">
+<meta name="twitter:description" content="1.简单使用builder模式使用前提：构造方法参数足够多，4个或以上使用方法：1.调用构造方法，并使用所必需的参数，获得一个builder对象​                   2.调用builder的setter方法设置可选参数​                   3.最后调用一个无参的构造方法生成对象">
   <link rel="canonical" href="http://yoursite.com/2019/10/02/Effective-Java/">
 
 
@@ -326,10 +326,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="1-简单使用builder模式"><a href="#1-简单使用builder模式" class="headerlink" title="1.简单使用builder模式"></a>1.简单使用builder模式</h3><p><strong>使用前提</strong>：构造方法参数足够多，4个或以上</p>
-<p><strong>使用方法</strong>：1.调用构造方法，并使用所必需的参数，获得一个builder对象</p>
-<p>​                   2.调用builder的setter方法设置可选参数</p>
-<p>​                   3.最后调用一个无参的构造方法生成对象</p>
+        <h3 id="1-简单使用builder模式"><a href="#1-简单使用builder模式" class="headerlink" title="1.简单使用builder模式"></a>1.简单使用builder模式</h3><p><strong>使用前提</strong>：构造方法参数足够多，4个或以上</p><p><strong>使用方法</strong>：1.调用构造方法，并使用所必需的参数，获得一个builder对象</p><p>​                   2.调用builder的setter方法设置可选参数</p><p>​                   3.最后调用一个无参的构造方法生成对象</p><a id="more"></a>
+
+
+
 <p><strong>代码示例</strong>：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">===============此处以学生这个类举例==============</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">*1.此处假设学生的id和name为必选参数。其他的属性为可选参数</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">@ToString</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="comment">//必选参数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name;</span><br><span class="line">    <span class="comment">//可选参数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> height;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Student</span><span class="params">(Builder builder)</span> </span>&#123;</span><br><span class="line">        id      = builder.id;</span><br><span class="line">        name    = builder.name;</span><br><span class="line">        age     = builder.age;</span><br><span class="line">        height  = builder.height;</span><br><span class="line">        address = builder.address;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">        <span class="comment">//必选参数</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="comment">//可选参数</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> height;</span><br><span class="line">        <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(<span class="keyword">int</span> id, String name)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.id = id;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">age</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            age = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">height</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">            height = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">address</span><span class="params">(String val)</span> </span>&#123;</span><br><span class="line">            address = val;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Student <span class="title">build</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Student(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -344,6 +344,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -351,7 +361,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/看书心得笔记/" rel="tag"># 看书心得笔记</a>
+              <a href="/tags/看书心得笔记/" rel="tag"><i class="fa fa-tag"></i> 看书心得笔记</a>
             
           </div>
         
@@ -441,7 +451,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

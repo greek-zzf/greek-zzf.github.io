@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="前提要求,了解stater命名方式,以及自动配置原理  12345678910111213@Configuration  //指定这个类是一个配置类@ConditionalOnXXX  //在指定条件成立的情况下自动配置类生效@AutoConfigureAfter  //指定自动配置类的顺序@Bean  //给容器中添加组件@ConfigurationPropertie//结合相关xxxProp">
+  <meta name="description" content="前提要求,了解stater命名方式,以及自动配置原理 12345678910111213@Configuration  //指定这个类是一个配置类@ConditionalOnXXX  //在指定条件成立的情况下自动配置类生效@AutoConfigureAfter  //指定自动配置类的顺序@Bean  //给容器中添加组件@ConfigurationPropertie//结合相关xxxPrope">
 <meta name="keywords" content="stater">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot--自定义stater">
 <meta property="og:url" content="http://yoursite.com/2020/06/26/SpringBoot自定义场景启动器stater/index.html">
 <meta property="og:site_name" content="greek-zzf">
-<meta property="og:description" content="前提要求,了解stater命名方式,以及自动配置原理  12345678910111213@Configuration  //指定这个类是一个配置类@ConditionalOnXXX  //在指定条件成立的情况下自动配置类生效@AutoConfigureAfter  //指定自动配置类的顺序@Bean  //给容器中添加组件@ConfigurationPropertie//结合相关xxxProp">
+<meta property="og:description" content="前提要求,了解stater命名方式,以及自动配置原理 12345678910111213@Configuration  //指定这个类是一个配置类@ConditionalOnXXX  //在指定条件成立的情况下自动配置类生效@AutoConfigureAfter  //指定自动配置类的顺序@Bean  //给容器中添加组件@ConfigurationPropertie//结合相关xxxPrope">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2020-03-31T03:09:41.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot--自定义stater">
-<meta name="twitter:description" content="前提要求,了解stater命名方式,以及自动配置原理  12345678910111213@Configuration  //指定这个类是一个配置类@ConditionalOnXXX  //在指定条件成立的情况下自动配置类生效@AutoConfigureAfter  //指定自动配置类的顺序@Bean  //给容器中添加组件@ConfigurationPropertie//结合相关xxxProp">
+<meta name="twitter:description" content="前提要求,了解stater命名方式,以及自动配置原理 12345678910111213@Configuration  //指定这个类是一个配置类@ConditionalOnXXX  //在指定条件成立的情况下自动配置类生效@AutoConfigureAfter  //指定自动配置类的顺序@Bean  //给容器中添加组件@ConfigurationPropertie//结合相关xxxPrope">
   <link rel="canonical" href="http://yoursite.com/2020/06/26/SpringBoot自定义场景启动器stater/">
 
 
@@ -328,8 +328,8 @@
       
         <ul>
 <li>前提要求,了解stater命名方式,以及自动配置原理</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span>  <span class="comment">//指定这个类是一个配置类</span></span><br><span class="line"><span class="meta">@ConditionalOnXXX</span>  <span class="comment">//在指定条件成立的情况下自动配置类生效</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter</span>  <span class="comment">//指定自动配置类的顺序</span></span><br><span class="line"><span class="meta">@Bean</span>  <span class="comment">//给容器中添加组件</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationPropertie</span><span class="comment">//结合相关xxxProperties类来绑定相关的配置</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties</span> <span class="comment">//让xxxProperties生效加入到容器中</span></span><br><span class="line"></span><br><span class="line">自动配置类要能加载</span><br><span class="line">将需要启动就加载的自动配置类，配置在META-INF/spring.factories</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span><br></pre></td></tr></table></figure>
+</ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span>  <span class="comment">//指定这个类是一个配置类</span></span><br><span class="line"><span class="meta">@ConditionalOnXXX</span>  <span class="comment">//在指定条件成立的情况下自动配置类生效</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter</span>  <span class="comment">//指定自动配置类的顺序</span></span><br><span class="line"><span class="meta">@Bean</span>  <span class="comment">//给容器中添加组件</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationPropertie</span><span class="comment">//结合相关xxxProperties类来绑定相关的配置</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties</span> <span class="comment">//让xxxProperties生效加入到容器中</span></span><br><span class="line"></span><br><span class="line">自动配置类要能加载</span><br><span class="line">将需要启动就加载的自动配置类，配置在META-INF/spring.factories</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span><br></pre></td></tr></table></figure><a id="more"></a>
+
 
 <ul>
 <li>模式:启动器+自动配置模块<ul>
@@ -378,6 +378,16 @@
     
         
       
+      
+      
+    
+		 <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    
+
 
       <footer class="post-footer">
           
@@ -385,7 +395,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/stater/" rel="tag"># stater</a>
+              <a href="/tags/stater/" rel="tag"><i class="fa fa-tag"></i> stater</a>
             
           </div>
         
@@ -473,7 +483,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
