@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/06/21/%E6%B5%81/</loc>
+    
+    <lastmod>2020-07-13T14:37:48.265Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/06/26/hexo%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E5%92%8CGitee%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2020-06-30T14:56:29.459Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/2020/06/26/SpringBoot%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</loc>
     
     <lastmod>2020-06-26T15:20:49.426Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/06/21/%E6%B5%81/</loc>
-    
-    <lastmod>2020-06-22T15:31:58.012Z</lastmod>
     
   </url>
   
