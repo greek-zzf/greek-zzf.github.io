@@ -16,21 +16,24 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="问题场景：给定一组文章 id 列表，如何判断文章 a 的 id 在给定的列表中？  我们很容易使用列表、数组、哈希表等将文章 id 先保存起来，判断重复时，直接遍历数组、列表、根据哈希值判断等。 上面的解决方式，最好的无疑是哈希表。哈希表检索时间复杂度为 O(1)，但是这只限于没有发生哈希冲突的情况下，而且数据量一旦比较大，存储占用也会大大增加，会导致检索性能大大下降。 对于数据量较大的场景，如">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2022/11/13/hello-world/index.html">
+<meta property="og:title" content="布隆过滤器">
+<meta property="og:url" content="http://example.com/2021/12/30/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="问题场景：给定一组文章 id 列表，如何判断文章 a 的 id 在给定的列表中？  我们很容易使用列表、数组、哈希表等将文章 id 先保存起来，判断重复时，直接遍历数组、列表、根据哈希值判断等。 上面的解决方式，最好的无疑是哈希表。哈希表检索时间复杂度为 O(1)，但是这只限于没有发生哈希冲突的情况下，而且数据量一旦比较大，存储占用也会大大增加，会导致检索性能大大下降。 对于数据量较大的场景，如">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-13T14:11:22.380Z">
-<meta property="article:modified_time" content="2022-11-13T14:11:22.380Z">
+<meta property="og:image" content="http://example.com/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/cover.png">
+<meta property="article:published_time" content="2021-12-30T08:35:00.000Z">
+<meta property="article:modified_time" content="2022-11-13T14:28:47.956Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="布隆过滤器">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/cover.png">
   
   
   
-  <title>Hello World - Hexo</title>
+  <title>布隆过滤器 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Hello World</span>
+            <span id="subtitle">布隆过滤器</span>
           
         </div>
 
@@ -206,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-13 14:11" pubdate>
-          2022年11月13日 下午
+        <time datetime="2021-12-30 08:35" pubdate>
+          2021年12月30日 早上
         </time>
       </span>
     
@@ -218,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          367 字
+          2k 字
         
       </span>
     
@@ -229,7 +232,7 @@
         
         
         
-          4 分钟
+          17 分钟
         
       </span>
     
@@ -267,24 +270,65 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hello World</h1>
+            <h1 style="display: none">布隆过滤器</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <blockquote>
+<p>问题场景：给定一组文章 id 列表，如何判断文章 a 的 id 在给定的列表中？</p>
+</blockquote>
+<p>我们很容易使用列表、数组、哈希表等将文章 id 先保存起来，判断重复时，直接遍历数组、列表、根据哈希值判断等。</p>
+<p>上面的解决方式，最好的无疑是哈希表。哈希表检索时间复杂度为 O(1)，但是这只限于没有发生哈希冲突的情况下，而且数据量一旦比较大，存储占用也会大大增加，会导致检索性能大大下降。</p>
+<p>对于数据量较大的场景，如何快速检索元素是否包含在另一个集合中，这就引出今天的主角了「布隆过滤器」。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
+<p><strong>布隆过滤器</strong>（英语：Bloom Filter）是1970年由布隆提出的。它实际上是一个很长的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E8%BF%9B%E5%88%B6">二进制</a>向量和一系列随机<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%98%A0%E5%B0%84">映射函数</a>。布隆过滤器可以用于检索一个元素是否在一个集合中。它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率和删除困难</p>
+</blockquote>
+<p>简介引用自维基百科，里面有两个概念「二进制向量」，「映射函数」。</p>
+<p><strong>二进制向量</strong>就是一堆 bit(位) 的集合，bit 我们都知道就是只能表示 0 和 1。其实我们常使用的 int 有 32 位，因此他也可以看做一个二进制向量。</p>
+<p>下面是一个简单的示例，每一个空格就代表一个 bit，下面的数字表示它的索引：</p>
+<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/54a416e0-66c1-4893-aade-ede8e001bd04.png" srcset="/img/loading.gif" lazyload alt="1.png"></p>
+<p><strong>映射函数</strong>我们其实很并不陌生。使用过 HashMap 就应该知道，对 key 使用 hashCode 方法，计算哈希值，这个 hashCode 方法就是一个映射函数，一个 key 只能对应一个哈希值。</p>
+<p>布隆过滤器对一个 key 使用多个映射函数，得到多个值。</p>
+<p>哈希函数映射</p>
+<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/63b9a80b-0cd5-48ea-ac54-a93256a7caf7.png" srcset="/img/loading.gif" lazyload alt="hash.png"></p>
+<p>布隆过滤器中映射函数</p>
+<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/51445b83-d4a0-497f-8ebb-5f0fb9ddcc76.png" srcset="/img/loading.gif" lazyload alt="bloomfilter.png"></p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>了解一些基本概念之后，布隆过滤器的原理就很明了了。</p>
+<p>布隆过滤器对于要保存的值使用一系列随机的映射函数，得到二进制向量下标，然后把对应的 bit 置为 1，就是这么简单。</p>
+<p>例如，字符串 “zzh”，经过三个随机的映射函数，对应的下标为 2，7，11 因此对应的 bit 为 1。</p>
+<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/ccf230bf-6de4-49ab-8238-c9387cad586d.png" srcset="/img/loading.gif" lazyload alt="insert.png"></p>
+<p>我们可以对要插入到的字符串应用同样的哈希函数，然后看二进制向量里对应的bit 是否全为 1 来判断一个元素是否在集合里。</p>
+<p>如果是，则该元素<strong>可能</strong>在里面，注意是可能。 因为这些位置有可能是由其他元素或者其他元素的组合所引起的，这也就导致了布隆过滤器的误识别率。</p>
+<p>如果不是，则表示该元素一定不在集合中。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>我更习惯在介绍一个功能的时候，先把他的缺点说出来，知道缺点的话，后续就可以大胆的应用。</p>
+<h3 id="误识别率"><a href="#误识别率" class="headerlink" title="误识别率"></a>误识别率</h3><p>插入字符串 “zzh” 得到下标 2、7、11</p>
+<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/8b034b8d-b422-4dfc-a270-10c65db5d255.png" srcset="/img/loading.gif" lazyload alt="insert.png"></p>
+<p>插入字符串 “greek” 得到下标 5、8、9</p>
+<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/4bc4c95c-abee-4c20-9d5e-cf66a4b02cd5.png" srcset="/img/loading.gif" lazyload alt="insert_greek.png"></p>
+<p>插入字符串 “gem” 得到下标 2、5、8</p>
+<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/66253d9d-d8ac-4783-9ba3-a3f954bfb9fa.png" srcset="/img/loading.gif" lazyload alt="insert_gem.png"></p>
+<p>可以看到 “gem” 得到的下标对应的 bit 都已经为 1，但是该字符串并不在集合中，这就是布隆过滤器的误识别率。</p>
+<h3 id="删除困难"><a href="#删除困难" class="headerlink" title="删除困难"></a>删除困难</h3><p>删除困难的原因和误识别率是如出一辙。例如我们只想把 “gem” 字符串删除，于是把下标为 2、5、8 的 bit 都置为 0，这样的话 “greek” 和 “zzh” 部分数据就被删除了。无法保证删除的下标影响到其他元素，这就是布隆过滤器删除困难的原因。</p>
+<p>我们也很容易想到把位数组变成整数数组，每插入一个元素相应的计数器加 1，这样删除元素时将计数器减掉就可以了。但是这样根本不可行，因为连一个元素是否在集合中都无法百分百保证，又何来的把这个元素删除呢？就好比你想能为开源世界大牛，现在却连 GitHub 都无法保证访问一样。</p>
+<h3 id="规避手段"><a href="#规避手段" class="headerlink" title="规避手段"></a>规避手段</h3><p>识别率和删除困难虽然都是缺点，但都是可以通过一些手段去规避。</p>
+<p>假设在布隆过滤器里面有 <em>k</em> 个映射函数, <em>m</em> 个比特, 以及 <em>n</em> 个已插入元素，那么该过滤器误判率近似于：_(1-e-kn&#x2F;m)k_ 。因此我们可以通过调整映射函数数量和布隆过滤器的大小来降低误判率。</p>
+<p>对于应该使用多少个映射函数，国外的一篇博客给了较好的答案，引用部分为原文内容，详情<a target="_blank" rel="noopener" href="https://llimllib.github.io/bloomfilter-tutorial/zh_CN/#footnote2">点击</a></p>
+<blockquote>
+<p>对于给定的 <em>m</em> 和 <em>n</em> ，有一个函数可以帮我们确定最优的 <em>k</em> 值: <em>(m&#x2F;n)ln(2)</em></p>
+<p>所以可以通过以下的步骤来确定 Bloom filter 的大小:</p>
+<ol>
+<li>确定 <em>n</em> 的变动范围</li>
+<li>选定 <em>m</em> 的值</li>
+<li>计算 <em>k</em> 的最优值</li>
+<li>对于给定的_n_, <em>m</em>, and _k_计算错误率。如果这个错误率不能接收，那么回到第二步，否则结束</li>
+</ol>
+</blockquote>
+<p>事实上，已经存在许多布隆过滤器变种，他们使用更好的映射函数、支持删除元素、更低的误判率等等。维基百科上记录了 60 多种布隆过滤器的变体。例如：布谷鸟过滤器、布卢姆过滤器、等等，他们相比原始的布隆过滤器往往有更强的特性，详情访问<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bloom_filter#Optimal_number_of_hash_functions">wiki</a></p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>查询效率和插入效率高</strong>，时间复杂度为 O(k) ，k 为映射函数的数量。因为你每次查询或者插入一个元素时，都是通过 k 个函数计算对于的 bit 下标，然后检查对应的 bit 位是否为 1 或者将 bit 位置位 1。</p>
+<p><strong>空间效率</strong>。布隆过滤器的空间效率取决于你期望的误判率，期望的误判率越小，所需的空间就要更大，因此无法具体量化。我们可以简单的和 HashMap 做个对比。</p>
+<p>假设 HashMap 和布隆过滤器都保存字符串 “zzh”，且布隆过滤器使用 3 个映射函数。HashMap 仅保存这个字符串需要 6 个字节，即 48 bit，而布隆过滤器只需要 3 个 bit。</p>
+<p>一些应用场景：URL 黑名单判断、垃圾邮箱判断、弱密码检测、比特币钱包同步等等。</p>
 
                 
               </div>
@@ -294,6 +338,13 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/">#布隆过滤器</a>
+      
+    </div>
+  
 </div>
 
 
@@ -302,8 +353,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>http://example.com/2022/11/13/hello-world/</div>
+      <div>布隆过滤器</div>
+      <div>http://example.com/2021/12/30/布隆过滤器/</div>
     </div>
     <div class="license-meta">
       
@@ -315,7 +366,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月13日</div>
+          <div>2021年12月30日</div>
         </div>
       
       
@@ -347,7 +398,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/13/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93%EF%BC%88%E6%8A%80%E6%9C%AF%E5%90%91%EF%BC%89/" title="2021-年终总结（技术向）">
+                      <a href="/2022/01/01/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93%EF%BC%88%E6%8A%80%E6%9C%AF%E5%90%91%EF%BC%89/" title="2021-年终总结（技术向）">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">2021-年终总结（技术向）</span>
                         <span class="visible-mobile">上一篇</span>
