@@ -1,0 +1,648 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Git 中的一些抓狂经历，平时遇不到，一遇到就很操蛋。  部分参考：Oh Shit, Git  git-flight-rules   branch本地分支太多了，老子要删掉。12345# 看一眼本地有哪些分支git branch # 删掉本地对应分支git branch -d &lt;本地分支名&gt;  远程分支有点多余，老子要删掉。12345# 看一眼远程有哪些分支git branch -r#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操蛋的 Git">
+<meta property="og:url" content="http://example.com/2022/10/16/%E6%93%8D%E8%9B%8B%E7%9A%84%20Git/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Git 中的一些抓狂经历，平时遇不到，一遇到就很操蛋。  部分参考：Oh Shit, Git  git-flight-rules   branch本地分支太多了，老子要删掉。12345# 看一眼本地有哪些分支git branch # 删掉本地对应分支git branch -d &lt;本地分支名&gt;  远程分支有点多余，老子要删掉。12345# 看一眼远程有哪些分支git branch -r#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/%E6%93%8D%E8%9B%8B%E7%9A%84Git/cover.png">
+<meta property="article:published_time" content="2022-10-16T23:17:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T14:54:42.475Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/%E6%93%8D%E8%9B%8B%E7%9A%84Git/cover.png">
+  
+  
+  
+  <title>操蛋的 Git - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">操蛋的 Git</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-16 23:17" pubdate>
+          2022年10月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">操蛋的 Git</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Git 中的一些抓狂经历，平时遇不到，一遇到就很操蛋。</p>
+<blockquote>
+<p>部分参考：<a target="_blank" rel="noopener" href="https://ohshitgit.com/zh">Oh Shit, Git</a>  <a target="_blank" rel="noopener" href="https://github.com/k88hudson/git-flight-rules">git-flight-rules</a></p>
+</blockquote>
+<p><a name="ICrHo"></a></p>
+<h2 id="branch"><a href="#branch" class="headerlink" title="branch"></a>branch</h2><h3 id="本地分支太多了，老子要删掉。"><a href="#本地分支太多了，老子要删掉。" class="headerlink" title="本地分支太多了，老子要删掉。"></a>本地分支太多了，老子要删掉。</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git"># 看一眼本地有哪些分支<br>git branch <br><br># 删掉本地对应分支<br>git branch -d &lt;本地分支名&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="远程分支有点多余，老子要删掉。"><a href="#远程分支有点多余，老子要删掉。" class="headerlink" title="远程分支有点多余，老子要删掉。"></a>远程分支有点多余，老子要删掉。</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git"># 看一眼远程有哪些分支<br>git branch -r<br><br># 删掉远程对应分支<br>git push origin --delete &lt;远程分支名&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="要从远程分支-checkout-一个新分支"><a href="#要从远程分支-checkout-一个新分支" class="headerlink" title="要从远程分支 checkout 一个新分支"></a>要从远程分支 checkout 一个新分支</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs git"># 常规写法<br>git checkout -b &lt;本地分支名&gt; &lt;远程分支名&gt;<br><br>或<br><br># 简写<br>git checkout --track &lt;远程分支名&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="老子忘记当前分支是基于哪个分支创建的了"><a href="#老子忘记当前分支是基于哪个分支创建的了" class="headerlink" title="老子忘记当前分支是基于哪个分支创建的了"></a>老子忘记当前分支是基于哪个分支创建的了</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git reflog show &lt;分支名&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h2><h3 id="老子提交信息打错了，要把提交信息改一下"><a href="#老子提交信息打错了，要把提交信息改一下" class="headerlink" title="老子提交信息打错了，要把提交信息改一下"></a>老子提交信息打错了，要把提交信息改一下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs git"># 输入命令根据提示修改提交信息<br>git commit --amend<br></code></pre></td></tr></table></figure>
+
+<h3 id="老子提交之后（还未-push），发现还有东西忘记提交了"><a href="#老子提交之后（还未-push），发现还有东西忘记提交了" class="headerlink" title="老子提交之后（还未 push），发现还有东西忘记提交了"></a>老子提交之后（还未 push），发现还有东西忘记提交了</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git"># 正常 add<br>git add &lt;忘记提交的文件路径&gt;<br><br># 把这次提交合并到最新的一次提交中<br>git commit --amend --no-edit<br></code></pre></td></tr></table></figure>
+
+<h3 id="靠，点错了。这个文件不应该提交，撤回这次提交（未-push）"><a href="#靠，点错了。这个文件不应该提交，撤回这次提交（未-push）" class="headerlink" title="靠，点错了。这个文件不应该提交，撤回这次提交（未 push）"></a>靠，点错了。这个文件不应该提交，撤回这次提交（未 push）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs git"># 本质上是让 head 指针指向上一次提交<br>git reset --soft HEAD@&#123;1&#125;<br><br>或<br><br># 让 head 指针指向上一次的 commit <br>git reset --soft &lt;commit id&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h2><h3 id="我要让当前分支恢复成最初的样子"><a href="#我要让当前分支恢复成最初的样子" class="headerlink" title="我要让当前分支恢复成最初的样子"></a>我要让当前分支恢复成最初的样子</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git"># 重置当前分支到的最近的一次提交<br>git reset HEAD --hard<br><br># 重置当前分支到的远程分支的最新一次提交<br>git reset &lt;远程分支名&gt; --hard<br></code></pre></td></tr></table></figure>
+
+<h3 id="我要把文件移出暂存区"><a href="#我要把文件移出暂存区" class="headerlink" title="我要把文件移出暂存区"></a>我要把文件移出暂存区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git">git reset head --mixed <br><br>或<br><br>git reset head<br></code></pre></td></tr></table></figure>
+<h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><h3 id="靠，merge-错分支了，我要恢复-merge-前的状态"><a href="#靠，merge-错分支了，我要恢复-merge-前的状态" class="headerlink" title="靠，merge 错分支了，我要恢复 merge 前的状态"></a>靠，merge 错分支了，我要恢复 merge 前的状态</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs git"># ORIG_HEAD 变量保存了 merge 前的 HEAD 变量<br>git reset --hard ORIG_HEAD<br></code></pre></td></tr></table></figure>
+
+<h2 id="cherry-pick"><a href="#cherry-pick" class="headerlink" title="cherry-pick"></a>cherry-pick</h2><blockquote>
+<ul>
+<li><strong>摘樱桃，把一次或多次 commit 应用到当前分支</strong></li>
+</ul>
+</blockquote>
+<h3 id="oh-shit-最新的提交解决了一个历史-bug，其他分支代码也要修改这个-bug。"><a href="#oh-shit-最新的提交解决了一个历史-bug，其他分支代码也要修改这个-bug。" class="headerlink" title="oh shit! 最新的提交解决了一个历史 bug，其他分支代码也要修改这个 bug。"></a>oh shit! 最新的提交解决了一个历史 bug，其他分支代码也要修改这个 bug。</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs git"># 应用场景：假设已修复 bug 的分支是 bug-fix，需要修改 bug 的分支是 release-1.0<br><br># 1.切换到需要修改 bug 的分支<br>git checkout release-1.0<br><br># 2.使用 cherry-pick<br>git cherry-pick &lt;bug 修复的 commit id&gt;<br><br>或<br><br>git cherry-pick bug-fix<br></code></pre></td></tr></table></figure>
+
+<h2 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h2><blockquote>
+<ul>
+<li><strong>用于撤销历史的某次更改，例如：bug 或者功能</strong></li>
+<li><strong>回滚某次发布</strong></li>
+</ul>
+</blockquote>
+<h3 id="产品加了个没卵用的功能，现在要上线，这个功能还要不要？"><a href="#产品加了个没卵用的功能，现在要上线，这个功能还要不要？" class="headerlink" title="产品加了个没卵用的功能，现在要上线，这个功能还要不要？"></a>产品加了个没卵用的功能，现在要上线，这个功能还要不要？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git"># 不上线该功能：把该功能对应的 commit id 并 revert,之后会产生一个新 revert 提交。<br>git revert &lt;commit id&gt;<br><br># 最终还是决定要上: 只需对 revert 提交进行 revert<br>git revert &lt;revert 提交的 commit id&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h2><h3 id="我要把改动文件暂存起来，不想提交这些文件"><a href="#我要把改动文件暂存起来，不想提交这些文件" class="headerlink" title="我要把改动文件暂存起来，不想提交这些文件"></a>我要把改动文件暂存起来，不想提交这些文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs git"># 给改动存储<br>git stash<br><br>或<br><br># 给改动取名并存储<br>git stash save &lt;自定义名称&gt;<br></code></pre></td></tr></table></figure>
+<h3 id="忘记了-stash-中存储了哪些改动"><a href="#忘记了-stash-中存储了哪些改动" class="headerlink" title="忘记了 stash 中存储了哪些改动"></a>忘记了 stash 中存储了哪些改动</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs git"># 列举所有的 stash 信息<br>git stash list<br></code></pre></td></tr></table></figure>
+<h3 id="我要取出改动，应用到-feature-分支"><a href="#我要取出改动，应用到-feature-分支" class="headerlink" title="我要取出改动，应用到 feature 分支"></a>我要取出改动，应用到 feature 分支</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs git"># 切换到 feature 分支，把改动取出应用到 feature 分支并自动删除 stash<br># 命令末尾加 &lt;stash id&gt; 应用指定的 stash <br>git stash pop<br><br>或<br><br># 把改动取出应用到 feature 分支,stash 不会删除<br># 命令末尾加 &lt;stash id&gt; 应用指定的 stash <br>git stash apply<br></code></pre></td></tr></table></figure>
+<h3 id="老子要手动删除-stash-信息"><a href="#老子要手动删除-stash-信息" class="headerlink" title="老子要手动删除 stash 信息"></a>老子要手动删除 stash 信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git"># 删除全部的 stash 信息<br>git stash clear<br><br># 删除指定的 stash 信息<br>git stash drop &lt;stash id&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h2><h3 id="我去，tag-怎么用啊，老板跟我说打个-tag。"><a href="#我去，tag-怎么用啊，老板跟我说打个-tag。" class="headerlink" title="我去，tag 怎么用啊，老板跟我说打个 tag。"></a>我去，tag 怎么用啊，老板跟我说打个 tag。</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs git"># 创建 tag<br>git tag &lt;标签名&gt;<br><br># 将创建的 tag 推到远程仓库<br>git push origin &lt;标签名&gt;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="丢，手抖打错了-tag-名称，怎么删了这个-tag-啊。"><a href="#丢，手抖打错了-tag-名称，怎么删了这个-tag-啊。" class="headerlink" title="丢，手抖打错了 tag 名称，怎么删了这个 tag 啊。"></a>丢，手抖打错了 tag 名称，怎么删了这个 tag 啊。</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs git"># 删除本地 tag<br>git tag -d &lt;标签名&gt;<br><br># 删除远程仓库中的 tag<br>git push --delete origin &lt;标签名&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="log"><a href="#log" class="headerlink" title="log"></a>log</h2><h3 id="嗨，忘记上次提交改了哪些文件"><a href="#嗨，忘记上次提交改了哪些文件" class="headerlink" title="嗨，忘记上次提交改了哪些文件"></a>嗨，忘记上次提交改了哪些文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs git"># 查看每次提交文件<br>git log --name-only <br><br>或<br><br># 查看每次提交的文件，以及对文件进行的操作<br>git log --name-status<br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Git/">#Git</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>操蛋的 Git</div>
+      <div>http://example.com/2022/10/16/操蛋的 Git/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年10月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/10/Spring%20%E4%B8%8E%E4%BA%8B%E5%8A%A1/" title="Spring 与事务">
+                        <span class="hidden-mobile">Spring 与事务</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
