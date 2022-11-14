@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/picture/Stream/cover.png">
 <meta property="article:published_time" content="2022-01-03T21:06:00.000Z">
-<meta property="article:modified_time" content="2022-11-14T10:41:03.379Z">
+<meta property="article:modified_time" content="2022-11-14T10:47:40.276Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Stream">
@@ -280,7 +280,7 @@
 <p>三个员工对传送带上的产品进行操作，老王负责收集把黄色产品挑出，老周负责把产品按先后排序，而老赵负责把残次品挑拣出来，拆开零件放到新的床送带中，继续加工。传送带的终点就是篮子，产品都流向篮子里面。</p>
 <p>流的操作就是如此。在没有流之前，我们要自己从一堆产品中找到残次品很难。但是我们有了流之后，我们有了流水线，有了工人，我们就可以让工人帮我们收集，让他们来处理，我们只是充当老板的角色，下达命令即可。在 Java 的流 (Stream) 中，我们只需要使用一些命令，剩下的交给程序本身去执行。这样做既减少了代码量，又能高效完成我们的需求，真是两全其美。</p>
 <p>在上面的过程中，我们把老王和老周，以及老赵操作叫做<strong>中间操作</strong>。因为他们并没有把产品收集起来，他们只是把其他不合格的产品过滤挑出，产品最终都是到篮子里面。但是你装产品不一定是用篮子，你也可以使用箱子，等其他容器。我们把使用这些<code>容器</code>装产品的操作称作<strong>终结操作</strong>。在 java 中，<strong>中间操作就是返回为 Stream 的操作，终结操作就是返回非Stream 的操作。</strong>下面会详细讲解。</p>
-<h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><p>**创建 Stream **</p>
+<h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><p><strong>创建 Stream</strong></p>
 <ul>
 <li>Collection.stream()</li>
 <li>Stream.of()</li>
