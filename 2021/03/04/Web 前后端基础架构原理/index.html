@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/cover.png">
 <meta property="article:published_time" content="2021-03-04T23:41:00.000Z">
-<meta property="article:modified_time" content="2022-11-14T13:38:46.363Z">
+<meta property="article:modified_time" content="2022-11-14T13:52:15.782Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Web">
 <meta name="twitter:card" content="summary_large_image">
@@ -285,7 +285,7 @@
 <p>区分不同应用的数据，我们就用到了<strong>端口</strong>，不同应用他所对应的端口不一样的。网线中传输的数据，每个数据包都有对应的端口信息，就像一列火车一样，每个人的目的地不一样，有的在广州下车，有的在深圳下车，目的地不一样。数据也是这样，根据端口到达不同的应用中去。</p>
 <p>我们可以经常看到网址前面有 http 或 https，他们都对应着不同的端口号。HTTPS 协议的默认端⼝是443，HTTP协议的默认端口是80。别看我们访问网站的时候没有看到端口号，其实浏览器已经在后面偷偷帮我们补上了。</p>
 <h3 id="TCP-协议"><a href="#TCP-协议" class="headerlink" title="TCP 协议"></a>TCP 协议</h3><p>当我们向远程的服务器发起请求时，TCP 协议就开辟了一条双车道的「高速公路」，不过在这条路上跑的是数据。同时数据也是一个一个的字节，所以也叫字节流，<strong>TCP是基于流的协议</strong>。由于是双车道，所以我们可以和服务器同时接受和发送数据，这叫做<strong>全双工协议，</strong>tcp就是全双工协议。半双工协议就是类似生活中的「对讲机」，只有对方说完，我们才能说话。</p>
-<p><strong>TCP 协议本质上就是规定字节流如何发送和接收</strong><br>**</p>
+<p><strong>TCP 协议本质上就是规定字节流如何发送和接收</strong></p>
 <h3 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h3><p>Http 是在 TCP 协议之上的一层协议。Http 定义了文本之外的东西如何被传输。我们把发送给服务器的字节流叫做 <strong>HTTP Request</strong>，比如我们访问豆瓣首页。我们就会向服务器发送如下字节流。</p>
 <p><strong><img src="/../picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/a46104e5-ab13-4c06-8d67-fc25533364f0.png" srcset="/img/loading.gif" lazyload alt="image.png"></strong><br>服务器收到请求之后就会返回一个 <strong>HTTP Response <strong>字节流，除了 Headers 之外，还返回了</strong> HTTP Response Body（响应体）</strong>，response body 可以是文本，也可以是及二进制数据，包括图片、声音、下载的文件等。</p>
 <p><img src="/../picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/d1b5fc66-e420-4974-a253-2d14fc46da93.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>刚才访问的豆瓣网站，就返回了一个 response body，一个 html 文件。我们得浏览器收到这个 html 文件，就会根据他的结构，标签去解析和展示他。我们看到的页面就是浏览器解析之后的样子。</p>

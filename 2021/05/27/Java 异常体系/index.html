@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/picture/Java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/cover.png">
 <meta property="article:published_time" content="2021-05-27T22:29:00.000Z">
-<meta property="article:modified_time" content="2022-11-14T13:38:46.359Z">
+<meta property="article:modified_time" content="2022-11-14T13:52:15.782Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -296,7 +296,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">openFile</span><span class="hljs-params">()</span>&#123;<br>       <span class="hljs-type">File</span> <span class="hljs-variable">file</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;&quot;</span>);<br>       <span class="hljs-keyword">try</span> (<span class="hljs-type">OutputStream</span> <span class="hljs-variable">os</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(file)) &#123;<br><br>       &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException e) &#123;<br>           e.printStackTrace();<br>       &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>           e.printStackTrace();<br>       &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
 
 <p>那么问题来了，什么类型的资源会自动关闭呢 ？</p>
-<p>答案就是**所有实现了 **<code>**AutoCloseable**</code><strong>这个接口的类</strong>，都能被自动关闭。比如上面的 <code>FileOutputStream</code>就实现了这个接口。当然智能的 IDE 在我们写 try-catch 的时候都会 给与提示，告诉你可以转成 try-catch-resources模式 </p>
+<p>答案就是<strong>所有实现了</strong> <code>AutoCloseable</code> <strong>这个接口的类</strong>，都能被自动关闭。比如上面的 <code>FileOutputStream</code>就实现了这个接口。当然智能的 IDE 在我们写 try-catch 的时候都会 给与提示，告诉你可以转成 try-catch-resources模式 </p>
 <h2 id="抛出异常"><a href="#抛出异常" class="headerlink" title="抛出异常"></a>抛出异常</h2><p>上面使用 try-catch 捕获异常，但实际生产环境中也需要抛出异常，不在当前方法处理。手动抛出异常，需要用到关键字 <code>throw</code>。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">openFile</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Exception</span>();<br> &#125;<br></code></pre></td></tr></table></figure>
 
@@ -339,7 +339,6 @@
 <p>合并之后我们的代码就会变成这样</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> &#123;<br>    &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException | EOFException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<p><a name="e75b5d4e"></a></p>
 <h2 id="异常的一些原则"><a href="#异常的一些原则" class="headerlink" title="异常的一些原则"></a>异常的一些原则</h2><h3 id="抛出原则"><a href="#抛出原则" class="headerlink" title="抛出原则"></a>抛出原则</h3><ul>
 <li><p>能⽤ if &#x2F; else处理的，不要使⽤异常</p>
 <ul>

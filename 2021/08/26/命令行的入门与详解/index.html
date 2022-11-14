@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/picture/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%AF%A6%E8%A7%A3/cover.png">
 <meta property="article:published_time" content="2021-08-26T16:57:00.000Z">
-<meta property="article:modified_time" content="2022-11-14T13:38:46.363Z">
+<meta property="article:modified_time" content="2022-11-14T13:52:15.782Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="命令行">
 <meta name="twitter:card" content="summary_large_image">
@@ -345,7 +345,7 @@
 <h2 id="工作目录（Working-directory）"><a href="#工作目录（Working-directory）" class="headerlink" title="工作目录（Working directory）"></a>工作目录（Working directory）</h2><p><strong>工作目录就是输入命令行时，所处的目录即为工作目录。绝对路径是以根目录开头的路径，相对路径是相对于当前目录的路径。</strong></p>
 <h1 id="进程的输入与输出"><a href="#进程的输入与输出" class="headerlink" title="进程的输入与输出"></a>进程的输入与输出</h1><p>标准输⼊ stdin ，进程将从标准输入中得到输入数据。例如使用 <code>rm -rf *</code> 命令，会提示是否确认删除，当我们回复y 的时候，就时一个标准输入。</p>
 <p><strong>输出的重定向</strong>，我们可以使用 “&gt;” 符号来重定向输出，例如在终端输入 <code>date +&quot;%Y-%m-%d %H:%M:%S&quot; &gt; output.txt</code> ，就是将<strong>标准输出</strong>重定向到 output.txt 文件中，若再次运行该命令，会将之前的 output.txt 文件覆盖 。使用 “&gt;&gt;” 可以将标准输出追加到 output.txt 文件中。</p>
-<p><strong>标准输出 stdout</strong> 和<strong>标准错误 stderr <strong>相当于一个进程的两个管道。标准输出对应着文件描述符1，标准错误 对应着文件描述符2。假设我们要将一个</strong>进程的标准输出重定向</strong>到 output.txt 文件中，我们可以使用 <code>命令 &gt; output.txt</code> 或者 <code> 命令 1&gt; output.txt</code> 。同理类推，将**进程的标准错误重定向到 **erroe.txt 文件，可以使用    <code>命令 2&gt; error.txt</code> 。要让标准输出和标准错误都重定向到 output.txt 文件，使用 <code> 命令 &gt; output.txt &gt; 2&gt;&amp;1</code> 。该命令代表的意思是，先将2（标准错误），重定向到1（标准输出），再把结果重定向到 outout.txt 文件。</p>
+<p><strong>标准输出 stdout</strong> 和<strong>标准错误 stderr <strong>相当于一个进程的两个管道。标准输出对应着文件描述符1，标准错误 对应着文件描述符2。假设我们要将一个</strong>进程的标准输出重定向</strong>到 output.txt 文件中，我们可以使用 <code>命令 &gt; output.txt</code> 或者 <code> 命令 1&gt; output.txt</code> 。同理类推，将<strong>进程的标准错误重定向到</strong> error.txt 文件，可以使用    <code>命令 2&gt; error.txt</code> 。要让标准输出和标准错误都重定向到 output.txt 文件，使用 <code> 命令 &gt; output.txt &gt; 2&gt;&amp;1</code> 。该命令代表的意思是，先将2（标准错误），重定向到1（标准输出），再把结果重定向到 outout.txt 文件。</p>
 <p><strong>&#x2F;dev&#x2F;null</strong> 相当于一个垃圾桶的概念，可以把标准输出或者标准输入重定向到该文件。 <code> 命令 &gt; /dev/null</code> 即把标准输出丢到垃圾桶里，相当于黑洞一般，把标准输出给「吞」了。</p>
 <h1 id="Linux-文件权限"><a href="#Linux-文件权限" class="headerlink" title="Linux 文件权限"></a>Linux 文件权限</h1><p>任何一个 UNIX 文件都有9位，分成3组，分别是自己（文件创建者），同用户组的人，不同用户组的人。每一组都有 rwx，r 代表读（read），w 代表写（write），x 代表可执行。</p>
 <p>假设有一个需求，我们要当前文件只能被当前用户读写执行。就需要把自己组的 r 设置为1，w 设置为1，x 设置为1，其他组的 rwx 都设置为0，设置完成后对应的二进制分别是 <code>111 000 000</code> ，对应的十进制就是 <code>700</code> ，因此使用 <code>chmod 700 当前文件</code> 即可赋予当前用户读写执行权限。</p>
