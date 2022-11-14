@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="首先我们要有一个概念，互联网基本上就只干一件事「处理字符串」。我们看的纷繁复杂的网页，都是通过字节传输的，然后经过一个指定的编码转化成人类能看懂的字符串。因此能处理好字符串是 Web 服务器的基本要求，像 Java，PHP，Python，Ruby等。 String 的不可变性背过一些八股文面试题的人都知道 String 是不可变的，那么问题来了，「不可变的定义是什么？」，「String 是如何保证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="String">
+<meta property="og:url" content="http://example.com/2021/08/11/String/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="首先我们要有一个概念，互联网基本上就只干一件事「处理字符串」。我们看的纷繁复杂的网页，都是通过字节传输的，然后经过一个指定的编码转化成人类能看懂的字符串。因此能处理好字符串是 Web 服务器的基本要求，像 Java，PHP，Python，Ruby等。 String 的不可变性背过一些八股文面试题的人都知道 String 是不可变的，那么问题来了，「不可变的定义是什么？」，「String 是如何保证">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/String/cover.png">
+<meta property="article:published_time" content="2021-08-11T13:31:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T10:41:03.379Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="String">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/String/cover.png">
+  
+  
+  
+  <title>String - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">String</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-08-11 13:31" pubdate>
+          2021年8月11日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">String</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>首先我们要有一个概念，互联网基本上就只干一件事「处理字符串」。我们看的纷繁复杂的网页，都是通过字节传输的，然后经过一个指定的编码转化成人类能看懂的字符串。因此能处理好字符串是 Web 服务器的基本要求，像 Java，PHP，Python，Ruby等。</p>
+<h2 id="String-的不可变性"><a href="#String-的不可变性" class="headerlink" title="String 的不可变性"></a>String 的不可变性</h2><p>背过一些八股文面试题的人都知道 String 是不可变的，那么问题来了，「不可变的定义是什么？」，「String 是如何保证不可变的呢？」</p>
+<p><strong>不可变性</strong>，当创建一个<code>String s = &quot;abcd&quot;</code>对象的时候，JVM 的堆内存就生成了一个 String 对象，并且它的值是 abcd，而 s 变量只是指向这个对象。我们说的不可变性指的就是 JVM 生成的对象值不可变，比如刚才的 abcd，创建出来之后它就一直都是 abcd，无法被改变。</p>
+<p>经常使用字符串的人开始疑惑了，那我 <code>String s = &quot;abcdel&quot;</code>不是也可以吗？String 的值不是改变了吗？</p>
+<p>的确，我们是可以给 s 这个变量重新赋值。但是我们给他赋值实际上是 JVM 新创建了一个值为 abcdel 的 String 变量，然后变量 s 从指向值为 abcd 的对象，改为指向值为 abcdel 的对象。原来值为 123 的对象还是存在 JVM 中，并且值并没有改变，只是暂时没有变量指向这个对象罢了。上面的操作，可以用如图所示。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="/picture/String/ea0bb048-f46d-4e83-abb9-de31bd9a694d.png" srcset="/img/loading.gif" lazyload alt="image.png"></h3><p>了解上面的知识后，回到新的问题上来，<strong>String 是如何保证不可变性呢？</strong></p>
+<p>打开 String 的源代码，我们可以发现，String 类以及它的字符数组变量都是被 final 关键词修饰的。这就意味着 String 无法被继承，并且 char[] value 的地址指向无法修改，而且 String 所有的公开 API 都没有修改 char[] value 的方法，这就保证了 String 的不可变性。</p>
+<p><img src="/picture/String/632458ad-4ea5-42bf-b25a-9c0262d646c4.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p><strong>线程安全</strong>，不可变的对象天生就是线程安全的，可以随心所欲的在线程之间传递。</p>
+<p><strong>存储安全，</strong>为什么说是存储安全呢？因为遵守了 hashCode 的约定。</p>
+<p>正是因为 Stirng 的不可变性，才能实现存储安全。我们可以想象一下有一个 <code>Map&lt;String,String&gt; map = new HashMap&lt;&gt;();</code>，假如 String 是可变的话，那么就违反了 hashCode 的约定，想了解 hashCode 的相关约定<a target="_blank" rel="noopener" href="https://www.yuque.com/alipayygdprovgrb/uc535m/mdqx4t">访问这里</a> 。</p>
+<p>如图所示，有三个字符串 “a”，”c”，通过计算分别得到了对应的 hashCode。如果 String 是可变的行不行呢？我们可以通过反证法来证明。现在假如 String 是可变的，那么当字符串从 a 变成了 c（即 <code>String a = &quot;a&quot; 到 a = &quot;c&quot;</code> ），他的 hashCode 要不要改变呢？分两种情况。</p>
+<p><img src="/picture/String/1304755d-ad8a-4838-8262-6e408d0c7787.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>如果<strong>不改变 hashCode</strong>，那就违反了 hashCode  的第二条约定「两个对象 equals 方法为 true，则生成的 hashCode 相等」。显然 <code>a.equals(c)</code> 为true，按照约定 a 和 c 的 hashCode 应该相等。但我们的前提是 a 的 hashCode 不改变，因此 a 和 c 的 hashCode 并不相等，前后矛盾。</p>
+<p>如果<strong>改变 hashCode</strong> ，那么就违反了 hashCode 的第一条约定「两个对象相等，hashCode 也相等」。例如我们通过如下代码让 a 和 c 为同一个对象，此时的 a &#x3D;&#x3D; c。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;123&quot;</span>;<br><span class="hljs-type">String</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> a;<br></code></pre></td></tr></table></figure>
+
+<p>如果此时 a 改变了值，hashCode 也会跟着变化。但是 a &#x3D;&#x3D; c 依然为 true，因为他们所引用的内存地址都是相同的。hashCode 规定对象相等返回相同的 hashCode ，而我们的前提是值改变，hashCode 改变，也是前后矛盾。</p>
+<p>通过反证法，证明了 String 必须是不可变的，才能达到存储安全的目的。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>每当想修改字符串的时候，都必须创建新的对象来维持它的不可变性。比如下面这个循环，循环 10 次，就创建了 10 个对象，当循环次数上升到一定程度，就会给内存管理带来巨大的压力。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">text</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;0&quot;</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>    text = text + i;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>当我们想创建值相同的两个 String 对象，有以下三种方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 方法一</span><br><span class="hljs-type">String</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;123&quot;</span>;<br><span class="hljs-type">String</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;123&quot;</span>;<br><br><span class="hljs-comment">// 方法二</span><br><span class="hljs-type">String</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">&quot;123&quot;</span>);<br><span class="hljs-type">String</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(<span class="hljs-string">&quot;123&quot;</span>);<br><br><span class="hljs-comment">// 方法三</span><br><span class="hljs-type">String</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;123&quot;</span>;<br><span class="hljs-type">String</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> a;<br></code></pre></td></tr></table></figure>
+
+<p>我们分别用 &#x3D;&#x3D; 和 equals 方法来判断 a，b是否相等，三种方式输出的结果分别会是什么呢？</p>
+<p>方法一，a，b 的值都是 “123”，因此很简单，<code>a.equals(b)</code>肯定为 true，那么 <code>a == b</code> 呢？答案是 true。因为有「字符串常量池」的存在，当 a 创建出来，字符串常量池创建 “123” 这个字符串常量，当 b 赋值的时候，发现字符串常量池中已经有相同的对象，因此直接让 b 指向这个对象，此时 a 和 b 都指向同一个对象。如图</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="/picture/String/990942c9-60db-42ef-99c4-370f76819ce7.png" srcset="/img/loading.gif" lazyload alt="image.png"></h3><p>方法二，a 和 b 都是通过 new 方法，各自声明了一个值为 “123” 的对象，因此这是两个不同的对象。所以，a &#x3D;&#x3D; b 为 false，a.equals(b) 为 true。此时的 a 和 b 是指向不同的对象的，虽然他们的值都是 123。</p>
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="/picture/String/d40d7eb9-b7c9-4f13-8720-de56aa0a2859.png" srcset="/img/loading.gif" lazyload alt="image.png"></h3><p>方法三，a 赋值 b，把 a 的地址指向给 b一份。因此，a，b 两个变量都是引用同一个对象，因此 a&#x3D;&#x3D;b 为 true，a.equals(b) 也为 true。图中就是 a 指向的内存地址是 0x45，然后通过 <code>String b = a</code> b 得到 a 传来的地址，所以也指向 0x45 这个内存。</p>
+<p><img src="/picture/String/2bb22221-4e5c-47cd-a667-e5f2eeec841e.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id="StringBuilder-与-StringBuffer"><a href="#StringBuilder-与-StringBuffer" class="headerlink" title="StringBuilder 与 StringBuffer"></a>StringBuilder 与 StringBuffer</h3><p>虽然 String 是不可变的，但是在实际生产中我们还是需要可变字符串，这要怎么解决呢？就拿上面那段循环代码来说，每次都要创建一个新的变量，循环次数多了必然占用过多内存。**StringBuilder **就是个可变字符串，因此我们可以使用 StringBuilder 来改进这段代码，这样就避免了创建多个对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">StringBuilder</span> <span class="hljs-variable">text</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(<span class="hljs-string">&quot;0&quot;</span>);<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>    text = text.append(i);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>StringBuffer 也是可变字符串，与 StringBuilder 的区别是：StringBuilder 线程不安全，但是速度快；StringBuffer 线程安全，速度相对较慢。因此，要根据实际生产环境，选择合适的类，大多数情况优先使用 StringBuilder。</p>
+<p>String，StringBuffer 和 StringBuilder 更多 API，请参考 Java 官方文档。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+        <a href="/tags/String/">#String</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>String</div>
+      <div>http://example.com/2021/08/11/String/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年8月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/26/Maven%20%E4%BE%9D%E8%B5%96%E4%B8%8E%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6/" title="Maven 依赖与插件解析机制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Maven 依赖与插件解析机制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/04/Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/" title="Web 前后端基础架构原理">
+                        <span class="hidden-mobile">Web 前后端基础架构原理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

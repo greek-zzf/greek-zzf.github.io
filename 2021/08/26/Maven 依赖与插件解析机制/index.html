@@ -1,0 +1,660 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="劝退提醒：不了解 maven 坐标机制，没有使用过 maven 插件，不了解 maven 插件命令的，可以关闭文章了。 我们经常在项目中引入包，使用 &lt;dependency&gt; 标签，然后填写包的坐标信息， Maven 就可以帮我们引入该 jar 包。当本地存在该 jar 包时，就从本地引入该 jar 包，否则就从远程仓库引入。 这背后的解析机制是什么呢？ 依赖解析机制依赖解析的背后机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven 依赖与插件解析机制">
+<meta property="og:url" content="http://example.com/2021/08/26/Maven%20%E4%BE%9D%E8%B5%96%E4%B8%8E%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="劝退提醒：不了解 maven 坐标机制，没有使用过 maven 插件，不了解 maven 插件命令的，可以关闭文章了。 我们经常在项目中引入包，使用 &lt;dependency&gt; 标签，然后填写包的坐标信息， Maven 就可以帮我们引入该 jar 包。当本地存在该 jar 包时，就从本地引入该 jar 包，否则就从远程仓库引入。 这背后的解析机制是什么呢？ 依赖解析机制依赖解析的背后机制">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/Maven%E4%BE%9D%E8%B5%96%E4%B8%8E%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6/cover.png">
+<meta property="article:published_time" content="2021-08-26T16:45:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T10:41:03.379Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Maven">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/Maven%E4%BE%9D%E8%B5%96%E4%B8%8E%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6/cover.png">
+  
+  
+  
+  <title>Maven 依赖与插件解析机制 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Maven 依赖与插件解析机制</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-08-26 16:45" pubdate>
+          2021年8月26日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Maven 依赖与插件解析机制</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>劝退提醒</strong>：不了解 maven 坐标机制，没有使用过 maven 插件，不了解 maven 插件命令的，可以关闭文章了。</p>
+<p>我们经常在项目中引入包，使用 <code>&lt;dependency&gt;</code> 标签，然后填写包的坐标信息， Maven 就可以帮我们引入该 jar 包。当本地存在该 jar 包时，就从本地引入该 jar 包，否则就从远程仓库引入。</p>
+<p>这背后的解析机制是什么呢？</p>
+<h2 id="依赖解析机制"><a href="#依赖解析机制" class="headerlink" title="依赖解析机制"></a>依赖解析机制</h2><p>依赖解析的背后机制可以概括如下：</p>
+<ol>
+<li><p>依赖范围是 <code>system</code>，maven 就会从本地加载该 jar 包，完成构建。</p>
+</li>
+<li><p>正常解析依赖坐标，先去本地仓库找，找到就完成构建。</p>
+</li>
+<li><p>本地找不到，并且显示的指定了版本信息，就去远程仓库中遍历，找到并下载解析。</p>
+</li>
+<li><p>如果依赖的版本信息并没有指定，而是使用 <code>RELEASE</code>或者 <code>LATEST</code>，他会找到远程仓库的<strong>元数据</strong>和本地的元数据进行合并，然后计算出真正的版本号。元数据指的就是仓库中 <code>groupId/artifactId/maven-metadata.xml</code>文件，例如我们打开 guava 包的元数据。元数据位置就在 com.google.guava&#x2F;guava 包下，打开可以看到如下信息：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">metadata</span> <span class="hljs-attr">modelVersion</span>=<span class="hljs-string">&quot;1.1.0&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.google.guava<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>guava<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">versioning</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">latest</span>&gt;</span>30.1.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">latest</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">release</span>&gt;</span>30.1.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">release</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">versions</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r03<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r05<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r06<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r07<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r08<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r09<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	...<br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1-android<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1.1-android<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">versions</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">lastUpdated</span>&gt;</span>20210319161151<span class="hljs-tag">&lt;/<span class="hljs-name">lastUpdated</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">versioning</span>&gt;</span><br>&lt;/metadata<br></code></pre></td></tr></table></figure>
+<p> 上面的信息展示了 latest，release 对应的版本号，以及 guava 包的历代版本号，以及最近一次更新时间。例如我们引入 guava，并使用 latest 版本，maven 就会合并元数据，然后计算出 latest 对应的版本号，然后从本地仓库找到改版本的 guava，没有则去远程仓库下载。</p>
+</li>
+<li><p>依赖的版本是 SNAPSHOT，则同样获取远程元数据与本地合并，计算版本信息，获取对应版本的包。</p>
+</li>
+<li><p>如果依赖版本为时间戳的快照版本，就会先转换成非时间戳的快照版本，然后去解析下载。</p>
+</li>
+<li><p>maven 3 中如果不指定 version，则默认解析使用 RELEASE 版本。</p>
+</li>
+</ol>
+<h2 id="插件解析机制"><a href="#插件解析机制" class="headerlink" title="插件解析机制"></a>插件解析机制</h2><p>我们常用的 maven 插件命令都是 <code>mvn dependency:tree</code> <code>mvn flyway:migrate</code>，诸如此类的，他们的格式都是 <code>mvn 插件前缀:目标</code>。</p>
+<p>为了方便用户使用和配置插件，maven 不需要用户提供完整的坐标信息，就能解析得到正确的插件。那么问题来了，maven 是怎么确定插件的坐标和版本的呢？例如 <code>mvn dependency:tree</code> 他执行了什么插件，插件坐标版本信息是什么？</p>
+<p>插件的解析机制和依赖解析机制基本一致，不同的是远程仓库不一样。配置插件的远程仓库地址需要使用 <code>&lt;pluginRepository&gt;</code> 标签配置，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">pluginRepositories</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">pluginRepository</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">pluginRepository</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">pluginRepositories</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>除了 <code>&lt;pluginRepositories&gt;</code>和 <code>&lt;pluginRepository&gt;</code>不同，其他的与依赖的仓库配置信息一致。</p>
+<h3 id="默认的-groupId"><a href="#默认的-groupId" class="headerlink" title="默认的 groupId"></a>默认的 groupId</h3><p>在 pom 文件在红配置插件信息的时候，如果插件是 maven 官方的插件（groupId 为 org.apache.maven.plugins），就可以省略 groupId 的配置。如下是官方的 clean 插件配置，没有指定 groupId，但是解析坐标的时候会带上。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-clean-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>在插件配置中，不推荐省略 groupId 的写法，但这与我们使用 maven 插件命令有关。</p>
+<h3 id="省略版本信息"><a href="#省略版本信息" class="headerlink" title="省略版本信息"></a>省略版本信息</h3><p>maven 的核心插件都在超级 pom 中显示的声明了具体的版本信息，因此当这些插件未指定版本信息的时候，就会使用超级 pom 中指定的插件版本。</p>
+<p>如果是非核心插件，且未指定版本信息。在 maven2 中默认解析至 latest，maven3 默认解析至 release，具体的解析过程与依赖解析一致，都是根据合并计算元数据，得到具体的版本信息。</p>
+<h3 id="插件前缀解析"><a href="#插件前缀解析" class="headerlink" title="插件前缀解析"></a>插件前缀解析</h3><p>我们使用命令 <code>mvn dependency:tree</code> 插件前缀是 dependency，我们是如何根据这个前缀信息得到该插件的完整坐标呢？</p>
+<p>这就需要结合上面的知识了，首先存在一个保存 groupId 和 artifactId 对应关系的文件 maven-metadata.xml，该文件存在 groupId &#x2F; maven-metadata.xml。由于上面的 dependency 是官方插件，因此 groupId 为 <code>org.apache.maven.plugins</code> ，我们去远程仓库找到该文件，如下图。</p>
+<p><img src="/../picture/Maven%E4%BE%9D%E8%B5%96%E4%B8%8E%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6/91808d7d-667b-4874-bf53-33765521e002.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>我们可以找到插件前缀 dependency 对应的 articfactId 是 <code>maven-dependency-plugin</code>，因此插件的完整坐标可以确定了。</p>
+<p><strong>获取 groupId</strong></p>
+<p>这里还有个问题，因为我们是提前知道 dependency 是官方的插件，可以推出他的 groupId ，但是 maven 是怎么知道它的 groupId 呢？</p>
+<p>maven 的主要插件都在 <code>[https://repo1.maven.org/maven2/org/apache/maven/plugins](https://repo1.maven.org/maven2/org/apache/maven/plugins)</code>和<code>[https://repository.codehaus.org/org/code-haus/mojo](https://repository.codehaus.org/org/code-haus/mojo)</code>下，他们对应的 groupId 分别是 <code>org.apache.maven.plugins</code> 和 <code>org.codehaus.mojo</code>。maven 解析插件的时候就会默认使用这两个 groupId 去匹配，检查 org&#x2F;apache&#x2F;maven&#x2F;plugins&#x2F;maven-metadata.xml，org&#x2F;codehaus.momjo&#x2F;maven-metadata.xml 文件，判断是否有匹配的插件前缀，如果有则获取对应的坐标信息，完成解析。</p>
+<p>倘若想使用的插件是第三方的，就可以通过配置 setting.xml 文件，让 maven 也检查其他 groupId 上的仓库 metadata.xml 文件。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">setting</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">pluginGroups</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">pluginGroup</span>&gt;</span>第三方仓库 groupId<span class="hljs-tag">&lt;/<span class="hljs-name">pluginGroup</span>&gt;</span>  <br>  <span class="hljs-tag">&lt;/<span class="hljs-name">pluginGroups</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">setting</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<p>解析 dependency:tree 命令</p>
+<ol>
+<li><p>先使用默认的和配置的第三方的  groupId 去找到对应的 <code>maven-metadata.xml</code>文件，然后检查是否包含 dependency 前缀信息。</p>
+</li>
+<li><p>包含前缀信息，获取对应 articfactId，不包含则使用下一个 groupId 的 maven-metadata.xml 文件。如果所有都获取不到，则报错。</p>
+</li>
+<li><p>获取到 articfactId 之后根据上面 <a href="#Ueudm">获取版本信息</a>，即可得到完整的坐标，完成解析执行。</p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Maven/">#Maven</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Maven 依赖与插件解析机制</div>
+      <div>http://example.com/2021/08/26/Maven 依赖与插件解析机制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年8月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/12/30/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" title="布隆过滤器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">布隆过滤器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/11/String/" title="String">
+                        <span class="hidden-mobile">String</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="当我们打开浏览器去访问一个网站时，发生了什么？在了解整个过程之前，我们应该先了解一些基本概念 计算机网络首先我们需要明确一点的是，当我们访问一个网站的时候，实际上是在与一个主机进行交互。就像去商店购物一样，只要你不差钱，商店有的，它都能提供给你。 主机（Host）主机简单来说就是一台电脑，只不过它的作用更多，可以响应浏览器发送的请求。我们平时所用的电脑也可以充当一台服务器，只不过需要一些专业的操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web 前后端基础架构原理">
+<meta property="og:url" content="http://example.com/2021/03/04/Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="当我们打开浏览器去访问一个网站时，发生了什么？在了解整个过程之前，我们应该先了解一些基本概念 计算机网络首先我们需要明确一点的是，当我们访问一个网站的时候，实际上是在与一个主机进行交互。就像去商店购物一样，只要你不差钱，商店有的，它都能提供给你。 主机（Host）主机简单来说就是一台电脑，只不过它的作用更多，可以响应浏览器发送的请求。我们平时所用的电脑也可以充当一台服务器，只不过需要一些专业的操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/cover.png">
+<meta property="article:published_time" content="2021-03-04T23:41:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T10:41:03.379Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/cover.png">
+  
+  
+  
+  <title>Web 前后端基础架构原理 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Web 前后端基础架构原理</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-03-04 23:41" pubdate>
+          2021年3月4日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Web 前后端基础架构原理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>当我们打开浏览器去访问一个网站时，发生了什么？在了解整个过程之前，我们应该先了解一些基本概念</p>
+<h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p>首先我们需要明确一点的是，当我们访问一个网站的时候，实际上是在与一个主机进行交互。就像去商店购物一样，只要你不差钱，商店有的，它都能提供给你。</p>
+<h3 id="主机（Host）"><a href="#主机（Host）" class="headerlink" title="主机（Host）"></a>主机（Host）</h3><p>主机简单来说就是一台电脑，只不过它的作用更多，可以响应浏览器发送的请求。我们平时所用的电脑也可以充当一台服务器，只不过需要一些专业的操作，才能把它变成主机。</p>
+<p>那么问题来了，世界上有很多台主机，我们在浏览器输入 <a target="_blank" rel="noopener" href="http://www.taobao.com/">www.taobao.com</a> 的时候，它是怎么帮我们找到淘宝的主机的？</p>
+<h3 id="IP-与域名"><a href="#IP-与域名" class="headerlink" title="IP 与域名"></a>IP 与域名</h3><p>每个 IP 对应一个主机，因此只要我们知道 IP 地址就可以正确地找到对应的主机了。说到这里可能还有个疑问，我们明明输入的是一个网址，也没有看见 ip 地址啊，他怎么知道我访问的是那一台主机？这个就要说到 DNS 的功劳了。首先用 ip 去找对应的主机是没问题的，我们输入的网址本质上就对应一个 ip，只是我们没有察觉。DNS 就是把输入的网址，找到对应的 ip ，然后返回给我们。这样我们就本能的以为，只要输入网址就能找到对应的网站了，这是 DNS 给我们的错觉。</p>
+<p>DNS 是个网络上的服务，他包含了域名和 ip 地址的映射关系。windows 本机上有个 hosts 文件，可以自己添加和修改网址和 ip 的对应关系，假如我们把 <a target="_blank" rel="noopener" href="http://www.taobao.com/">www.taobao.com</a> 对应的 ip 改成 127.0.0.1，这样在浏览器再次输入<a target="_blank" rel="noopener" href="http://www.taobao.com/">www.taobao.com</a> 就找不到原本的淘宝网站了，而是映射到本机。</p>
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h3><p>现在请假设一个场景：你有一台电脑，电脑连了一根网线，同时电脑上开了好几个程序，像 QQ、淘宝、微信。你有没想过，一根网线传的数据，他怎么知道哪个是 QQ 要的数据，哪个是淘宝返回的数据呢？</p>
+<p>区分不同应用的数据，我们就用到了<strong>端口</strong>，不同应用他所对应的端口不一样的。网线中传输的数据，每个数据包都有对应的端口信息，就像一列火车一样，每个人的目的地不一样，有的在广州下车，有的在深圳下车，目的地不一样。数据也是这样，根据端口到达不同的应用中去。</p>
+<p>我们可以经常看到网址前面有 http 或 https，他们都对应着不同的端口号。HTTPS 协议的默认端⼝是443，HTTP协议的默认端口是80。别看我们访问网站的时候没有看到端口号，其实浏览器已经在后面偷偷帮我们补上了。</p>
+<h3 id="TCP-协议"><a href="#TCP-协议" class="headerlink" title="TCP 协议"></a>TCP 协议</h3><p>当我们向远程的服务器发起请求时，TCP 协议就开辟了一条双车道的「高速公路」，不过在这条路上跑的是数据。同时数据也是一个一个的字节，所以也叫字节流，<strong>TCP是基于流的协议</strong>。由于是双车道，所以我们可以和服务器同时接受和发送数据，这叫做<strong>全双工协议，</strong>tcp就是全双工协议。半双工协议就是类似生活中的「对讲机」，只有对方说完，我们才能说话。</p>
+<p><strong>TCP 协议本质上就是规定字节流如何发送和接收</strong><br>**</p>
+<h3 id="HTTP-协议"><a href="#HTTP-协议" class="headerlink" title="HTTP 协议"></a>HTTP 协议</h3><p>Http 是在 TCP 协议之上的一层协议。Http 定义了文本之外的东西如何被传输。我们把发送给服务器的字节流叫做 <strong>HTTP Request</strong>，比如我们访问豆瓣首页。我们就会向服务器发送如下字节流。</p>
+<p><strong><img src="/../picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/a46104e5-ab13-4c06-8d67-fc25533364f0.png" srcset="/img/loading.gif" lazyload alt="image.png"></strong><br>服务器收到请求之后就会返回一个 <strong>HTTP Response <strong>字节流，除了 Headers 之外，还返回了</strong> HTTP Response Body（响应体）</strong>，response body 可以是文本，也可以是及二进制数据，包括图片、声音、下载的文件等。</p>
+<p><img src="/../picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/d1b5fc66-e420-4974-a253-2d14fc46da93.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>刚才访问的豆瓣网站，就返回了一个 response body，一个 html 文件。我们得浏览器收到这个 html 文件，就会根据他的结构，标签去解析和展示他。我们看到的页面就是浏览器解析之后的样子。</p>
+<p><img src="/../picture/Web%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/b594a1c8-ea35-46ee-9093-5ff9fe6ae319.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Web/">#Web</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Web 前后端基础架构原理</div>
+      <div>http://example.com/2021/03/04/Web 前后端基础架构原理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年3月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/11/String/" title="String">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">String</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/03/Maven%20%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/" title="Maven 包冲突解决过程">
+                        <span class="hidden-mobile">Maven 包冲突解决过程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
