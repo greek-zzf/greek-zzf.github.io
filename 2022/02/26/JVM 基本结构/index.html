@@ -1,0 +1,657 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="谈起 JVM 第一印象就是「八股」，毕竟正经人谁学 JVM 啊。当我深入学习，了解了相关原理后，真令人大呼过瘾。 了解 JVM 并不会让你更快的 CRUD，对大部分工作没有实质性的帮助，但这是成为高级程序员的第一步。 JVM 初识JVM 全称是 Java virtual machine 即 Java 虚拟机。JVM 是抽象（虚拟）计算机，它定义了一系列规范，因此他有很多实现，如：HotSpot，E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2022/02/26/JVM%20%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="谈起 JVM 第一印象就是「八股」，毕竟正经人谁学 JVM 啊。当我深入学习，了解了相关原理后，真令人大呼过瘾。 了解 JVM 并不会让你更快的 CRUD，对大部分工作没有实质性的帮助，但这是成为高级程序员的第一步。 JVM 初识JVM 全称是 Java virtual machine 即 Java 虚拟机。JVM 是抽象（虚拟）计算机，它定义了一系列规范，因此他有很多实现，如：HotSpot，E">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/JVM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/cover.png">
+<meta property="article:published_time" content="2022-02-26T18:26:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T02:19:10.750Z">
+<meta property="article:author" content="Greek">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/JVM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/cover.png">
+  
+  
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-02-26 18:26" pubdate>
+          2022年2月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>谈起 JVM 第一印象就是「八股」，毕竟正经人谁学 JVM 啊。当我深入学习，了解了相关原理后，真令人大呼过瘾。</p>
+<p>了解 JVM 并不会让你更快的 CRUD，对大部分工作没有实质性的帮助，但这是成为高级程序员的第一步。</p>
+<h2 id="JVM-初识"><a href="#JVM-初识" class="headerlink" title="JVM 初识"></a>JVM 初识</h2><p>JVM 全称是 <strong>Java virtual machine</strong> 即 Java 虚拟机。JVM 是抽象（虚拟）计算机，它定义了一系列规范，因此他有很多实现，如：HotSpot，Eclipse OpenJ9 等等，最常使用的应该就是 Oracle 的 HotSpot。</p>
+<p>JVM 存在的意义就是抹平所有平台和操作系统的鸿沟。它就像是一个在不同平台提供的翻译官，当用英语和它对话时，他翻译成自己「国家」的语言并执行。这就是为什么在 Windows 下编写好的代码能够在 Linux 等其他系统运行的原因。</p>
+<p>代码编译执行过程如图<br><img src="/../picture/JVM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/4ff19c89-d87f-4273-bfe4-3c47e3a8f1ad.png" srcset="/img/loading.gif" lazyload alt="jvm_1.png"><br>程序员使用像 Java，Kotlin，Scala ，Groovy 等高级语言进行编码，编译成 JVM 能识别的语言。JVM 识别并进行「二次编译操作」，将它翻译成对应的平台语言。</p>
+<p>日常编码所做的仅仅只是用高级语言编写一份「说明书」，说明书如何编译成中间语言，这就是高级语言编译器做的事了，当然也可以自己去实现一个编译器，嗯。。至少我目前没有这个能力。</p>
+<p><strong>JLS</strong></p>
+<p>Java 语言规范 Java Language Specification， 定义了 Java 编程的语法。比如 Java 中的关键字信息 class、public 等等，都是在 JLS 规范下，完成 Java 代码的开发。</p>
+<p><strong>JVMS</strong></p>
+<p>Java 虚拟机规范 Java Virtual Machine Specifiction，定义了字节码如何在 JVM 中执行，仅此而已。</p>
+<h2 id="JVM-堆-Heap"><a href="#JVM-堆-Heap" class="headerlink" title="JVM 堆 (Heap)"></a>JVM 堆 (Heap)</h2><p>堆是 JVM 中非常重要的区域，所有的「对象」都在堆上分配，它是个无情的对象生产机器，只负责生产，不负责销毁。</p>
+<p>堆为我们创建了对象，但是在代码中操作与访问对象实际上都是在操作对象的地址或者引用。</p>
+<p>来看个非常简单的代码，以此来演示堆中发生了什么</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>obj = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br></code></pre></td></tr></table></figure>
+
+<p><img src="/../picture/JVM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/1540f816-9a4c-4b1f-af66-0a4c6b917b3c.png" srcset="/img/loading.gif" lazyload alt="jvm_heap.png"><br>首先堆内存中创建了一个对象（假设对象地址为 100），然后将该对象的地址赋值给 obj 变量，可以想象有一条线将 obj 和 对象 100 连接起来。</p>
+<p>接着，堆内存中又创建了一个变量 101，然后将该对象地址赋值给 obj，此时 obj 和对象 101 连接起来了。这就是堆所做的一切。</p>
+<p>很显然，上面的例子对象 100 还是存在堆中，他并没有消失，他还在等有缘人「联系」它。</p>
+<p>这样就会存在一个问题，「无人问津」的对象越来越多怎么办？这就涉及到 GC 了，GC 会根据相应的算法来判断对象是否需要回收销毁，因此暂时不需要操心，后续提供 GC 的讲解。</p>
+<p>当然堆中产生的对象太多，大量占用堆内存，导致内存溢出，常见表现为 OOM (Out Of Memory) 异常。当代码出现该异常时，就应该关心，代码是否产生了大量不必要的对象，谨慎的检查代码。</p>
+<h2 id="JVM-栈（Stack）"><a href="#JVM-栈（Stack）" class="headerlink" title="JVM 栈（Stack）"></a>JVM 栈（Stack）</h2><p>当我们用 IDEA Debug 如下代码，可以看到在 IDEA 界面底部，多了一些信息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>    a();<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">a</span><span class="hljs-params">()</span> &#123;<br>    System.out.println(<span class="hljs-string">&quot;I am a&quot;</span>);<br>    b();<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">b</span><span class="hljs-params">()</span> &#123;<br>    System.out.println(<span class="hljs-string">&quot;I am b&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在我的调试器中表现形式如下：</p>
+<p><img src="/../picture/JVM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/9c51eaa9-3ce2-4d47-9a40-b38be9fba7aa.png" srcset="/img/loading.gif" lazyload alt="method_stack.PNG"></p>
+<p>从 main 方法到 b 方法，中间一系列调用都称作<strong>「栈」</strong>或<strong>「方法栈」</strong>，其中每一次方法调用称作<strong>「栈帧」</strong>，如图中的 main，a，b。</p>
+<p>不知你是否思考过，为什么代码的调用形式会是这样？无论你是否好奇过，现在我来分析下代码执行的过程。</p>
+<p>我们都知道，Java  程序的入口都是 main 方法开始的，因此当代码被执行时，会先调用 <strong>main</strong> 方法。不过，在调用 main 方法之前，JVM 创建一个方法栈，用来保存「当前线程」方法调用过程（因此方法栈是线程私有的）。于是方法栈中会放入第一个栈帧 main，由于栈结构的特性，main 自然而然的就会在栈底。</p>
+<p>接着执行 main 方法，执行到最后需要调用 <strong>a</strong> 方法，因此将栈帧 a 放入方法栈中。接着 a 中又调用 b 方法，以此类推。现在，方法栈中已经有 3 个栈帧了，方法调用已经结束了。于是从栈顶开始，将方法的执行结果依次返回，b 方法中无返回值，因此执行完打印语句，b 栈帧就销毁了。以此类推到 a 方法，最后到 main，这就是上述代码玩完整的执行过程，流程如图：</p>
+<p><img src="/../picture/JVM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/41370100-58dc-4f78-bdde-b88dd7483c77.png" srcset="/img/loading.gif" lazyload alt="method_stack_invoke.png"></p>
+<p>了解了方法调用的基本流程，这里有几个疑问：</p>
+<p><strong>Q：当方法栈满了会发生什么？</strong></p>
+<p>A：当栈深度过⼤时抛出 StackOverflowError，著名的程序员交流网站就是以此命名的 <a target="_blank" rel="noopener" href="https://stackoverflow.com/">stackoverflow</a></p>
+<p><strong>Q：栈帧销毁什么时候被销毁？</strong></p>
+<p><strong>A</strong>：这些情况栈帧会被销毁：当方法执行抛出异常或者错误；方法正常返回结果或者无返回。</p>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>来看一段简单的代码， a 方法定义了一个变量，并且调用了 b 方法使得该变量自增，然后打印该变量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">a</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>    b(i);<br>    System.out.println(i);<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">b</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>&#123;<br>    i++;<br>    System.out.println(i);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>a 方法中打印的结果为 0，按照正常的思维去理解的话，i 的值因该为 1 才对，这是为什么？</p>
+<p>这是因为这些变量在方法中都是<strong>「值传递」</strong>的，当把 i 传递给 b 方法时，发生了一次拷贝，因此 b 方法中操作的 i，实际上只存在 b 方法中，并不会影响到 a 方法中的 i 变量。</p>
+<p>上面说的是基本类型变量传递，接下来用引用数据类型来进行参数传递，看看发生了什么：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">a</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>    b(obj);<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">b</span><span class="hljs-params">(Object obj)</span>&#123;<br>    obj = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>a 方法中初始化了一个变量 obj，并把它当作参数传递给 b 方法，b 方法中创建一个新的对象，并把该对象地址赋值给参数 obj。整个过程就是这样，此时 a 中的 obj 对象和 b 中的 obj 是什么关系？他们是同一个对象吗？b 中的对象改变了，会影响到 a 吗？</p>
+<p>有过编程经验的应该都知道，答案是否定的。<br><img src="/../picture/JVM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/42e48b45-6083-49b6-ae87-95fe66c76114.png" srcset="/img/loading.gif" lazyload alt="stack_argument.png"><br>如图所示，a 中 obj 变量指向 Object 10087，把 obj 当作参数给 b 方法时，他会直接复制 obj 所指向的对象地址，即 b 方法刚开始也指向 10087 对象。之后创建了一个新对象地址为 10086，并把地址重新赋值给了 obj，因此 b 中的 obj 指向的是 10086，而 a 指向的是 10087，两者操作的都不是同一个对象，因此也不会相互影响。</p>
+<h3 id="栈帧"><a href="#栈帧" class="headerlink" title="栈帧"></a>栈帧</h3><p>现在已经对 JVM 中的堆和栈有所了解，但是对于方法栈中的每个栈帧还不了解，目前只是知道方法调用就入栈，结束就出栈。因此，现在将栈帧放大来看，看看代码执行过程中，栈帧发生了什么。</p>
+<p>每个栈帧中都有一个「操作数栈」和「局部变量表」。</p>
+<p>每当方法调用开始的时候，局部变量表会被初始化成当前方法的参数。操作数栈上会根据代码实际情况，加载局部变量表中的数据，或者直接加载常量，根据<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_Java_bytecode_instructions">字节码指令集</a>，完成相应的数据操作。</p>
+<p>这就像是人在吃饭一样，用筷子在碟子（局部变量表）中夹菜，夹到碗中（操作数栈），然后根据自己喜好（代码）吃自己的菜。</p>
+<h2 id="JVM-方法区"><a href="#JVM-方法区" class="headerlink" title="JVM 方法区"></a>JVM 方法区</h2><p>方法区中包含了整个虚拟机所共享的 Class 信息，JVM 就是根据方法区中 Class 这份说明书，来帮我们生成对象的。</p>
+<p>方法区中存的所有信息都是共享，基本都是只读的，但这并不是一定的。<strong>「运行时常量池」</strong>就是个例外，在程序运行时往往会往常量池中放入常量信息。</p>
+<p>运行时常量池会保存经常使用的常量，例如 String 字符串常量，当重复 new 一个相同字符串对象时，新的对象就会指向字符串常量池中的字符串常量，这样就节省了内存开销。同时在 String api 中，由于常量的重复使用，可以使得它的 equals 方法可以更快速地进行判断。</p>
+<p><strong>永久代和元空间</strong></p>
+<p>JVM 方法区是一块所有的线程共享的区域，是 JVM 所定义的规范。</p>
+<p>Java 7 之前发方法区的实现称作<strong>「永久代」</strong>，即 <strong>PermGen</strong>。Java 8 之后的称作<strong>「元空间」</strong>，即 <strong>Metaspace</strong>。</p>
+<p>在 Java 7 中，方法区和堆是使用一块连续的物理内存，仅仅是在逻辑上分开的。如果没有设置方法区的大小的话，使用默认大小很容易遇到 OOM 错误。</p>
+<p>在 Java 8 之后，把方法区和堆区分开来，使用了本地内存（Native memory），大小取决于本地内存大小。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2022/02/26/JVM 基本结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年2月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/14/Java%20%E4%B8%AD%E7%9A%84%20GC/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/01/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93%EF%BC%88%E6%8A%80%E6%9C%AF%E5%90%91%EF%BC%89/" title="2021-年终总结（技术向）">
+                        <span class="hidden-mobile">2021-年终总结（技术向）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
