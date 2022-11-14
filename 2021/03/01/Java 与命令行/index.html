@@ -1,0 +1,633 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在日常写 Java 程序的工作中，运行，debug 等等操作，本质上都是在进行命令行操作。我们在 IDE 上点击运行，Java 程序就会运行，实际上 IDE 在背后帮我们进行了命令拼接。 我们可以在 IDEA 中编写一个简单的 Java 程序 1234567891011package zzf;&#x2F;** * @author zzf * @date 2021&#x2F;2&#x2F;28&#x2F;028 21:53 *&#x2F;publi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 与命令行">
+<meta property="og:url" content="http://example.com/2021/03/01/Java%20%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在日常写 Java 程序的工作中，运行，debug 等等操作，本质上都是在进行命令行操作。我们在 IDE 上点击运行，Java 程序就会运行，实际上 IDE 在背后帮我们进行了命令拼接。 我们可以在 IDEA 中编写一个简单的 Java 程序 1234567891011package zzf;&#x2F;** * @author zzf * @date 2021&#x2F;2&#x2F;28&#x2F;028 21:53 *&#x2F;publi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/cover.png">
+<meta property="article:published_time" content="2021-03-01T15:31:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T13:00:20.912Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="命令行">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/cover.png">
+  
+  
+  
+  <title>Java 与命令行 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Java 与命令行</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-03-01 15:31" pubdate>
+          2021年3月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java 与命令行</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在日常写 Java 程序的工作中，运行，debug 等等操作，本质上都是在进行命令行操作。我们在 IDE 上点击运行，Java 程序就会运行，实际上 IDE 在背后帮我们进行了命令拼接。</p>
+<p>我们可以在 IDEA 中编写一个简单的 Java 程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> zzf;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> zzf</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/2/28/028 21:53</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello World&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在 zzf 包下面有个 Main.java 类，里面有个 main 方法输出了 “Hello World”。在 IDEA 中点击了运行按钮之后，控制台会有一串命令行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">D:\java\jdk\bin\java.exe -javaagent:D:\software\Idea\ideaIU-2019.2.3.win\lib\idea_rt.jar=56956:D:\software\Idea\ideaIU-2019.2.3.win\bin -Dfile.encoding=UTF-8 -classpath D:\Java\jdk\jre\lib\charsets.jar;D:\Java\jdk\jre\lib\deploy.jar;D:\Java\jdk\jre\lib\ext\access-bridge-64.jar;D:\Java\jdk\jre\lib\ext\cldrdata.jar;D:\Java\jdk\jre\lib\ext\dnsns.jar;D:\Java\jdk\jre\lib\ext\jaccess.jar;D:\Java\jdk\jre\lib\ext\jfxrt.jar;D:\Java\jdk\jre\lib\ext\localedata.jar;D:\Java\jdk\jre\lib\ext\nashorn.jar;D:\Java\jdk\jre\lib\ext\sunec.jar;D:\Java\jdk\jre\lib\ext\sunjce_provider.jar;D:\Java\jdk\jre\lib\ext\sunmscapi.jar;D:\Java\jdk\jre\lib\ext\sunpkcs11.jar;D:\Java\jdk\jre\lib\ext\zipfs.jar;D:\Java\jdk\jre\lib\javaws.jar;D:\Java\jdk\jre\lib\jce.jar;D:\Java\jdk\jre\lib\jfr.jar;D:\Java\jdk\jre\lib\jfxswt.jar;D:\Java\jdk\jre\lib\jsse.jar;D:\Java\jdk\jre\lib\management-agent.jar;D:\Java\jdk\jre\lib\plugin.jar;D:\Java\jdk\jre\lib\resources.jar;D:\Java\jdk\jre\lib\rt.jar;D:\idea-work\testDemo\out\production\testDemo zzf.Main<br></code></pre></td></tr></table></figure>
+<p>当我们把该命令复制到 CMD 窗口运行的时候，同样控制台会打印 “Hello World”</p>
+<h2 id="Java-执行过程"><a href="#Java-执行过程" class="headerlink" title="Java 执行过程"></a>Java 执行过程</h2><p>我们平时写的源代码（.java 文件），需要编译成字节码（.class 文件），然后再给到 jvm 去解释执行。jvm 只认识字节码，多个 class 文件可以打包成 jar 包来执行。</p>
+<h3 id="args-参数"><a href="#args-参数" class="headerlink" title="args 参数"></a>args 参数</h3><p>我们写 Java 程序，main 方法里面都有一个 args 参数，实际上这个参数是可以从命令行获取的。编写以下程序获取打印 args 参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String []args)</span>&#123;<br>	System.out.println(java.util.Arrays.toString(args));<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>使用如下命令编辑和运行该程序</p>
+<p><img src="/../picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/cb5a1ca0-47b2-4f27-adf4-23b88ff755c8.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以看到使用 <code>java Main</code> 运行时，打印为空字符串，而在后面添加 <code>1 2 3</code> 三个参数时，打印 <code>[1,2,3]</code> 。</p>
+<p><code>java Main 1 2 3</code> 表示，调用 java 这个可执行程序，然后把 <code>Main 1 2 3</code> 这四个参数传递个 java。java 把 Main 这个类名拿出来，并且运行这个类，后面的参数 <code>1 2 3</code> 当做这个类的参数，传递给这个类的 main 方法。</p>
+<h3 id="jvm-中的系统属性和环境变量"><a href="#jvm-中的系统属性和环境变量" class="headerlink" title="jvm 中的系统属性和环境变量"></a>jvm 中的系统属性和环境变量</h3><p>系统属性和环境变量是完全不同的东西，系统属性只在 jvm 中有效，不像环境变量可以继承属性。</p>
+<p>我们可以在代码中使用 <strong>System.getenv()</strong> 来获取当前环境变量，使用 <strong>System.getProperty()</strong> 获取系统属性。我们可以编写如下代码（其中 java.version 是 jvm 自带的系统属性）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String []args)</span>&#123;<br>    <span class="hljs-comment">// 打印 args 参数</span><br>	System.out.println(<span class="hljs-string">&quot;args: &quot;</span> +java.util.Arrays.toString(args));<br>    <span class="hljs-comment">// 打印名为 zzf 的环境变量</span><br>	System.out.println(<span class="hljs-string">&quot;env: &quot;</span> +System.getenv(<span class="hljs-string">&quot;zzf&quot;</span>));<br>    <span class="hljs-comment">// 打印名为 zzf 的系统属性</span><br>	System.out.println(<span class="hljs-string">&quot;System Property: &quot;</span> +System.getProperty(<span class="hljs-string">&quot;zzf&quot;</span>));<br>    <span class="hljs-comment">// 打印名为 java.version 的系统属性</span><br>	System.out.println(<span class="hljs-string">&quot;Java version: &quot;</span> +System.getProperty(<span class="hljs-string">&quot;java.version&quot;</span>));<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们先使用 <code>export zzf=helo</code> 给当前环境添加环境变量 zzf，值为 hello，然后运行。</p>
+<p><img src="/../picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/f9e53a89-e89f-4f30-ae14-bf89b7712e10.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以发现系统属性 zzf 并没有，打印为 null。而由于 jvm 存在系统属性 java.version，所以正确打印出版本号。要传入系统属性给 jvm 我们需要使用 <strong>-D</strong> 参数，如图所示。</p>
+<p><img src="/../picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/38903da7-6c08-4b00-bbe3-39cc1fb23f9a.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id="java-代码中的包"><a href="#java-代码中的包" class="headerlink" title="java 代码中的包"></a>java 代码中的包</h3><p>假设有如下代码 zzf.java：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.apache.commons.lang3.StringUtils;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">zzf</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span> <span class="hljs-params">(String[] args)</span>&#123;<br>		System.out.println(StringUtils.isBlank(args[<span class="hljs-number">0</span>]));<br>		System.out.println(StringUtils.isBlank(args[<span class="hljs-number">1</span>]));<br>		System.out.println(StringUtils.isBlank(args[<span class="hljs-number">2</span>]));<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>该代码引用了第三方的包 <code>org.apache.commons.lang3.StringUtils</code> ，当我们使用 javac 编译的时候会报错，找不到这个包。因此，就需要指定这个包的目录，假设 <code>commons-lang3-3.9.jar</code> 文件和 zzf.java 文件在同一目录下，我们就可以使用 -classpath（简写 -cp），指定文件的位置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">javac -cp commons-lang3-3.9.jar zzf.java<br></code></pre></td></tr></table></figure>
+<p>这样就可以编译通过。但是在运行 java 程序的时候，需要同时指定引用的包的位置，还需要指定 zzf.class 文件位置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -cp ./commons-lang3-3.9.jar:. zzf 1 2 3<br></code></pre></td></tr></table></figure>
+<p> 该命令指定了第三方包的位置，以及 zzf.class 文件的位置。由于 zzf.class 文件是在当前目录，所以用 “.” 来表示。在 Linux 中多个目录用 “:” 隔开，Windows 使用 “;” 隔开。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>回到这个命令行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">D:\java\jdk\bin\java.exe -javaagent:D:\software\Idea\ideaIU-2019.2.3.win\lib\idea_rt.jar=56956:D:\software\Idea\ideaIU-2019.2.3.win\bin -Dfile.encoding=UTF-8 -classpath D:\Java\jdk\jre\lib\charsets.jar;D:\Java\jdk\jre\lib\deploy.jar;D:\Java\jdk\jre\lib\ext\access-bridge-64.jar;D:\Java\jdk\jre\lib\ext\cldrdata.jar;D:\Java\jdk\jre\lib\ext\dnsns.jar;D:\Java\jdk\jre\lib\ext\jaccess.jar;D:\Java\jdk\jre\lib\ext\jfxrt.jar;D:\Java\jdk\jre\lib\ext\localedata.jar;D:\Java\jdk\jre\lib\ext\nashorn.jar;D:\Java\jdk\jre\lib\ext\sunec.jar;D:\Java\jdk\jre\lib\ext\sunjce_provider.jar;D:\Java\jdk\jre\lib\ext\sunmscapi.jar;D:\Java\jdk\jre\lib\ext\sunpkcs11.jar;D:\Java\jdk\jre\lib\ext\zipfs.jar;D:\Java\jdk\jre\lib\javaws.jar;D:\Java\jdk\jre\lib\jce.jar;D:\Java\jdk\jre\lib\jfr.jar;D:\Java\jdk\jre\lib\jfxswt.jar;D:\Java\jdk\jre\lib\jsse.jar;D:\Java\jdk\jre\lib\management-agent.jar;D:\Java\jdk\jre\lib\plugin.jar;D:\Java\jdk\jre\lib\resources.jar;D:\Java\jdk\jre\lib\rt.jar;D:\idea-work\testDemo\out\production\testDemo zzf.Main<br></code></pre></td></tr></table></figure>
+<p>先不管 <code>-javaagent</code> ，从 <code>-Dfile.encoding=UTF-8</code> 给 jvm 设置一个系统属性 file.encoding&#x3D;UTF-8，然后使用 <code>-classpath</code> 指定引用的包路径，要运行的文件的位置。最后只剩需要执行的文件名称 <code>zzf.Main</code> 。把上述这些都交给 <code>D:\java\jdk\bin\java.exe</code> 该可执行程序执行。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+        <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/">#命令行</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java 与命令行</div>
+      <div>http://example.com/2021/03/01/Java 与命令行/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年3月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/03/Maven%20%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/" title="Maven 包冲突解决过程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Maven 包冲突解决过程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

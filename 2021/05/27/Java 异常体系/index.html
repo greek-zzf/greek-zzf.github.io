@@ -1,0 +1,709 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在 Java 中，离开方法的手段可以 靠 return 方法返回，而异常是 return 方法之外，离开方法的手段。 在实际工作中，经常会遇到空指针、找不到、文件找不到，等等不计其数的异常情况。那么 Java 中如何处理这些异常呢？ try &#x2F; catch &#x2F; finally当对一个文件进行写入操作的时候，所使用的 IDE 就会提醒，可能存在异常，需要处理。于是我们按照 IDE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 异常体系">
+<meta property="og:url" content="http://example.com/2021/05/27/Java%20%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在 Java 中，离开方法的手段可以 靠 return 方法返回，而异常是 return 方法之外，离开方法的手段。 在实际工作中，经常会遇到空指针、找不到、文件找不到，等等不计其数的异常情况。那么 Java 中如何处理这些异常呢？ try &#x2F; catch &#x2F; finally当对一个文件进行写入操作的时候，所使用的 IDE 就会提醒，可能存在异常，需要处理。于是我们按照 IDE">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/Java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/cover.png">
+<meta property="article:published_time" content="2021-05-27T22:29:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T13:00:20.912Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/Java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/cover.png">
+  
+  
+  
+  <title>Java 异常体系 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Java 异常体系</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-05-27 22:29" pubdate>
+          2021年5月27日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Java 异常体系</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在 Java 中，离开方法的手段可以 靠 return 方法返回，而<strong>异常是 return 方法之外，离开方法的手段</strong>。</p>
+<p>在实际工作中，经常会遇到空指针、找不到、文件找不到，等等不计其数的异常情况。那么 Java 中如何处理这些异常呢？</p>
+<h2 id="try-x2F-catch-x2F-finally"><a href="#try-x2F-catch-x2F-finally" class="headerlink" title="try &#x2F; catch &#x2F; finally"></a>try &#x2F; catch &#x2F; finally</h2><p>当对一个文件进行写入操作的时候，所使用的 IDE 就会提醒，可能存在异常，需要处理。于是我们按照 IDE 的提示，编写了如下代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">openFile</span><span class="hljs-params">()</span> &#123;<br>     <span class="hljs-type">File</span> <span class="hljs-variable">file</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;C:\\Users\\Administrator\\Desktop\\1.txt&quot;</span>);<br>     <span class="hljs-keyword">try</span> &#123;<br>         <span class="hljs-type">OutputStream</span> <span class="hljs-variable">os</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(file);<br>     &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException e) &#123;<br>         e.printStackTrace();<br>     &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>代码主要分成两部分：try 包裹的部分，以及 catch 包裹部分，其中 catch 专门用来捕获异常。</p>
+<p>其中 try 包裹的，表示可能运行会出错的代码。上面的代码通过 File，构建一个输出流，由于 File 对应的文件不一定存在，导致构建输出流失败，出现异常。因此，构建输出流的代码就要放到 try 中包裹起来。</p>
+<p>catch 包裹的代码，就是对异常进行处理的流程。上面的代码是将错误信息打印到<strong>标准错误流</strong>中。</p>
+<p>一般异常处理使用 try-catch 语句就足够了，但有遇到加载文件资源的情况，使用完之后就需要及时关闭。也许你会想把关闭资源操作放在 try-catch 语句之后，这也是可以的。但是，一旦 try-catch 中有return 操作，导致代码无法往下执行，关闭资源也就失效了。</p>
+<p><code>finally</code>就是解决这个问题的，无论 try-catch 中如何返回，如何调用，它包裹的代码块都会执行。在 catch 语句后加上 finally，以及包裹的代码，这样就完成了一套标准的异常处理流程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">openFile</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">File</span> <span class="hljs-variable">file</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;&quot;</span>);<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-type">OutputStream</span> <span class="hljs-variable">os</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(file);<br>    &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException e) &#123;<br>        e.printStackTrace();<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>       <span class="hljs-comment">//执行资源清理操作</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Tips</strong>：如果 try 中可能存在多种类型异常，我们就需要多个 catch 来捕获他们。</p>
+<h3 id="try-with-resources"><a href="#try-with-resources" class="headerlink" title="try-with-resources"></a>try-with-resources</h3><p>在上面的代码中提到资源清理操作，在生产过程中，可能不止一个资源需要清理，我们需要进行多个资源关闭操作，难免会忘记对些资源清理。因此，在 Java 7 中就引入了 <code>try-with-resources</code>这个语法糖。</p>
+<p>原先我们关闭资源操作写在 finally 中，如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">openFile</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">File</span> <span class="hljs-variable">file</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;&quot;</span>);<br>        <span class="hljs-type">OutputStream</span> <span class="hljs-variable">os</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            os = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(file);<br>        &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException e) &#123;<br>            e.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            os.close();<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>现在我们把 <code>OutputStream os = new FileOutputStream(file)</code>声明在 try 后面的括号里，声明在里面的东西它会帮我们自动关闭，因此 <code>finally</code> 语句也不用写了。代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">openFile</span><span class="hljs-params">()</span>&#123;<br>       <span class="hljs-type">File</span> <span class="hljs-variable">file</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;&quot;</span>);<br>       <span class="hljs-keyword">try</span> (<span class="hljs-type">OutputStream</span> <span class="hljs-variable">os</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileOutputStream</span>(file)) &#123;<br><br>       &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException e) &#123;<br>           e.printStackTrace();<br>       &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>           e.printStackTrace();<br>       &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>那么问题来了，什么类型的资源会自动关闭呢 ？</p>
+<p>答案就是**所有实现了 **<code>**AutoCloseable**</code><strong>这个接口的类</strong>，都能被自动关闭。比如上面的 <code>FileOutputStream</code>就实现了这个接口。当然智能的 IDE 在我们写 try-catch 的时候都会 给与提示，告诉你可以转成 try-catch-resources模式 </p>
+<h2 id="抛出异常"><a href="#抛出异常" class="headerlink" title="抛出异常"></a>抛出异常</h2><p>上面使用 try-catch 捕获异常，但实际生产环境中也需要抛出异常，不在当前方法处理。手动抛出异常，需要用到关键字 <code>throw</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">openFile</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Exception</span>();<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面代码抛出了一个异常，但没有使用 try-catch 捕获处理。仔细观察的话，你会发现 openFile 方法后面多出了<code>throws Exception</code>，它的意思声明 openFile 方法可能会抛出异常。</p>
+<p>那为什么要声明异常呢？直接抛出异常不行吗？</p>
+<p>这就源于 Java 的「保护机制」，如果你的方法中可能存在异常，要么使用 try-catch 将它捕获处理，要么就使用 throws 给当前方法声明异常。任何调用了声明异常的方法，都需要处理传过来的异常，与前面一样，要么 try-catch，要么继续声明异常等待其他方法调用处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">A</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Exception</span>();<br>   &#125;<br><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">B</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>       A();<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>如上面代码所示，B 调用 A 方法，A 方法没有 try-catch，而是使用 throws 声明异常。因此，B 方法就有两种选择，要么 try-catch 处理 A 抛出的异常，要么选择像 A 一样，声明一个异常继续向上抛出。显然 B 是同 A 一样，选择声明异常向上抛出，当其他方法调用 B 方法，也会面临 B 方法的两种选择。如果一直向上抛异常，而不使用 try-catch 处理，那么抛出的异常会击穿所有的栈帧，直到有方法将它 catch 住。</p>
+<p><strong>Tips：throw 是抛出一个异常，而 throws 则是声明方法可能要抛出的异常</strong>，切勿混淆。</p>
+<h2 id="Java-异常体系"><a href="#Java-异常体系" class="headerlink" title="Java 异常体系"></a>Java 异常体系</h2><ul>
+<li>Throwable - 可以被抛出的东⻄（有毒）<ul>
+<li>Exception - checked execption（受检异常，有毒，代表⼀种预料之中的异常）<ul>
+<li>RuntimeException （运⾏时异常，⽆毒，代表⼀种预料之外的异常，因此不需要声明）</li>
+</ul>
+</li>
+<li>Error （错误，无毒）</li>
+</ul>
+</li>
+<li>catch 的级联与合并</li>
+</ul>
+<p>Throwable 是所有 Exception 和 Error 的父类，只要是 Throwable 类型就可以使用 throw 抛出。由于 Error 和 Exception 是他的子类，因此也能被抛出。</p>
+<p>上面的继承体系中提到 「有毒」和「无毒」的概念，有毒指的是方法会<strong>传染</strong>，而无毒不会。「有毒」同前面的 A 方法和 B 方法一样，任何声明了有毒类型的方法，被调用之后，需要再次声明或者自己处理。任何声明了「无毒」类型的方法，被调用之后方法中无需做任何处理。「有毒」的代码实例，参考「抛出异常」章节的 A 和 B 方法。下面展示「无毒」的类型代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">A</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>();<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">B</span><span class="hljs-params">()</span>&#123;<br>    A();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到我们抛出了一个「无毒」类型异常 <code>RuntimeException</code>，当 B 方法调用 A 方法的时候，无需 try-catch，也无需声明异常。</p>
+<p>这就是「有毒」和「无毒」的区别，它们有专业的术语 <code>checked</code>和<code>unchecked</code>，表示「受检」和「非受检」。「受检」表示写的代码会被检查，IDE 一般都会提示你做相应的处理。「非受检」表示写的代码不会被检查，无需做处理。</p>
+<p>Exception 是预料之内异常，正因为在预料之内，所以 IDE 才会提示我们去处理这个异常。常见的有 <code>IOException</code>、<code>FileNotFonudException</code> 。RuntimeException 预料之外的异常，也正因为预料之外，因此 IDE 并不会对抛出的异常进行检验，因为根本无法检验。常见的有 <code>NullPointerException</code>，即空指针异常。</p>
+<p>Error 代表一种严重的错误，他与 Exception 的区别是，前者代表不能恢复的异常，后面代表可以恢复的异常。大多数情况下，Error 代表一种不正常的情况，像内存错误（OutOfMemoryError）等。而像网络超时重连就是可恢复异常的表现。</p>
+<p><strong>catch 的级联与合并</strong></p>
+<p>前面我们提到过，方法中存在多个异常，就需要多个 catch 来处理，如下分别对几种不同类型的异常进行处理，进来的异常会从上到下一次比对，进入到对应的 catch 中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> &#123;<br><br>    &#125;<span class="hljs-keyword">catch</span> (Exception e)&#123;<br><br>    &#125;<span class="hljs-keyword">catch</span> (EOFException e)&#123;<br><br>    &#125;<span class="hljs-keyword">catch</span> (FileNotFoundException e)&#123;<br><br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>但上面代码存在一个问题，Exception 下面的 catch 都不会执行。因为 Exception 是他们的父类，所以每次进来都是第一个 catch 被执行，所以我们应该调整顺序从小到大排列，这样才能根据不同异常类型，做不同处理，如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> &#123;<br><br>      &#125;<span class="hljs-keyword">catch</span> (FileNotFoundException e)&#123;<br><br>      &#125;<span class="hljs-keyword">catch</span> (EOFException e)&#123;<br><br>      &#125;<span class="hljs-keyword">catch</span> (Exception e)&#123;<br><br>      &#125;<br></code></pre></td></tr></table></figure>
+
+<p>在 Java 7 之后引用了新的语法，对于处理方法完全一致的异常可以进行合并。如下，都是将错误信息打印到标准错误流中，因此我们可以对它进行合并</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> &#123;<br>     &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException e) &#123;<br>         e.printStackTrace();<br>     &#125; <span class="hljs-keyword">catch</span> (EOFException e) &#123;<br>         e.printStackTrace();<br>     &#125;<br></code></pre></td></tr></table></figure>
+
+<p>合并之后我们的代码就会变成这样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> &#123;<br>    &#125; <span class="hljs-keyword">catch</span> (FileNotFoundException | EOFException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p><a name="e75b5d4e"></a></p>
+<h2 id="异常的一些原则"><a href="#异常的一些原则" class="headerlink" title="异常的一些原则"></a>异常的一些原则</h2><h3 id="抛出原则"><a href="#抛出原则" class="headerlink" title="抛出原则"></a>抛出原则</h3><ul>
+<li><p>能⽤ if &#x2F; else处理的，不要使⽤异常</p>
+<ul>
+<li>无法保证抓出的异常是你想抓住的</li>
+<li>相比 if 判断，异常的创建是非常昂贵的操作</li>
+</ul>
+</li>
+<li><p>尽早抛出异常</p>
+</li>
+<li><p>异常要准确、带有详细信息</p>
+</li>
+<li><p>抛出异常也⽐悄悄地执⾏错误的逻辑强的多</p>
+</li>
+</ul>
+<h3 id="处理原则"><a href="#处理原则" class="headerlink" title="处理原则"></a>处理原则</h3><ul>
+<li><p>本⽅法是否有责任处理这个异常？</p>
+<ul>
+<li>不要处理不归⾃⼰管的异常</li>
+</ul>
+</li>
+<li><p>本⽅法是否有能⼒处理这个异常？</p>
+<ul>
+<li>如果⾃⼰⽆法处理，就抛出</li>
+</ul>
+</li>
+<li><p>如⾮万分必要，不要忽略异常</p>
+</li>
+</ul>
+<h3 id="使⽤-JDK-内置的异常"><a href="#使⽤-JDK-内置的异常" class="headerlink" title="使⽤ JDK 内置的异常"></a>使⽤ JDK 内置的异常</h3><ul>
+<li>NullPointerException</li>
+<li>ClassNotFoundException&#x2F;NoClassDefFoundError</li>
+<li>IllegalStateException</li>
+<li>IllegalArgumentException</li>
+<li>IllegalAccessException</li>
+<li>ClassCastException</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Java 异常体系</div>
+      <div>http://example.com/2021/05/27/Java 异常体系/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年5月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/11/String/" title="String">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">String</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/11/Java%20%E8%8E%B7%E5%8F%96%20GitHub%20PR%20%E4%BF%A1%E6%81%AF/" title="Java 获取 GitHub PR 消息">
+                        <span class="hidden-mobile">Java 获取 GitHub PR 消息</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
