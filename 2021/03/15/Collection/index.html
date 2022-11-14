@@ -1,0 +1,655 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="什么是 CollectionCollection 是 Java 世界中最重要的类库，是这个类库的顶级接口。它的实现有 Set，List。而 Set 的实现又有 HashSet，TreeSet……。List 的实现有 ArrayList，LinkedList ……。也就是说我们日常使用的集合类都基本是 Collection 接口的实现 Collction 常用方法C：new ArrayList()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Collection">
+<meta property="og:url" content="http://example.com/2021/03/15/Collection/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是 CollectionCollection 是 Java 世界中最重要的类库，是这个类库的顶级接口。它的实现有 Set，List。而 Set 的实现又有 HashSet，TreeSet……。List 的实现有 ArrayList，LinkedList ……。也就是说我们日常使用的集合类都基本是 Collection 接口的实现 Collction 常用方法C：new ArrayList()">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/Collection/cover.png">
+<meta property="article:published_time" content="2021-03-15T15:29:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T13:26:02.361Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/Collection/cover.png">
+  
+  
+  
+  <title>Collection - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Collection</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-03-15 15:29" pubdate>
+          2021年3月15日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Collection</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="什么是-Collection"><a href="#什么是-Collection" class="headerlink" title="什么是 Collection"></a>什么是 Collection</h1><p><code>Collection</code> 是 Java 世界中最重要的类库，是这个类库的顶级接口。它的实现有 Set，List。而 Set 的实现又有 <strong>HashSet</strong>，TreeSet……。List 的实现有 <strong>ArrayList</strong>，LinkedList ……。也就是说我们日常使用的集合类都基本是 <code>Collection</code> 接口的实现</p>
+<h1 id="Collction-常用方法"><a href="#Collction-常用方法" class="headerlink" title="Collction 常用方法"></a>Collction 常用方法</h1><p><strong>C：</strong>new ArrayList()  &#x2F; new LinkedList() &#x2F; new HashSer() &#x2F;…<br><strong>R：</strong>size() &#x2F; isEmpty() &#x2F; contains() &#x2F; for() &#x2F;stream<br><strong>U：</strong>add() &#x2F; addAll() &#x2F; retainAll()<br><strong>D：</strong>clear() &#x2F; remove() &#x2F; removeAll()</p>
+<ul>
+<li>其中 <strong>contains()</strong> 判断 collection 是否包含某一元素</li>
+<li><strong>retainAll()</strong> 表示<strong>当前集合只保留与指定集合的公共元素</strong>，比如下面的代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">updateCollection</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">Collection</span> <span class="hljs-variable">collection1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>();<br><br>    collection1.add(<span class="hljs-number">1</span>);<br>    collection1.add(<span class="hljs-number">2</span>);<br>    collection1.add(<span class="hljs-number">3</span>);<br><br>    <span class="hljs-type">Collection</span> <span class="hljs-variable">collection2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>();<br><br>    collection2.add(<span class="hljs-number">2</span>);<br>    collection2.add(<span class="hljs-number">3</span>);<br>    collection2.add(<span class="hljs-number">3</span>);<br><br>    collection2.retainAll(collection1);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样 <strong>collection2</strong> 进行 <strong>retainAll()</strong> 操作之后得到的结果就是与** collection1** 相同的元素，即：2，3。</p>
+<ul>
+<li><strong>removeAll() <strong>正好与</strong> retinAll() 相反，</strong>表示**移除当前集合移除与指定集合相同的元素，比如下面代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteCollection</span><span class="hljs-params">()</span> &#123;<br>     <span class="hljs-type">Collection</span> <span class="hljs-variable">collection1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>();<br>     collection1.add(<span class="hljs-number">1</span>);<br>     collection1.add(<span class="hljs-number">2</span>);<br>     collection1.add(<span class="hljs-number">3</span>);<br><br>     <span class="hljs-type">Collection</span> <span class="hljs-variable">collection2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>();<br><br>     collection2.add(<span class="hljs-number">2</span>);<br>     collection2.add(<span class="hljs-number">3</span>);<br>     collection2.add(<span class="hljs-number">4</span>);<br><br>     collection2.removeAll(collection1);<br> &#125;<br></code></pre></td></tr></table></figure>
+<p><strong>collection2</strong> 进行 <strong>removeAll() <strong>操作之后，</strong>collection2</strong> 中的元素为：4。</p>
+<h1 id="List"><a href="#List" class="headerlink" title="List"></a>List</h1><p>List 是<strong>有序且元素可重复</strong>的集合</p>
+<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><p><strong>ArrayList 底层是个数组实现</strong>，具有动态扩容的特点。说到数组，我们印象中的数组都是有容量限制的，都有一个固定大小，那 ArrayList 的动态扩容是怎么实现的呢？</p>
+<p><strong>ArrayList 动态扩容原理</strong>：当 ArrayList 满了的时候，会自动扩容。ArrayList 会创建一个新的更大的空间的 List ，把原来满了的 List 的数据，复制到新的 List 中，并把原来满的 List 丢弃。</p>
+<h2 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h2><p>** LinkedList 底层是链表实现**，LinkedList 在日常使用中很少使用到。</p>
+<h2 id="ArrayList-和-LinkedList"><a href="#ArrayList-和-LinkedList" class="headerlink" title="ArrayList 和 LinkedList"></a>ArrayList 和 LinkedList</h2><p>ArrayList 是 Java 世界中，最常用的实现。既然是最常用的实现，为什么我们还需要 LinkedList? 既然有两种实现方式，那么两者的的区别和优缺点又是什么？</p>
+<p>通过两者的底层实现可以发现他们各自的优势和区别。</p>
+<p>因为 <code>ArrayList</code> 底层是数组实现，根据数组这一数据结构的特点，可以知道，数组用于查询，速度非常快。但是，数组做增删的操作就很比较慢。</p>
+<p>而 <code>LinkedList</code> 的底层是链表实现，根据链表这一数据结构的特点，也很容易知道，链表的增删速度非常快，而对于查询来说就比较慢。</p>
+<p>因此，综上所诉。对于查询需求较多的，我们可以使用 <code>ArrayList</code> 的实现，对于增删需求较多的，就使用 <code>LinkedList</code></p>
+<h2 id="ArrayList-的扩容机制"><a href="#ArrayList-的扩容机制" class="headerlink" title="ArrayList 的扩容机制"></a>ArrayList 的扩容机制</h2><p>我们经常往 ArrayList 中添加元素，在们看来 ArrayList 好像是一个无限容量的空间一样，可以一直往里面丢东西。实际上是 ArrayList 的扩容机制在搞鬼，每当容量不足的时候，他就会在背后帮我们自动扩容，而我们是感知不到这个过程的，扩容机制给我们造成了无限容量的假象。</p>
+<p>我们直接查看 ArrayList 的 add 方法源代码，如下。</p>
+<p><img src="/../picture/Collection/7f8d3ac4-c857-44f1-8059-0f25f5d926df.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以发现在添加元素前，使用了 ensureCapacityInternal 方法，来确保可以添加。我们可以在 ensureCapacityInternal 的实现方法中找到 grow 方法，这个方法就是 ArrayList 扩容的秘密。</p>
+<p><img src="/../picture/Collection/5b73daa1-eb23-4706-b5a4-67b333140334.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以看到代码中的 newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1)，表示的扩容后，新容量等于旧容量加上旧容量右移一位。右移可以理解为除以 n^2，此处就是旧容量除以1的2次方，相加之后新容量就是旧容量的1.5倍。<strong>ArrayList 扩容机制简述就是：创建一个更大的空间，空间容量为原来容量的1.5倍，然后把所有元素拷贝过去，完成扩容。</strong></p>
+<p>说到这里还有个问题没有解决，既然 ArrayList 容量是有限的，那么<strong>我们直接 new 一个 ArrayList 的初始容量是多少呢？</strong>其实源代码已经给出答案了。</p>
+<p><img src="/../picture/Collection/dd0e6e82-2b84-4a18-a78d-b61ffa2ad050.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>构造方法注释中标明，初始化容量是10。但我用 debug 调试的时候，发现初始容量并不是我们 new 的时候就创建好了，而是当我们往里面添加第一个元素时，触发了 ArrayList 的扩容机制，扩容成一个容量是10的新空间，再把我们要添加的元素放进新空间中。这属于懒加载机制，当我们需要添加元素时，才真正开辟空间。</p>
+<h1 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h1><p>Set 是<strong>无序且元素不可重复</strong>的集合。在 java 世界中，判断两个元素是否相同使用 <code>equals</code>  方法。</p>
+<h2 id="简单的-Set-实现"><a href="#简单的-Set-实现" class="headerlink" title="简单的 Set 实现"></a>简单的 Set 实现</h2><p>我们可以顺着 List 的特性，以及 Collection 的 Contains() 方法来简单实现一个 Set。因为 Set 不包含重复元素，而且 Contains 方法就是判断元素是否重复。因此，只要往 List 中添加元素时，进行 Contains 判断，元素不重复就往 List 中添加，这样就能得到一个不包含重复元素的 List，也就是一个手写的简单 Set 实现。</p>
+<h2 id="Java-世界的高效-Set-实现-HashSet"><a href="#Java-世界的高效-Set-实现-HashSet" class="headerlink" title="Java 世界的高效 Set 实现 HashSet"></a>Java 世界的高效 Set 实现 HashSet</h2><p>虽然我们手写的 Set 也能用，但是相比 Java 中其它的 Set 实现，性能差距不知差了多少。Java 世界中最高效的 Set 实现当属于 <code>HashSet</code> 。</p>
+<h3 id="一、HashSet-实现简述"><a href="#一、HashSet-实现简述" class="headerlink" title="一、HashSet 实现简述"></a>一、HashSet 实现简述</h3><p>HashSet 之所以高效是因为他的背后是 HashBucket，即：哈希桶。每个哈希桶对应一个 hashCode。因此，每次往 HashSet 中添加元素的时候，首先通过 hash 运算，计算出它的 hashCode，再与哈希桶的 hashCode 进行比对，相同就把元素加入该哈希桶中。</p>
+<h3 id="二、hashCode"><a href="#二、hashCode" class="headerlink" title="二、hashCode"></a>二、hashCode</h3><p>在了解 HashCode 之前，先了解下 <strong>Hash 运算</strong>。Hash 运算就是把我们数据变成一个哈希值，是一个单向映射操作。例如：假设 Hash 运算把名字变成姓氏，于是就是有「张三」-&gt;「张」、「李四」-&gt; 「李」，以此类推。Java 世界中的 Hash 运算有它<strong>自己的一套运算规则</strong>，我们只需要知道经过 Hash 运算会返回一个 int 值就行了。</p>
+<p>hashCode 是数据通过 Hash 运算得到的值。我们可以通过 hashCode 来初步判断是否同一元素。</p>
+<p>在 Java 世界中对象返回的 HashCode 都遵守以下约定：</p>
+<ul>
+<li><strong>同一个对象得到的 hashCode 相等</strong></li>
+<li><strong>两个对象 <code>equals</code> 为 true，hashcode 相等</strong></li>
+<li><strong>两个对象不等，hashcode 可能相等</strong></li>
+</ul>
+<h2 id="判断对象是否相等"><a href="#判断对象是否相等" class="headerlink" title="判断对象是否相等"></a>判断对象是否相等</h2><p>假设存在一个 Person 对象，它有 name 属性。现在我们要使得名字相同的对象为同一对象，应该怎么做呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String name;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Person</span><span class="hljs-params">(String name)</span> &#123;<br>        <span class="hljs-built_in">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在上面提到过判断是否重复我们可以使用 equals 方法，因此我们可以该方法来解决。假如我们初始化 person1，person2，他们的名字都是「张三」。然后我们再调用 equals 方法判断 <code>person1.equals(perons2)</code> ，结果返回的却是 false，为什么？</p>
+<p>在我们看来，名字相同的人就是同一个对象，可是计算机却不是这么认为的，我们查看 Object 的 equals 方法发现，它比较的实际上是内存地址。因为是两个对象，所以他们指向的内存地址不同。尽管内存中的值相等，也没用。</p>
+<p>因此，我们就需要重写 equals，hashCode 方法来达到相同名字为同一对象的目的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hashCode</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> name.hashCode();<br>&#125;<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">equals</span><span class="hljs-params">(Object obj)</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span> == obj) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (obj <span class="hljs-keyword">instanceof</span> Person) &#123;<br>        <span class="hljs-type">Person</span> <span class="hljs-variable">person</span> <span class="hljs-operator">=</span> (Person) obj;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.name.equals(person.getName());<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们在 equals 中比较两个对象的名字是否相等，相等返回 true。同时遵守「两个对象 <code>equals</code> 为 true，hashcode 相等」的约定，所以我们再 hashCode 方法中根据 name 来返回 HashCode，当 name 相同时就会返回相等的 HahsCode。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Collection</div>
+      <div>http://example.com/2021/03/15/Collection/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年3月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/01/HTML%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/" title="HTML 常用标签">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTML 常用标签</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/04/Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/" title="Web 前后端基础架构原理">
+                        <span class="hidden-mobile">Web 前后端基础架构原理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="使用一个工具的时候，应该先要问自己他是什么，他有什么作用？所以先根据这两个来初步了解下 Git 和 GitHub。 GitHubGitHub 简单来说就是一个代码仓库，里面存放着世界各地程序员写的代码，我们也可以在 GitHub 上注册自己的账号，拥有自己的代码仓库。我们可以往自己的仓库提交代码，也可以去看一些大牛的仓库，学习他们的编码技巧，倘若发现一些小 Bug，我们也可以帮助别人解决，贡献一份">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub 提交作业">
+<meta property="og:url" content="http://example.com/2021/12/24/GitHub%20%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用一个工具的时候，应该先要问自己他是什么，他有什么作用？所以先根据这两个来初步了解下 Git 和 GitHub。 GitHubGitHub 简单来说就是一个代码仓库，里面存放着世界各地程序员写的代码，我们也可以在 GitHub 上注册自己的账号，拥有自己的代码仓库。我们可以往自己的仓库提交代码，也可以去看一些大牛的仓库，学习他们的编码技巧，倘若发现一些小 Bug，我们也可以帮助别人解决，贡献一份">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/cover.png">
+<meta property="article:published_time" content="2021-12-24T10:37:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T13:26:02.361Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/cover.png">
+  
+  
+  
+  <title>GitHub 提交作业 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">GitHub 提交作业</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-24 10:37" pubdate>
+          2021年12月24日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">GitHub 提交作业</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>使用一个工具的时候，应该先要问自己他是什么，他有什么作用？所以先根据这两个来初步了解下 Git 和 GitHub。</p>
+<h1 id="GitHub"><a href="#GitHub" class="headerlink" title="GitHub"></a>GitHub</h1><p>GitHub 简单来说就是一个<code>代码仓库</code>，里面存放着世界各地程序员写的代码，我们也可以在 GitHub 上注册自己的账号，拥有自己的代码仓库。我们可以往自己的仓库提交代码，也可以去看一些大牛的仓库，学习他们的编码技巧，倘若发现一些小 Bug，我们也可以帮助别人解决，贡献一份力量。</p>
+<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p>想一个问题：我们已经有了自己的代码仓库 GitHub，那么我们该怎么把自己电脑上的代码放到 GitHub 中去呢？</p>
+<p>解决这个问题的办法有：我们打开 GitHub ，在自己的代码仓库点击上传文件，这样就可以上传自己的代码。但是这样上传速度慢，而且容错性较差，可能遇到提交错误的代码，导致无法回到上一版本。</p>
+<p><code>Git</code> 最大的用处，应该就是版本控制。可以记录你提交记录与版本，相当于「后悔药」，也支持多人协作，每个人的代码提交记录都会保存，所做的修改也有记录，这就是 <code>Git</code> 的好处。</p>
+<h1 id="修改别人的代码"><a href="#修改别人的代码" class="headerlink" title="修改别人的代码"></a>修改别人的代码</h1><p>这是一次在 GitHub 上完成提交的经历，整个过程如下：</p>
+<h2 id="一、Fork-别人的代码"><a href="#一、Fork-别人的代码" class="headerlink" title="一、Fork 别人的代码"></a>一、<code>Fork</code> 别人的代码</h2><p>首先，找到你要修改的仓库地址。因为是别人的代码，你没办法直接 「clone」复制下来，修改并提交，除非仓库的主人你认识，并且赋予了你修改的权限。既然没有直接的修改权限，那么我们就要 <code>Fork</code> 一份代码。<code>Fork</code> 的意思是：<strong>把当前仓库，拷贝到自己的 GitHub。</strong><code>Fork</code> 的结果就是你的 GitHub 中多了一个一模一样的仓库。<code>Fork</code> 操作如图：</p>
+<p><img src="/../picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/cb59b504-916e-4f55-af84-6dc15999ca16.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>图中的 <code>Fork</code> 结果，在我的 GitHub 中多了一个「JavaCollection」的仓库，代码也和拷贝过来的一模一样。</p>
+<h2 id="二、Clone-代码，并在本地进行修改"><a href="#二、Clone-代码，并在本地进行修改" class="headerlink" title="二、Clone 代码，并在本地进行修改"></a>二、<code>Clone</code> 代码，并在本地进行修改</h2><p>Clone 代码就相对简单很多了，找到 Fork 之后的仓库。我这边对应的就是我 GitHub 中的「JavaCollection」仓库，打开，并点击「code」，弹框选择 「HTTPS」,复制 「HTTPS」下面的地址。需要说明一点：如果你对 「SSH」和「GitHub CLI」不熟悉，就老老实实选择「HTTPS」。</p>
+<p><img src="/../picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/d3c61600-7248-4c10-be02-f8bb0a09b2f0.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>复制好地址之后，打开<strong>开发者工具</strong>，此处以 IDEA 举例。打开 IDEA，并在首页点击 <code>Get from Version Control</code> ，不同的 IDEA 版本可能名称不一样。</p>
+<p><img src="/../picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/3b5b086c-ccd2-4dc9-8870-53f0888ae0f9.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>在弹出的对话框中，选择在 <code>Version control</code> 选择 Git，并在 <code>Url</code> 一栏粘贴刚才复制的地址，再点击 <code>Clone</code> 即可</p>
+<p><img src="/../picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/94d71270-bf17-4655-82c8-e34d275a0a9c.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>点击 Clone 之后，IDEA 会自动帮你把代码拷贝到本地，拷贝完成之后 IDEA 提示你「是否需要打开它」，选择「Yes」，等待一会，就可以对代码就行操作了。</p>
+<p><img src="/../picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/e55425a2-2f40-407f-8d8e-c1f85262010b.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h2 id="三、Commit-代码，并-Push-本地代码到-GitHub"><a href="#三、Commit-代码，并-Push-本地代码到-GitHub" class="headerlink" title="三、Commit 代码，并 Push 本地代码到 GitHub"></a>三、<code>Commit</code> 代码，并 <code>Push</code> 本地代码到 <code>GitHub</code></h2><p>点击 IDEA 左下角的 Version Control，可看到修改的文件详情，在需要提交的文件处右键，然后点击 <code>Commit</code> ，代码就会先提交到本地仓库</p>
+<p><img src="/../picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/64deed58-e000-482f-a9a7-4a34f2a7ccb7.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><code>Commit</code> 代码之后，接下来就要进行 <code>Push</code> 操作，在 IDEA 工具栏中找到「VCS」「Git」「Push」，就可以把本地代码提交到自己的 GitHub 中。接下来可以在 GitHub 中找到对应的代码仓库，查看刚才提交 <code>Push</code> 的结果。</p>
+<h2 id="四、发起-Pull-requests"><a href="#四、发起-Pull-requests" class="headerlink" title="四、发起 Pull requests"></a>四、发起 <code>Pull requests</code></h2><p>在 GitHub 点击上传代码的仓库，就可以看到 <code>Pull requests</code> ，点击它，然后选择要提交的分支，以及他人仓库的分支，点击完成就可以了。</p>
+<p><img src="/../picture/GitHub%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A/269c3072-c82c-4bf3-8981-dc5abe3189e8.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>发起 <code>Pull requests</code> 之后只需要等待开发者查看你的 <code>PR</code>，根据情况判断是否需要，如果通过了，恭喜你成功贡献了一份力量，没有通过也不用气馁，可以看看不通过的原因什么，下次继续努力。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/GitHub/">#GitHub</a>
+      
+        <a href="/tags/Git/">#Git</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>GitHub 提交作业</div>
+      <div>http://example.com/2021/12/24/GitHub 提交作业/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年12月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/12/30/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" title="布隆过滤器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">布隆过滤器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/20/Java%208%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="Java 8 函数式编程">
+                        <span class="hidden-mobile">Java 8 函数式编程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
