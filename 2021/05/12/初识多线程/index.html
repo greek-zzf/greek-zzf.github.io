@@ -19,13 +19,13 @@
     <meta name="description" content="在编程学习中，我们都要接触到多线程，多线程会帮系统性能带来很大提升，但是这种提升是风险与收益并存的。因此，学习并掌握多线程原理至关重要。 单线程与多线程既然有多线程，那肯定是有单线程的。那单线程是什么呢？单线程就是在特定时间系统只做一件事，这就和人一样只能「一心一意」，不能「三心二意」。 平时开发中跑的 Java 程序大多都是单应用，对于一些没有什么访问量的系统来说，能勉强支撑。反之，访问量较大的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识多线程">
-<meta property="og:url" content="http://example.com/2021/05/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%88%9D%E6%AD%A5/index.html">
+<meta property="og:url" content="http://example.com/2021/05/12/%E5%88%9D%E8%AF%86%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="在编程学习中，我们都要接触到多线程，多线程会帮系统性能带来很大提升，但是这种提升是风险与收益并存的。因此，学习并掌握多线程原理至关重要。 单线程与多线程既然有多线程，那肯定是有单线程的。那单线程是什么呢？单线程就是在特定时间系统只做一件事，这就和人一样只能「一心一意」，不能「三心二意」。 平时开发中跑的 Java 程序大多都是单应用，对于一些没有什么访问量的系统来说，能勉强支撑。反之，访问量较大的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/picture/%E5%88%9D%E8%AF%86%E5%A4%9A%E7%BA%BF%E7%A8%8B/cover.png">
 <meta property="article:published_time" content="2021-05-12T16:51:00.000Z">
-<meta property="article:modified_time" content="2022-11-14T13:58:48.061Z">
+<meta property="article:modified_time" content="2022-11-14T14:04:38.674Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="多线程">
@@ -388,8 +388,8 @@
 
 
 <h3 id="Runable-与-Callable"><a href="#Runable-与-Callable" class="headerlink" title="Runable 与 Callable"></a>Runable 与 Callable</h3><p>在线程池中，都是使用 submit 方法提交并执行任务。使用 submit 方法的时候可以发现，它接收两个不同类型的参数。一个是与之前多线程相同的参数 Runable，而另一个则是 Callable。通过查看两者源代码可以发现，前者是没有返回值的，而 Callable 则有返回值。</p>
-<p><img src="/../picture/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%88%9D%E6%AD%A5/60ed335c-4bda-4b0b-9b00-7aa0ae60dbe3.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<p><img src="/../picture/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%88%9D%E6%AD%A5/c8717165-05fe-4a6f-b7da-95f2d9ca2265.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="/../picture/%E5%88%9D%E8%AF%86%E5%A4%9A%E7%BA%BF%E7%A8%8B/60ed335c-4bda-4b0b-9b00-7aa0ae60dbe3.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="/../picture/%E5%88%9D%E8%AF%86%E5%A4%9A%E7%BA%BF%E7%A8%8B/c8717165-05fe-4a6f-b7da-95f2d9ca2265.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>我们可以发现 submit 方法返回了一个 Future 对象，Future 泛型的值与 Callable 里 call 方法返回的值是一样的。</p>
 <h3 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h3><p><strong>Future 表示异步计算的结果，也可以理解未来返回的结果。</strong>例如：我们让一个工人去割麦子，他去执行之后，我们只需要看看仓库是否增加了这么多麦子即可。工人割麦子的时候，我们可以去干其他事情，只需最后看结果就行。这个 Future 就是工人割的麦子总量。</p>
 <p>Future 的常用 API</p>
@@ -450,7 +450,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>初识多线程</div>
-      <div>http://example.com/2021/05/12/多线程初步/</div>
+      <div>http://example.com/2021/05/12/初识多线程/</div>
     </div>
     <div class="license-meta">
       
