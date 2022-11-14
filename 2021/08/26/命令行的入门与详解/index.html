@@ -16,25 +16,24 @@
   <meta name="author" content="Greek">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在日常写 Java 程序的工作中，运行，debug 等等操作，本质上都是在进行命令行操作。我们在 IDE 上点击运行，Java 程序就会运行，实际上 IDE 在背后帮我们进行了命令拼接。 我们可以在 IDEA 中编写一个简单的 Java 程序 1234567891011package zzf;&#x2F;** * @author zzf * @date 2021&#x2F;2&#x2F;28&#x2F;028 21:53 *&#x2F;publi">
+    <meta name="description" content="什么是命令行操作系统都有内核的概念，内核是直接与硬件打交道的。我们通过包裹内核的一层壳（ shell ）来与内核打交道。 广义的命令行包括一切通过字符终端控制计算机的⽅式  Windows - cmd&#x2F;PowerShell&#x2F;Git bash  UNIX&#x2F;Linux系列：sh&#x2F;zsh&#x2F;Terminal, etc.  为什么需要命令行 因为基本所有公司">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 与命令行">
-<meta property="og:url" content="http://example.com/2021/03/01/Java%20%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/index.html">
+<meta property="og:title" content="命令行的入门与详解">
+<meta property="og:url" content="http://example.com/2021/08/26/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在日常写 Java 程序的工作中，运行，debug 等等操作，本质上都是在进行命令行操作。我们在 IDE 上点击运行，Java 程序就会运行，实际上 IDE 在背后帮我们进行了命令拼接。 我们可以在 IDEA 中编写一个简单的 Java 程序 1234567891011package zzf;&#x2F;** * @author zzf * @date 2021&#x2F;2&#x2F;28&#x2F;028 21:53 *&#x2F;publi">
+<meta property="og:description" content="什么是命令行操作系统都有内核的概念，内核是直接与硬件打交道的。我们通过包裹内核的一层壳（ shell ）来与内核打交道。 广义的命令行包括一切通过字符终端控制计算机的⽅式  Windows - cmd&#x2F;PowerShell&#x2F;Git bash  UNIX&#x2F;Linux系列：sh&#x2F;zsh&#x2F;Terminal, etc.  为什么需要命令行 因为基本所有公司">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/cover.png">
-<meta property="article:published_time" content="2021-03-01T15:31:00.000Z">
-<meta property="article:modified_time" content="2022-11-14T13:38:46.359Z">
+<meta property="og:image" content="http://example.com/picture/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%AF%A6%E8%A7%A3/cover.png">
+<meta property="article:published_time" content="2021-08-26T16:57:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T13:38:46.363Z">
 <meta property="article:author" content="Greek">
-<meta property="article:tag" content="Java">
 <meta property="article:tag" content="命令行">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/cover.png">
+<meta name="twitter:image" content="http://example.com/picture/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%AF%A6%E8%A7%A3/cover.png">
   
   
   
-  <title>Java 与命令行 - Hexo</title>
+  <title>命令行的入门与详解 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Java 与命令行</span>
+            <span id="subtitle">命令行的入门与详解</span>
           
         </div>
 
@@ -210,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2021-03-01 15:31" pubdate>
-          2021年3月1日 下午
+        <time datetime="2021-08-26 16:57" pubdate>
+          2021年8月26日 下午
         </time>
       </span>
     
@@ -222,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.5k 字
+          2.9k 字
         
       </span>
     
@@ -233,7 +232,7 @@
         
         
         
-          38 分钟
+          25 分钟
         
       </span>
     
@@ -271,39 +270,100 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Java 与命令行</h1>
+            <h1 style="display: none">命令行的入门与详解</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在日常写 Java 程序的工作中，运行，debug 等等操作，本质上都是在进行命令行操作。我们在 IDE 上点击运行，Java 程序就会运行，实际上 IDE 在背后帮我们进行了命令拼接。</p>
-<p>我们可以在 IDEA 中编写一个简单的 Java 程序</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> zzf;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> zzf</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2021/2/28/028 21:53</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello World&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>在 zzf 包下面有个 Main.java 类，里面有个 main 方法输出了 “Hello World”。在 IDEA 中点击了运行按钮之后，控制台会有一串命令行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">D:\java\jdk\bin\java.exe -javaagent:D:\software\Idea\ideaIU-2019.2.3.win\lib\idea_rt.jar=56956:D:\software\Idea\ideaIU-2019.2.3.win\bin -Dfile.encoding=UTF-8 -classpath D:\Java\jdk\jre\lib\charsets.jar;D:\Java\jdk\jre\lib\deploy.jar;D:\Java\jdk\jre\lib\ext\access-bridge-64.jar;D:\Java\jdk\jre\lib\ext\cldrdata.jar;D:\Java\jdk\jre\lib\ext\dnsns.jar;D:\Java\jdk\jre\lib\ext\jaccess.jar;D:\Java\jdk\jre\lib\ext\jfxrt.jar;D:\Java\jdk\jre\lib\ext\localedata.jar;D:\Java\jdk\jre\lib\ext\nashorn.jar;D:\Java\jdk\jre\lib\ext\sunec.jar;D:\Java\jdk\jre\lib\ext\sunjce_provider.jar;D:\Java\jdk\jre\lib\ext\sunmscapi.jar;D:\Java\jdk\jre\lib\ext\sunpkcs11.jar;D:\Java\jdk\jre\lib\ext\zipfs.jar;D:\Java\jdk\jre\lib\javaws.jar;D:\Java\jdk\jre\lib\jce.jar;D:\Java\jdk\jre\lib\jfr.jar;D:\Java\jdk\jre\lib\jfxswt.jar;D:\Java\jdk\jre\lib\jsse.jar;D:\Java\jdk\jre\lib\management-agent.jar;D:\Java\jdk\jre\lib\plugin.jar;D:\Java\jdk\jre\lib\resources.jar;D:\Java\jdk\jre\lib\rt.jar;D:\idea-work\testDemo\out\production\testDemo zzf.Main<br></code></pre></td></tr></table></figure>
-<p>当我们把该命令复制到 CMD 窗口运行的时候，同样控制台会打印 “Hello World”</p>
-<h2 id="Java-执行过程"><a href="#Java-执行过程" class="headerlink" title="Java 执行过程"></a>Java 执行过程</h2><p>我们平时写的源代码（.java 文件），需要编译成字节码（.class 文件），然后再给到 jvm 去解释执行。jvm 只认识字节码，多个 class 文件可以打包成 jar 包来执行。</p>
-<h3 id="args-参数"><a href="#args-参数" class="headerlink" title="args 参数"></a>args 参数</h3><p>我们写 Java 程序，main 方法里面都有一个 args 参数，实际上这个参数是可以从命令行获取的。编写以下程序获取打印 args 参数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String []args)</span>&#123;<br>	System.out.println(java.util.Arrays.toString(args));<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>使用如下命令编辑和运行该程序</p>
-<p><img src="/../picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/cb5a1ca0-47b2-4f27-adf4-23b88ff755c8.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以看到使用 <code>java Main</code> 运行时，打印为空字符串，而在后面添加 <code>1 2 3</code> 三个参数时，打印 <code>[1,2,3]</code> 。</p>
-<p><code>java Main 1 2 3</code> 表示，调用 java 这个可执行程序，然后把 <code>Main 1 2 3</code> 这四个参数传递个 java。java 把 Main 这个类名拿出来，并且运行这个类，后面的参数 <code>1 2 3</code> 当做这个类的参数，传递给这个类的 main 方法。</p>
-<h3 id="jvm-中的系统属性和环境变量"><a href="#jvm-中的系统属性和环境变量" class="headerlink" title="jvm 中的系统属性和环境变量"></a>jvm 中的系统属性和环境变量</h3><p>系统属性和环境变量是完全不同的东西，系统属性只在 jvm 中有效，不像环境变量可以继承属性。</p>
-<p>我们可以在代码中使用 <strong>System.getenv()</strong> 来获取当前环境变量，使用 <strong>System.getProperty()</strong> 获取系统属性。我们可以编写如下代码（其中 java.version 是 jvm 自带的系统属性）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String []args)</span>&#123;<br>    <span class="hljs-comment">// 打印 args 参数</span><br>	System.out.println(<span class="hljs-string">&quot;args: &quot;</span> +java.util.Arrays.toString(args));<br>    <span class="hljs-comment">// 打印名为 zzf 的环境变量</span><br>	System.out.println(<span class="hljs-string">&quot;env: &quot;</span> +System.getenv(<span class="hljs-string">&quot;zzf&quot;</span>));<br>    <span class="hljs-comment">// 打印名为 zzf 的系统属性</span><br>	System.out.println(<span class="hljs-string">&quot;System Property: &quot;</span> +System.getProperty(<span class="hljs-string">&quot;zzf&quot;</span>));<br>    <span class="hljs-comment">// 打印名为 java.version 的系统属性</span><br>	System.out.println(<span class="hljs-string">&quot;Java version: &quot;</span> +System.getProperty(<span class="hljs-string">&quot;java.version&quot;</span>));<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>我们先使用 <code>export zzf=helo</code> 给当前环境添加环境变量 zzf，值为 hello，然后运行。</p>
-<p><img src="/../picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/f9e53a89-e89f-4f30-ae14-bf89b7712e10.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以发现系统属性 zzf 并没有，打印为 null。而由于 jvm 存在系统属性 java.version，所以正确打印出版本号。要传入系统属性给 jvm 我们需要使用 <strong>-D</strong> 参数，如图所示。</p>
-<p><img src="/../picture/Java%E4%B8%8E%E5%91%BD%E4%BB%A4%E8%A1%8C/38903da7-6c08-4b00-bbe3-39cc1fb23f9a.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<h3 id="java-代码中的包"><a href="#java-代码中的包" class="headerlink" title="java 代码中的包"></a>java 代码中的包</h3><p>假设有如下代码 zzf.java：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> org.apache.commons.lang3.StringUtils;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">zzf</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span> <span class="hljs-params">(String[] args)</span>&#123;<br>		System.out.println(StringUtils.isBlank(args[<span class="hljs-number">0</span>]));<br>		System.out.println(StringUtils.isBlank(args[<span class="hljs-number">1</span>]));<br>		System.out.println(StringUtils.isBlank(args[<span class="hljs-number">2</span>]));<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>该代码引用了第三方的包 <code>org.apache.commons.lang3.StringUtils</code> ，当我们使用 javac 编译的时候会报错，找不到这个包。因此，就需要指定这个包的目录，假设 <code>commons-lang3-3.9.jar</code> 文件和 zzf.java 文件在同一目录下，我们就可以使用 -classpath（简写 -cp），指定文件的位置。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">javac -cp commons-lang3-3.9.jar zzf.java<br></code></pre></td></tr></table></figure>
-<p>这样就可以编译通过。但是在运行 java 程序的时候，需要同时指定引用的包的位置，还需要指定 zzf.class 文件位置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -cp ./commons-lang3-3.9.jar:. zzf 1 2 3<br></code></pre></td></tr></table></figure>
-<p> 该命令指定了第三方包的位置，以及 zzf.class 文件的位置。由于 zzf.class 文件是在当前目录，所以用 “.” 来表示。在 Linux 中多个目录用 “:” 隔开，Windows 使用 “;” 隔开。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>回到这个命令行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">D:\java\jdk\bin\java.exe -javaagent:D:\software\Idea\ideaIU-2019.2.3.win\lib\idea_rt.jar=56956:D:\software\Idea\ideaIU-2019.2.3.win\bin -Dfile.encoding=UTF-8 -classpath D:\Java\jdk\jre\lib\charsets.jar;D:\Java\jdk\jre\lib\deploy.jar;D:\Java\jdk\jre\lib\ext\access-bridge-64.jar;D:\Java\jdk\jre\lib\ext\cldrdata.jar;D:\Java\jdk\jre\lib\ext\dnsns.jar;D:\Java\jdk\jre\lib\ext\jaccess.jar;D:\Java\jdk\jre\lib\ext\jfxrt.jar;D:\Java\jdk\jre\lib\ext\localedata.jar;D:\Java\jdk\jre\lib\ext\nashorn.jar;D:\Java\jdk\jre\lib\ext\sunec.jar;D:\Java\jdk\jre\lib\ext\sunjce_provider.jar;D:\Java\jdk\jre\lib\ext\sunmscapi.jar;D:\Java\jdk\jre\lib\ext\sunpkcs11.jar;D:\Java\jdk\jre\lib\ext\zipfs.jar;D:\Java\jdk\jre\lib\javaws.jar;D:\Java\jdk\jre\lib\jce.jar;D:\Java\jdk\jre\lib\jfr.jar;D:\Java\jdk\jre\lib\jfxswt.jar;D:\Java\jdk\jre\lib\jsse.jar;D:\Java\jdk\jre\lib\management-agent.jar;D:\Java\jdk\jre\lib\plugin.jar;D:\Java\jdk\jre\lib\resources.jar;D:\Java\jdk\jre\lib\rt.jar;D:\idea-work\testDemo\out\production\testDemo zzf.Main<br></code></pre></td></tr></table></figure>
-<p>先不管 <code>-javaagent</code> ，从 <code>-Dfile.encoding=UTF-8</code> 给 jvm 设置一个系统属性 file.encoding&#x3D;UTF-8，然后使用 <code>-classpath</code> 指定引用的包路径，要运行的文件的位置。最后只剩需要执行的文件名称 <code>zzf.Main</code> 。把上述这些都交给 <code>D:\java\jdk\bin\java.exe</code> 该可执行程序执行。</p>
+                <h1 id="什么是命令行"><a href="#什么是命令行" class="headerlink" title="什么是命令行"></a>什么是命令行</h1><p>操作系统都有内核的概念，内核是直接与硬件打交道的。我们通过包裹内核的一层壳（ shell ）来与内核打交道。</p>
+<p><strong>广义的命令行包括一切通过字符终端控制计算机的⽅式</strong></p>
+<ul>
+<li>Windows - cmd&#x2F;PowerShell&#x2F;Git bash </li>
+<li>UNIX&#x2F;Linux系列：sh&#x2F;zsh&#x2F;Terminal, etc.</li>
+</ul>
+<h1 id="为什么需要命令行"><a href="#为什么需要命令行" class="headerlink" title="为什么需要命令行"></a>为什么需要命令行</h1><ul>
+<li>因为基本所有公司的服务器都运⾏在 Linux 上 ，所以不得不用</li>
+<li>将工作自动化（暂时没有接触到的领域）</li>
+<li>相比 GUI，命令行更容易开发维护，bug 更少</li>
+<li>远程连接命令行占用资源远低于 GUI</li>
+<li>命令行上的开发者工具更丰富</li>
+</ul>
+<h1 id="不同平台命令行启动方式"><a href="#不同平台命令行启动方式" class="headerlink" title="不同平台命令行启动方式"></a>不同平台命令行启动方式</h1><ul>
+<li>Windows：cmd&#x2F;PowerShell&#x2F;WSL </li>
+<li>UNIX&#x2F;Linux：⼀开机就是，不⽤找。Mac OS 对应的是终端。</li>
+</ul>
+<h1 id="命令行的全部要素"><a href="#命令行的全部要素" class="headerlink" title="命令行的全部要素"></a>命令行的全部要素</h1><p><strong>命令是由可执行程序和参数组成的。</strong>例如：git add test.txt，git 就是<strong>可执行程序</strong>，git 后面所有的都是<strong>参数，</strong>即 <code>add test.txt</code> 。命令行输入命令，会把参数原封不动地交给可执行程序解释。</p>
+<h2 id="可执行程序（Executable）"><a href="#可执行程序（Executable）" class="headerlink" title="可执行程序（Executable）"></a>可执行程序（Executable）</h2><p>什么样的东西是可执行的呢？在 Windows 和 Linux &#x2F; Unix有着不同的区别</p>
+<ul>
+<li>Windows：只要是 exe &#x2F; bat &#x2F; com 结尾的文件都是可执行文件</li>
+<li>LIunx &#x2F; Unix：文件有 <strong>x 权限</strong>，表示该文件为可执行文件</li>
+</ul>
+<p><strong>可执行程序的位置</strong></p>
+<ul>
+<li>Windows：Path 环境变量或当前⽬录 </li>
+<li>UNIX &#x2F; Linux：PATH 环境变量</li>
+</ul>
+<p><strong>可以在脚本的第一行指定解释器（shebang）</strong>，假设 zzf.sh文件中有如下代码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/usr/bin/env node</span><br>console.log(123)<br></code></pre></td></tr></table></figure>
+<p><code>#!/usr/bin/env node</code> 意思是在 PATH 环境变量找到 node 解释器位置，来解释 zzf.sh 文件。也可以使用 node.exe 文件的绝对路径。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/d/node</span><br>console.log(123)<br></code></pre></td></tr></table></figure>
+<p>从环境变量找解释器和使用绝对路径是等价的，但是一般都是从环境变量去找，更为灵活。</p>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p><strong>UNIX 参数的约定</strong></p>
+<ul>
+<li>使用一个 “-“ 后面只能跟一个字符，例如：-a -f  等等。后面跟多个参数的话可以合并，例如：-a -f 合并成 -af</li>
+<li>使用两个 “-“ 后面可以跟一个单词，例如： <code>ls -a</code>  显示所有文件，等价于 <code>ls --all</code></li>
+</ul>
+<p> </p>
+<p>然而，Java 并不鸟 UNIX 参数约定，例如：当我们查看当前 Java 版本，使用命令 <code>java -version</code> ，一个 “-“ 后面跟了一个单词，与 UNIX 参数约定不符</p>
+<p><strong>参数一些注意事项</strong>默认情况下 “$” 符号会进行展开。假设当前目录存在一个 <code>main$A.class</code> 文件，并且 <code>export A=123</code> 设置环境变量 A 为123， 使用 <code>Java main$A</code> 运行该文件，等价于 <code>Java main123</code> 。即，把 $A 替换成 123，如果不进行替换，就要使用单引号包裹起来，即 <code>Java &#39;main$A&#39;</code> 。双引号包裹内容也会进行替换。</p>
+<p><strong>因此得出以下结论</strong></p>
+<ul>
+<li>单引号：不会对引号的内容做处理</li>
+<li>双引号：对引号里的内容替换</li>
+<li>空格：当做参数处理</li>
+</ul>
+<h2 id="环境变量（Environment-variable）"><a href="#环境变量（Environment-variable）" class="headerlink" title="环境变量（Environment variable）"></a>环境变量（Environment variable）</h2><ul>
+<li>进程（Process）<ul>
+<li>进程是计算机程序运⾏的最⼩单位 </li>
+<li>独占⾃⼰的内存空间和⽂件资源</li>
+</ul>
+</li>
+<li>每个进程都和⼀组变量相绑定 <ul>
+<li>传递不同的环境变量可以让程序表现出不同的⾏为 </li>
+<li>CLASSPATH&#x2F;GOPATH</li>
+</ul>
+</li>
+<li>在进程的fork过程中，环境变量可以被完全继承</li>
+<li>所有的操作系统&#x2F;编程语⾔都⽀持环境变量 </li>
+<li>局部和全局的环境变量<ul>
+<li>局部变量：只在当前环境生效</li>
+<li>全局变量：全局生效的变量</li>
+</ul>
+</li>
+</ul>
+<p>我们可以通过 export &#x2F; set 设置环境变量，通过 echo 读取环境变量 。修改全局变量就需要在全部变量文件中修改，不同操作系统对应的文件不同。</p>
+<h2 id="工作目录（Working-directory）"><a href="#工作目录（Working-directory）" class="headerlink" title="工作目录（Working directory）"></a>工作目录（Working directory）</h2><p><strong>工作目录就是输入命令行时，所处的目录即为工作目录。绝对路径是以根目录开头的路径，相对路径是相对于当前目录的路径。</strong></p>
+<h1 id="进程的输入与输出"><a href="#进程的输入与输出" class="headerlink" title="进程的输入与输出"></a>进程的输入与输出</h1><p>标准输⼊ stdin ，进程将从标准输入中得到输入数据。例如使用 <code>rm -rf *</code> 命令，会提示是否确认删除，当我们回复y 的时候，就时一个标准输入。</p>
+<p><strong>输出的重定向</strong>，我们可以使用 “&gt;” 符号来重定向输出，例如在终端输入 <code>date +&quot;%Y-%m-%d %H:%M:%S&quot; &gt; output.txt</code> ，就是将<strong>标准输出</strong>重定向到 output.txt 文件中，若再次运行该命令，会将之前的 output.txt 文件覆盖 。使用 “&gt;&gt;” 可以将标准输出追加到 output.txt 文件中。</p>
+<p><strong>标准输出 stdout</strong> 和<strong>标准错误 stderr <strong>相当于一个进程的两个管道。标准输出对应着文件描述符1，标准错误 对应着文件描述符2。假设我们要将一个</strong>进程的标准输出重定向</strong>到 output.txt 文件中，我们可以使用 <code>命令 &gt; output.txt</code> 或者 <code> 命令 1&gt; output.txt</code> 。同理类推，将**进程的标准错误重定向到 **erroe.txt 文件，可以使用    <code>命令 2&gt; error.txt</code> 。要让标准输出和标准错误都重定向到 output.txt 文件，使用 <code> 命令 &gt; output.txt &gt; 2&gt;&amp;1</code> 。该命令代表的意思是，先将2（标准错误），重定向到1（标准输出），再把结果重定向到 outout.txt 文件。</p>
+<p><strong>&#x2F;dev&#x2F;null</strong> 相当于一个垃圾桶的概念，可以把标准输出或者标准输入重定向到该文件。 <code> 命令 &gt; /dev/null</code> 即把标准输出丢到垃圾桶里，相当于黑洞一般，把标准输出给「吞」了。</p>
+<h1 id="Linux-文件权限"><a href="#Linux-文件权限" class="headerlink" title="Linux 文件权限"></a>Linux 文件权限</h1><p>任何一个 UNIX 文件都有9位，分成3组，分别是自己（文件创建者），同用户组的人，不同用户组的人。每一组都有 rwx，r 代表读（read），w 代表写（write），x 代表可执行。</p>
+<p>假设有一个需求，我们要当前文件只能被当前用户读写执行。就需要把自己组的 r 设置为1，w 设置为1，x 设置为1，其他组的 rwx 都设置为0，设置完成后对应的二进制分别是 <code>111 000 000</code> ，对应的十进制就是 <code>700</code> ，因此使用 <code>chmod 700 当前文件</code> 即可赋予当前用户读写执行权限。</p>
+<p>根据上面的结论，我们需要给所有用户可读可写可执行权限，就需要把所有组的 rwx 设置为1，得到的二进制就是 <code>111 111 111</code> ，对应的十进制为 <code>777</code> ，因此 <code>chmod 777 当前文件</code> 表示为所有用户，赋予可读可写可执行权限。</p>
+<h1 id="Linux-常用命令"><a href="#Linux-常用命令" class="headerlink" title="Linux 常用命令"></a>Linux 常用命令</h1><ul>
+<li>进⼊⽬录 cd (change directory) </li>
+<li>展示⽂件 ls&#x2F;ll&#x2F;ls -alth (list) </li>
+<li>移动&#x2F;重命名⽂件 mv (move) </li>
+<li>删除⽂件 rm&#x2F;rm -r&#x2F;rm -rf (remove) </li>
+<li>拷⻉⽂件 cp&#x2F;cp -r (copy) </li>
+<li>显示变量 echo </li>
+<li>导出变量 export </li>
+<li>Git系列操作 git pull&#x2F;push&#x2F;add&#x2F;commit&#x2F;…</li>
+<li>新建⽬录 mkdir&#x2F;mkdir -p (make directory) </li>
+<li>当前⽬录 pwd (print working directory) </li>
+<li>显示⽂件 cat (concatenate and print files)</li>
+<li>编辑⽂件 vi</li>
+</ul>
 
                 
               </div>
@@ -315,8 +375,6 @@
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Java/">#Java</a>
       
         <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/">#命令行</a>
       
@@ -330,8 +388,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java 与命令行</div>
-      <div>http://example.com/2021/03/01/Java 与命令行/</div>
+      <div>命令行的入门与详解</div>
+      <div>http://example.com/2021/08/26/命令行的入门与详解/</div>
     </div>
     <div class="license-meta">
       
@@ -343,7 +401,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2021年3月1日</div>
+          <div>2021年8月26日</div>
         </div>
       
       
@@ -375,15 +433,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/03/03/Maven%20%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/" title="Maven 包冲突解决过程">
+                      <a href="/2021/08/26/Java%20%E5%8C%85%E7%AE%A1%E7%90%86/" title="Java 包管理">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Maven 包冲突解决过程</span>
+                        <span class="hidden-mobile">Java 包管理</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/08/26/Maven%20%E4%BE%9D%E8%B5%96%E4%B8%8E%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6/" title="Maven 依赖与插件解析机制">
+                        <span class="hidden-mobile">Maven 依赖与插件解析机制</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

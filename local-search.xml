@@ -157,9 +157,9 @@
     
     <tags>
       
-      <tag>GitHub</tag>
-      
       <tag>Git</tag>
+      
+      <tag>GitHub</tag>
       
     </tags>
     
@@ -200,6 +200,25 @@
       <tag>Java</tag>
       
       <tag>Maven</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>命令行的入门与详解</title>
+    <link href="/2021/08/26/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%AF%A6%E8%A7%A3/"/>
+    <url>/2021/08/26/%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%85%A5%E9%97%A8%E4%B8%8E%E8%AF%A6%E8%A7%A3/</url>
+    
+    <content type="html"><![CDATA[<h1 id="什么是命令行"><a href="#什么是命令行" class="headerlink" title="什么是命令行"></a>什么是命令行</h1><p>操作系统都有内核的概念，内核是直接与硬件打交道的。我们通过包裹内核的一层壳（ shell ）来与内核打交道。</p><p><strong>广义的命令行包括一切通过字符终端控制计算机的⽅式</strong></p><ul><li>Windows - cmd&#x2F;PowerShell&#x2F;Git bash </li><li>UNIX&#x2F;Linux系列：sh&#x2F;zsh&#x2F;Terminal, etc.</li></ul><h1 id="为什么需要命令行"><a href="#为什么需要命令行" class="headerlink" title="为什么需要命令行"></a>为什么需要命令行</h1><ul><li>因为基本所有公司的服务器都运⾏在 Linux 上 ，所以不得不用</li><li>将工作自动化（暂时没有接触到的领域）</li><li>相比 GUI，命令行更容易开发维护，bug 更少</li><li>远程连接命令行占用资源远低于 GUI</li><li>命令行上的开发者工具更丰富</li></ul><h1 id="不同平台命令行启动方式"><a href="#不同平台命令行启动方式" class="headerlink" title="不同平台命令行启动方式"></a>不同平台命令行启动方式</h1><ul><li>Windows：cmd&#x2F;PowerShell&#x2F;WSL </li><li>UNIX&#x2F;Linux：⼀开机就是，不⽤找。Mac OS 对应的是终端。</li></ul><h1 id="命令行的全部要素"><a href="#命令行的全部要素" class="headerlink" title="命令行的全部要素"></a>命令行的全部要素</h1><p><strong>命令是由可执行程序和参数组成的。</strong>例如：git add test.txt，git 就是<strong>可执行程序</strong>，git 后面所有的都是<strong>参数，</strong>即 <code>add test.txt</code> 。命令行输入命令，会把参数原封不动地交给可执行程序解释。</p><h2 id="可执行程序（Executable）"><a href="#可执行程序（Executable）" class="headerlink" title="可执行程序（Executable）"></a>可执行程序（Executable）</h2><p>什么样的东西是可执行的呢？在 Windows 和 Linux &#x2F; Unix有着不同的区别</p><ul><li>Windows：只要是 exe &#x2F; bat &#x2F; com 结尾的文件都是可执行文件</li><li>LIunx &#x2F; Unix：文件有 <strong>x 权限</strong>，表示该文件为可执行文件</li></ul><p><strong>可执行程序的位置</strong></p><ul><li>Windows：Path 环境变量或当前⽬录 </li><li>UNIX &#x2F; Linux：PATH 环境变量</li></ul><p><strong>可以在脚本的第一行指定解释器（shebang）</strong>，假设 zzf.sh文件中有如下代码：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/usr/bin/env node</span><br>console.log(123)<br></code></pre></td></tr></table></figure><p><code>#!/usr/bin/env node</code> 意思是在 PATH 环境变量找到 node 解释器位置，来解释 zzf.sh 文件。也可以使用 node.exe 文件的绝对路径。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">!/d/node</span><br>console.log(123)<br></code></pre></td></tr></table></figure><p>从环境变量找解释器和使用绝对路径是等价的，但是一般都是从环境变量去找，更为灵活。</p><h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><p><strong>UNIX 参数的约定</strong></p><ul><li>使用一个 “-“ 后面只能跟一个字符，例如：-a -f  等等。后面跟多个参数的话可以合并，例如：-a -f 合并成 -af</li><li>使用两个 “-“ 后面可以跟一个单词，例如： <code>ls -a</code>  显示所有文件，等价于 <code>ls --all</code></li></ul><p> </p><p>然而，Java 并不鸟 UNIX 参数约定，例如：当我们查看当前 Java 版本，使用命令 <code>java -version</code> ，一个 “-“ 后面跟了一个单词，与 UNIX 参数约定不符</p><p><strong>参数一些注意事项</strong>默认情况下 “$” 符号会进行展开。假设当前目录存在一个 <code>main$A.class</code> 文件，并且 <code>export A=123</code> 设置环境变量 A 为123， 使用 <code>Java main$A</code> 运行该文件，等价于 <code>Java main123</code> 。即，把 $A 替换成 123，如果不进行替换，就要使用单引号包裹起来，即 <code>Java &#39;main$A&#39;</code> 。双引号包裹内容也会进行替换。</p><p><strong>因此得出以下结论</strong></p><ul><li>单引号：不会对引号的内容做处理</li><li>双引号：对引号里的内容替换</li><li>空格：当做参数处理</li></ul><h2 id="环境变量（Environment-variable）"><a href="#环境变量（Environment-variable）" class="headerlink" title="环境变量（Environment variable）"></a>环境变量（Environment variable）</h2><ul><li>进程（Process）<ul><li>进程是计算机程序运⾏的最⼩单位 </li><li>独占⾃⼰的内存空间和⽂件资源</li></ul></li><li>每个进程都和⼀组变量相绑定 <ul><li>传递不同的环境变量可以让程序表现出不同的⾏为 </li><li>CLASSPATH&#x2F;GOPATH</li></ul></li><li>在进程的fork过程中，环境变量可以被完全继承</li><li>所有的操作系统&#x2F;编程语⾔都⽀持环境变量 </li><li>局部和全局的环境变量<ul><li>局部变量：只在当前环境生效</li><li>全局变量：全局生效的变量</li></ul></li></ul><p>我们可以通过 export &#x2F; set 设置环境变量，通过 echo 读取环境变量 。修改全局变量就需要在全部变量文件中修改，不同操作系统对应的文件不同。</p><h2 id="工作目录（Working-directory）"><a href="#工作目录（Working-directory）" class="headerlink" title="工作目录（Working directory）"></a>工作目录（Working directory）</h2><p><strong>工作目录就是输入命令行时，所处的目录即为工作目录。绝对路径是以根目录开头的路径，相对路径是相对于当前目录的路径。</strong></p><h1 id="进程的输入与输出"><a href="#进程的输入与输出" class="headerlink" title="进程的输入与输出"></a>进程的输入与输出</h1><p>标准输⼊ stdin ，进程将从标准输入中得到输入数据。例如使用 <code>rm -rf *</code> 命令，会提示是否确认删除，当我们回复y 的时候，就时一个标准输入。</p><p><strong>输出的重定向</strong>，我们可以使用 “&gt;” 符号来重定向输出，例如在终端输入 <code>date +&quot;%Y-%m-%d %H:%M:%S&quot; &gt; output.txt</code> ，就是将<strong>标准输出</strong>重定向到 output.txt 文件中，若再次运行该命令，会将之前的 output.txt 文件覆盖 。使用 “&gt;&gt;” 可以将标准输出追加到 output.txt 文件中。</p><p><strong>标准输出 stdout</strong> 和<strong>标准错误 stderr <strong>相当于一个进程的两个管道。标准输出对应着文件描述符1，标准错误 对应着文件描述符2。假设我们要将一个</strong>进程的标准输出重定向</strong>到 output.txt 文件中，我们可以使用 <code>命令 &gt; output.txt</code> 或者 <code> 命令 1&gt; output.txt</code> 。同理类推，将**进程的标准错误重定向到 **erroe.txt 文件，可以使用    <code>命令 2&gt; error.txt</code> 。要让标准输出和标准错误都重定向到 output.txt 文件，使用 <code> 命令 &gt; output.txt &gt; 2&gt;&amp;1</code> 。该命令代表的意思是，先将2（标准错误），重定向到1（标准输出），再把结果重定向到 outout.txt 文件。</p><p><strong>&#x2F;dev&#x2F;null</strong> 相当于一个垃圾桶的概念，可以把标准输出或者标准输入重定向到该文件。 <code> 命令 &gt; /dev/null</code> 即把标准输出丢到垃圾桶里，相当于黑洞一般，把标准输出给「吞」了。</p><h1 id="Linux-文件权限"><a href="#Linux-文件权限" class="headerlink" title="Linux 文件权限"></a>Linux 文件权限</h1><p>任何一个 UNIX 文件都有9位，分成3组，分别是自己（文件创建者），同用户组的人，不同用户组的人。每一组都有 rwx，r 代表读（read），w 代表写（write），x 代表可执行。</p><p>假设有一个需求，我们要当前文件只能被当前用户读写执行。就需要把自己组的 r 设置为1，w 设置为1，x 设置为1，其他组的 rwx 都设置为0，设置完成后对应的二进制分别是 <code>111 000 000</code> ，对应的十进制就是 <code>700</code> ，因此使用 <code>chmod 700 当前文件</code> 即可赋予当前用户读写执行权限。</p><p>根据上面的结论，我们需要给所有用户可读可写可执行权限，就需要把所有组的 rwx 设置为1，得到的二进制就是 <code>111 111 111</code> ，对应的十进制为 <code>777</code> ，因此 <code>chmod 777 当前文件</code> 表示为所有用户，赋予可读可写可执行权限。</p><h1 id="Linux-常用命令"><a href="#Linux-常用命令" class="headerlink" title="Linux 常用命令"></a>Linux 常用命令</h1><ul><li>进⼊⽬录 cd (change directory) </li><li>展示⽂件 ls&#x2F;ll&#x2F;ls -alth (list) </li><li>移动&#x2F;重命名⽂件 mv (move) </li><li>删除⽂件 rm&#x2F;rm -r&#x2F;rm -rf (remove) </li><li>拷⻉⽂件 cp&#x2F;cp -r (copy) </li><li>显示变量 echo </li><li>导出变量 export </li><li>Git系列操作 git pull&#x2F;push&#x2F;add&#x2F;commit&#x2F;…</li><li>新建⽬录 mkdir&#x2F;mkdir -p (make directory) </li><li>当前⽬录 pwd (print working directory) </li><li>显示⽂件 cat (concatenate and print files)</li><li>编辑⽂件 vi</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>命令行</tag>
       
     </tags>
     
@@ -337,6 +356,25 @@
     <tags>
       
       <tag>Java</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Git</title>
+    <link href="/2021/03/04/Git/"/>
+    <url>/2021/03/04/Git/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Git-简介"><a href="#Git-简介" class="headerlink" title="Git 简介"></a>Git 简介</h1><p>了解一门新的技术或者工具都要问这几个问题：它是什么？它有什么用？</p><p><code>Git</code> 是世界上最先进的<code>分布式</code>版本控制系统。这里又有两个小问题：什么是「分布式」？「版本控制」又是什么？</p><p>首先讲一下「版本控制」。什么是版本控制呢，只要玩过游戏就能很好的理解，「版本控制」就像游戏的「存档」一样。一般我们打 boss 前都会存档，我们可能存在多个存档，每次想回到哪个时间点都能回去。我们遇到很难打的 boss ，可以借号给朋友，让朋友帮你过，朋友打完也可以存档，这样你玩的时候已经通关了。这就是「多人协作」的好处，同样 Git 也是支持多人协作的。相比游戏「存档」，Git 还可以清楚的知道每个存档你做了什么事，比如：你在存档 A 过了新手村，存档 B 击杀了 boss。游戏就不同了，「存档」和「事件」的对应关系，需要自己去记忆，存档多了就会很不方便。 </p><h1 id="Git-命令"><a href="#Git-命令" class="headerlink" title="Git 命令"></a>Git 命令</h1><p>git add</p><p>git commit</p><p>git status</p><p>git diff</p><p>git log –pretty&#x3D;oneline</p><p>git reset –hard head^</p><p>git reflog</p><h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><p>远程仓库熟悉的有 <code>GitHub</code>，<code>Gitee</code>。我们可以把我们的本地仓库推送到远程仓库上去，接下来都以 GitHub 仓库举例，练习。</p><h2 id="SSH-配置"><a href="#SSH-配置" class="headerlink" title="SSH 配置"></a>SSH 配置</h2><p>由于本地的 Git仓库和 GitHub 的传输是通过 SSH 加密的，我们需要做一些简单设置。在用户主目录下，先检查电脑是否有 <code>.ssh</code> 文件夹，如果有，在看下有没有 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 这两个文件。如果有，就跳到第二步。</p><p>一， 打开 <code>Git Bash</code>，输入如下命令命令，创建 SSH Key，记得把邮箱换成自己的。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">ssh-keygen -t rsa -C &quot;youremail@example.com&quot;<br></code></pre></td></tr></table></figure><p>过程中出现提示，一直回车即可。成功的话，就可以在用户主目录下看到 <code>.ssh</code> 文件夹，以及该文件夹下的 <code>id_rsa</code>，<code>id_rsa.pub</code> 两个文件。</p><p>二，在 GitHub 添加 SSH Key。把刚才的 id_rsa.pub 文件里的内容复制到 GitHub 要添加 SSH Key 的地方，完成添加即可。GitHub 添加 SSH Key 的位置自行搜索。</p><h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><p>使用如下命令关联远程仓库</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git remote add origin 仓库地址<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Git</tag>
       
     </tags>
     

@@ -16,25 +16,24 @@
   <meta name="author" content="Greek">
   <meta name="keywords" content="">
   
-    <meta name="description" content="什么是 Stream 流流就相当于工厂的流水线工作，传送带上是一件件产品，而传送带周围是一些工人。有的负责把挑出次品，把它放到其他另一条流水线中重新加工，有的负责根据产品颜色进行收集，等等。如下图所示。 三个员工对传送带上的产品进行操作，老王负责收集把黄色产品挑出，老周负责把产品按先后排序，而老赵负责把残次品挑拣出来，拆开零件放到新的床送带中，继续加工。传送带的终点就是篮子，产品都流向篮子里面。">
+    <meta name="description" content="Git 简介了解一门新的技术或者工具都要问这几个问题：它是什么？它有什么用？ Git 是世界上最先进的分布式版本控制系统。这里又有两个小问题：什么是「分布式」？「版本控制」又是什么？ 首先讲一下「版本控制」。什么是版本控制呢，只要玩过游戏就能很好的理解，「版本控制」就像游戏的「存档」一样。一般我们打 boss 前都会存档，我们可能存在多个存档，每次想回到哪个时间点都能回去。我们遇到很难打的 bos">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Stream">
-<meta property="og:url" content="http://example.com/2022/01/03/Stream/index.html">
+<meta property="og:title" content="Git">
+<meta property="og:url" content="http://example.com/2021/03/04/Git/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="什么是 Stream 流流就相当于工厂的流水线工作，传送带上是一件件产品，而传送带周围是一些工人。有的负责把挑出次品，把它放到其他另一条流水线中重新加工，有的负责根据产品颜色进行收集，等等。如下图所示。 三个员工对传送带上的产品进行操作，老王负责收集把黄色产品挑出，老周负责把产品按先后排序，而老赵负责把残次品挑拣出来，拆开零件放到新的床送带中，继续加工。传送带的终点就是篮子，产品都流向篮子里面。">
+<meta property="og:description" content="Git 简介了解一门新的技术或者工具都要问这几个问题：它是什么？它有什么用？ Git 是世界上最先进的分布式版本控制系统。这里又有两个小问题：什么是「分布式」？「版本控制」又是什么？ 首先讲一下「版本控制」。什么是版本控制呢，只要玩过游戏就能很好的理解，「版本控制」就像游戏的「存档」一样。一般我们打 boss 前都会存档，我们可能存在多个存档，每次想回到哪个时间点都能回去。我们遇到很难打的 bos">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/picture/Stream/cover.png">
-<meta property="article:published_time" content="2022-01-03T21:06:00.000Z">
-<meta property="article:modified_time" content="2022-11-14T13:38:46.363Z">
+<meta property="og:image" content="http://example.com/picture/Git/cover.png">
+<meta property="article:published_time" content="2021-03-04T23:42:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T13:38:46.359Z">
 <meta property="article:author" content="Greek">
-<meta property="article:tag" content="Java">
-<meta property="article:tag" content="Stream">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/picture/Stream/cover.png">
+<meta name="twitter:image" content="http://example.com/picture/Git/cover.png">
   
   
   
-  <title>Stream - Hexo</title>
+  <title>Git - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Stream</span>
+            <span id="subtitle">Git</span>
           
         </div>
 
@@ -210,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-01-03 21:06" pubdate>
-          2022年1月3日 晚上
+        <time datetime="2021-03-04 23:42" pubdate>
+          2021年3月4日 晚上
         </time>
       </span>
     
@@ -222,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          921 字
         
       </span>
     
@@ -233,7 +232,7 @@
         
         
         
-          25 分钟
+          8 分钟
         
       </span>
     
@@ -271,70 +270,30 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Stream</h1>
+            <h1 style="display: none">Git</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="什么是-Stream-流"><a href="#什么是-Stream-流" class="headerlink" title="什么是 Stream 流"></a>什么是 Stream 流</h2><p>流就相当于工厂的流水线工作，传送带上是一件件产品，而传送带周围是一些工人。有的负责把挑出次品，把它放到其他另一条流水线中重新加工，有的负责根据产品颜色进行收集，等等。如下图所示。<br><img src="/../picture/Stream/446cbca4-82a6-49e7-8ceb-1ceadcbcc8a9.png" srcset="/img/loading.gif" lazyload alt="image-20210424211146663.png"></p>
-<p>三个员工对传送带上的产品进行操作，老王负责收集把黄色产品挑出，老周负责把产品按先后排序，而老赵负责把残次品挑拣出来，拆开零件放到新的床送带中，继续加工。传送带的终点就是篮子，产品都流向篮子里面。</p>
-<p>流的操作就是如此。在没有流之前，我们要自己从一堆产品中找到残次品很难。但是我们有了流之后，我们有了流水线，有了工人，我们就可以让工人帮我们收集，让他们来处理，我们只是充当老板的角色，下达命令即可。在 Java 的流 (Stream) 中，我们只需要使用一些命令，剩下的交给程序本身去执行。这样做既减少了代码量，又能高效完成我们的需求，真是两全其美。</p>
-<p>在上面的过程中，我们把老王和老周，以及老赵操作叫做<strong>中间操作</strong>。因为他们并没有把产品收集起来，他们只是把其他不合格的产品过滤挑出，产品最终都是到篮子里面。但是你装产品不一定是用篮子，你也可以使用箱子，等其他容器。我们把使用这些<code>容器</code>装产品的操作称作<strong>终结操作</strong>。在 java 中，<strong>中间操作就是返回为 Stream 的操作，终结操作就是返回非Stream 的操作。</strong>下面会详细讲解。</p>
-<h2 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h2><p><strong>创建 Stream</strong></p>
-<ul>
-<li>Collection.stream()</li>
-<li>Stream.of()</li>
-<li>String.chars()</li>
-<li>IntStream.range() 等</li>
-</ul>
-<p><strong>Stream 中间操作</strong></p>
-<ul>
-<li>filter 按照输入的条件，过滤流中的元素</li>
-<li>map</li>
-<li>sorted 对流中的元素排序</li>
-</ul>
-<p><strong>Stream 终结操作</strong></p>
-<ul>
-<li>forEach 遍历流中的元素</li>
-<li>count &#x2F; max &#x2F; min 统计元素个数 、最大元素、最小元素</li>
-<li>findFirst &#x2F; findAny 找到第一个元素、随机找一个元素</li>
-<li>anyMatch &#x2F; noneMatch 是否有匹配的元素、没有匹配的元素</li>
-<li><strong>collect</strong> 等</li>
-</ul>
-<p>从方法名中我们就能了解它的用处，更为详细的 API 操作可以查看 Stream 源代码。</p>
-<h2 id="Collector-操作"><a href="#Collector-操作" class="headerlink" title="Collector 操作"></a>Collector 操作</h2><p>Collector 操作是 Stream 中最强大的操作，他就是我们上面例子中提到的「篮子」「箱子」等。它具有以下 API</p>
-<ul>
-<li>toSet &#x2F; toList &#x2F; toCollection</li>
-<li>joining()</li>
-<li>toMap()</li>
-<li>groupingBy()</li>
-</ul>
-<p>通过这些 API 操作，使得我们能将流中的元素收集起来</p>
-<p>下面通过一些实际案例，加深对 Stream 的理解。</p>
-<h3 id="案例1"><a href="#案例1" class="headerlink" title="案例1"></a>案例1</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> &#123;<br>        <span class="hljs-keyword">private</span> String name;<br>        <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> age;<br><br>        User(String name, <span class="hljs-type">int</span> age) &#123;<br>            <span class="hljs-built_in">this</span>.name = name;<br>            <span class="hljs-built_in">this</span>.age = age;<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getName</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> name;<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setName</span><span class="hljs-params">(String name)</span> &#123;<br>            <span class="hljs-built_in">this</span>.name = name;<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getAge</span><span class="hljs-params">()</span> &#123;<br>            <span class="hljs-keyword">return</span> age;<br>        &#125;<br><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAge</span><span class="hljs-params">(<span class="hljs-type">int</span> age)</span> &#123;<br>            <span class="hljs-built_in">this</span>.age = age;<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="Git-简介"><a href="#Git-简介" class="headerlink" title="Git 简介"></a>Git 简介</h1><p>了解一门新的技术或者工具都要问这几个问题：它是什么？它有什么用？</p>
+<p><code>Git</code> 是世界上最先进的<code>分布式</code>版本控制系统。这里又有两个小问题：什么是「分布式」？「版本控制」又是什么？</p>
+<p>首先讲一下「版本控制」。什么是版本控制呢，只要玩过游戏就能很好的理解，「版本控制」就像游戏的「存档」一样。一般我们打 boss 前都会存档，我们可能存在多个存档，每次想回到哪个时间点都能回去。我们遇到很难打的 boss ，可以借号给朋友，让朋友帮你过，朋友打完也可以存档，这样你玩的时候已经通关了。这就是「多人协作」的好处，同样 Git 也是支持多人协作的。相比游戏「存档」，Git 还可以清楚的知道每个存档你做了什么事，比如：你在存档 A 过了新手村，存档 B 击杀了 boss。游戏就不同了，「存档」和「事件」的对应关系，需要自己去记忆，存档多了就会很不方便。 </p>
+<h1 id="Git-命令"><a href="#Git-命令" class="headerlink" title="Git 命令"></a>Git 命令</h1><p>git add</p>
+<p>git commit</p>
+<p>git status</p>
+<p>git diff</p>
+<p>git log –pretty&#x3D;oneline</p>
+<p>git reset –hard head^</p>
+<p>git reflog</p>
+<h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><p>远程仓库熟悉的有 <code>GitHub</code>，<code>Gitee</code>。我们可以把我们的本地仓库推送到远程仓库上去，接下来都以 GitHub 仓库举例，练习。</p>
+<h2 id="SSH-配置"><a href="#SSH-配置" class="headerlink" title="SSH 配置"></a>SSH 配置</h2><p>由于本地的 Git仓库和 GitHub 的传输是通过 SSH 加密的，我们需要做一些简单设置。在用户主目录下，先检查电脑是否有 <code>.ssh</code> 文件夹，如果有，在看下有没有 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 这两个文件。如果有，就跳到第二步。</p>
+<p>一， 打开 <code>Git Bash</code>，输入如下命令命令，创建 SSH Key，记得把邮箱换成自己的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">ssh-keygen -t rsa -C &quot;youremail@example.com&quot;<br></code></pre></td></tr></table></figure>
+<p>过程中出现提示，一直回车即可。成功的话，就可以在用户主目录下看到 <code>.ssh</code> 文件夹，以及该文件夹下的 <code>id_rsa</code>，<code>id_rsa.pub</code> 两个文件。</p>
+<p>二，在 GitHub 添加 SSH Key。把刚才的 id_rsa.pub 文件里的内容复制到 GitHub 要添加 SSH Key 的地方，完成添加即可。GitHub 添加 SSH Key 的位置自行搜索。</p>
+<h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><p>使用如下命令关联远程仓库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git remote add origin 仓库地址<br></code></pre></td></tr></table></figure>
 
-<p>现在有个需求<strong>筛选出年龄大于等于60的用户，然后将他们按照年龄从大到小排序，将他们的名字放在一个LinkedList中返回</strong>。我们可以使用 Stream 写出如下代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LinkedList&lt;String&gt; <span class="hljs-title function_">collectNames</span><span class="hljs-params">(List&lt;User&gt; users)</span> &#123;<br>       <span class="hljs-keyword">return</span> users.stream()<br>               .filter(user -&gt; user.age &gt;= <span class="hljs-number">60</span>)<br>               .sorted(comparing(User::getAge).reversed())<br>               .map(user -&gt; user.name)<br>               .collect(toCollection(LinkedList::<span class="hljs-keyword">new</span>));<br>   &#125;<br></code></pre></td></tr></table></figure>
-
-<p>解析：要使用 Stream 首先就需要创建它<code>users.stream()</code>，根据要求筛选出年龄大于 60 的用户 <code>filter(user -&gt; user.age &gt;= 60)</code>，然后使用 sorted 对筛选后的用户按照年龄排序。由于我们要返回的是一个字符串列表<code>LinkedList&lt;String&gt;</code>，而我们 Stream 中的元素都是对象类型，因此我们使用 <code>map(user -&gt; user.name)</code>，把User 映射成 String 类型，这样 Stream 中的元素都是用户的名字了。最后，使用 collect 操作将用户的名字收集成一个 Linked ，这样就解决了我们的需求。</p>
-<p>通俗解释：我们作为老板，我们要创建一条流水线，然后安排工人在流水线旁边进行操作。安排员工老赵把用了60年以上的产品，筛选出来。筛选完后，安排老周按使用时长进行从大到小排序。排序之后，安排老王把可用的零件拆下来，最后用一个篮子收集这些可用的零件。</p>
-<h3 id="案例2"><a href="#案例2" class="headerlink" title="案例2"></a>案例2</h3><p><strong>统计一个给定的字符串中，大写英文字母（A,B,C,…,Z）出现的次数</strong>。例如，给定字符串”AaBbCc1234ABC”，返回6，因为该字符串中出现了6次大写英文字母 ABCABC</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">countUpperCaseLetters</span><span class="hljs-params">(String str)</span> &#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>) str.chars()<br>            .filter(Character::isUpperCase)<br>            .count();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>解析：String 类型创建流 <code>str.chars()</code>，然后使用 filter 进行过滤操作，过滤出大写字母 <code>filter(Character::isUpperCase)</code>，接着对过滤出的字母进行统计，完成需求。</p>
-<p>更多关于 Stream 操作 demo点击<a target="_blank" rel="noopener" href="https://github.com/greek-zzf/my-demo/tree/main/example/Stream%20%E7%BB%83%E4%B9%A0">这里</a></p>
-<h2 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h2><p>可以通过并发提高<strong>互相独立操作</strong>的性能。</p>
-<p><strong>互相独立操作</strong>指的就是，操作相互之间不影响。例：1个人割麦子需要10天，那10个人割相同面积的麦子就只需要1天。</p>
-<p><strong>非互相独立操作</strong>就像女人生孩子，1个女人十10个月生1个孩子，但是10个女人并不是一个月就能把孩子生出来。</p>
-<p>在正确使用的前提下，可以获得近似线性的性能提升。要使用并发流我们可以使用 <code>parallelStream()</code>创建并发流。或者在原有流的基础上，使用 <code>parallel()</code> 方法将流转化为并发流。</p>
-<p>使用一个简单的案例来使用并发流，统计 1 到 100万之间的质数个数 。原始的 Stream 写法如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">IntStream.range(<span class="hljs-number">1</span>,<span class="hljs-number">100_0000</span>).filter(是否为质数).count()<br></code></pre></td></tr></table></figure>
-
-<p>并发流写法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">IntStream.range(<span class="hljs-number">1</span>,<span class="hljs-number">100_0000</span>).parallel().filter(isPrime).count();<br></code></pre></td></tr></table></figure>
-
-<p>因为统计个数属于互相独立操作，就像两个人数羊群有多少只绵羊一样，两人分别数自己区域的羊，然后再加起来汇总。</p>
-<p>对于并发流来说，使⽤要⼩⼼，性能要测试，如果你不知道⾃⼰在做什 么，就忘了它吧。对于详细的操作可以参考<a target="_blank" rel="noopener" href="https://book.douban.com/subject/30412517/">《Effective Java 第三版》</a>42-48节。</p>
 
                 
               </div>
@@ -347,9 +306,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Java/">#Java</a>
-      
-        <a href="/tags/Stream/">#Stream</a>
+        <a href="/tags/Git/">#Git</a>
       
     </div>
   
@@ -361,8 +318,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Stream</div>
-      <div>http://example.com/2022/01/03/Stream/</div>
+      <div>Git</div>
+      <div>http://example.com/2021/03/04/Git/</div>
     </div>
     <div class="license-meta">
       
@@ -374,7 +331,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年1月3日</div>
+          <div>2021年3月4日</div>
         </div>
       
       
@@ -406,9 +363,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/02/26/JVM%20%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/" title="JVM 基本结构">
+                      <a href="/2021/03/15/Collection/" title="Collection">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">JVM 基本结构</span>
+                        <span class="hidden-mobile">Collection</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -416,8 +373,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/01/2021-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93%EF%BC%88%E6%8A%80%E6%9C%AF%E5%90%91%EF%BC%89/" title="2021-年终总结（技术向）">
-                        <span class="hidden-mobile">2021-年终总结（技术向）</span>
+                      <a href="/2021/03/04/Web%20%E5%89%8D%E5%90%8E%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86/" title="Web 前后端基础架构原理">
+                        <span class="hidden-mobile">Web 前后端基础架构原理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
