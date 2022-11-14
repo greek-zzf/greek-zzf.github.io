@@ -19,29 +19,17 @@
     <meta name="description" content="简介：Java 编写的最广泛使用的开源持续集成工具，非常易用，广泛的第三方插件支持，以及分布式构建。 文章所演示的项目地址： GitHub: https:&#x2F;&#x2F;github.com&#x2F;greek-zzf&#x2F;oh-my-jenkins.gitGitee: https:&#x2F;&#x2F;gitee.com&#x2F;geek-zzf&#x2F;oh-my-jenkins.git 安装War 包方式优点：安装启动非常方便。 缺点：与环境强绑定">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins 自动化部署">
-<meta property="og:url" content="http://example.com/2022/11/14/Jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:url" content="http://example.com/2022/04/30/Jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="简介：Java 编写的最广泛使用的开源持续集成工具，非常易用，广泛的第三方插件支持，以及分布式构建。 文章所演示的项目地址： GitHub: https:&#x2F;&#x2F;github.com&#x2F;greek-zzf&#x2F;oh-my-jenkins.gitGitee: https:&#x2F;&#x2F;gitee.com&#x2F;geek-zzf&#x2F;oh-my-jenkins.git 安装War 包方式优点：安装启动非常方便。 缺点：与环境强绑定">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/24e982a6-9b83-4233-99f0-15c083663bb5.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/0c9f33b3-b50e-45dd-b984-8fdd5c4a1ea9.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/415593ca-72bb-4786-a3c5-14271c5d15ac.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3fea80cf-d62d-4d27-a028-4bae6b70c59a.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b452178d-9bdd-4873-98f7-663fd62ef8bf.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f0e1221-1b21-4ac1-a991-19753f4085ca.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/8489f466-cf27-4f07-b07a-304f8b42769b.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f823c65-51d5-4936-b226-d635fc86e3c3.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b651a7f8-0267-42c9-861b-4ea128b5f596.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/70124ec6-6334-457c-9f47-4341127d490c.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b439354a-e1a4-47f4-9bf4-06975e7d8c98.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/4047e5a2-911f-4a91-9380-55c45988a209.png">
-<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3368c931-7653-4f8a-bc9e-df43d04ee7fc.png">
-<meta property="article:published_time" content="2022-11-14T02:19:10.750Z">
-<meta property="article:modified_time" content="2022-11-14T02:19:10.750Z">
+<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/cover.png">
+<meta property="article:published_time" content="2022-04-30T16:09:00.000Z">
+<meta property="article:modified_time" content="2022-11-14T02:22:38.894Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Jenkins">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/24e982a6-9b83-4233-99f0-15c083663bb5.png">
+<meta name="twitter:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/cover.png">
   
   
   
@@ -221,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-14 02:19" pubdate>
-          2022年11月14日 凌晨
+        <time datetime="2022-04-30 16:09" pubdate>
+          2022年4月30日 下午
         </time>
       </span>
     
@@ -433,7 +421,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Jenkins 自动化部署</div>
-      <div>http://example.com/2022/11/14/Jenkins 自动化部署/</div>
+      <div>http://example.com/2022/04/30/Jenkins 自动化部署/</div>
     </div>
     <div class="license-meta">
       
@@ -445,7 +433,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月14日</div>
+          <div>2022年4月30日</div>
         </div>
       
       
@@ -477,12 +465,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/07/14/Java%20%E4%B8%AD%E7%9A%84%20GC/" title="Java 中的 GC">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java 中的 GC</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/14/Java%20%E4%B8%AD%E7%9A%84%20GC/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2022/02/26/JVM%20%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/" title="JVM 基本结构">
+                        <span class="hidden-mobile">JVM 基本结构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
