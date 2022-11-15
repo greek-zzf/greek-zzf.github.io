@@ -1,0 +1,660 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="字节码字节码是高级语言和 JVM 通信的桥梁，高级语言只做一件事：把代码编译成字节码。因此，完全可以编写一套自己的编程语言，定义他的语法规则，然后将实现一个编译器，将代码转为字节码即可。 来看看 Java 中的字节码长什么样子，源代码如下： 12345678910package com.greek.shop;import org.junit.jupiter.api.Test;class ShopA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字节码加载与执行">
+<meta property="og:url" content="http://example.com/2022/03/03/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="字节码字节码是高级语言和 JVM 通信的桥梁，高级语言只做一件事：把代码编译成字节码。因此，完全可以编写一套自己的编程语言，定义他的语法规则，然后将实现一个编译器，将代码转为字节码即可。 来看看 Java 中的字节码长什么样子，源代码如下： 12345678910package com.greek.shop;import org.junit.jupiter.api.Test;class ShopA">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/cover.png">
+<meta property="article:published_time" content="2022-03-03T17:48:00.000Z">
+<meta property="article:modified_time" content="2022-11-15T14:12:50.541Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="字节码">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/cover.png">
+  
+  
+  
+  <title>字节码加载与执行 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">字节码加载与执行</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-03 17:48" pubdate>
+          2022年3月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">字节码加载与执行</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="字节码"><a href="#字节码" class="headerlink" title="字节码"></a>字节码</h2><p>字节码是高级语言和 JVM 通信的桥梁，高级语言只做一件事：把代码编译成字节码。因此，完全可以编写一套自己的编程语言，定义他的语法规则，然后将实现一个编译器，将代码转为字节码即可。</p>
+<p>来看看 Java 中的字节码长什么样子，源代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.greek.shop;<br><span class="hljs-keyword">import</span> org.junit.jupiter.api.Test;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ShopApplicationTests</span> &#123;<br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        System.out.println(i);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>编译之后部分字节码如下：</p>
+<p><img src="/../picture/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/3f4c78d1-d33f-4463-a2d3-b2a4dc2901d4.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>图中的字节码，正在一行行地执行指令，这些指令作用可以参考 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_Java_bytecode_instructions">Java 字节码指令表</a>。</p>
+<p>不知你是否察觉，我们可以直接编写字节码，而不再需要高级语言编译成字节码，这当然是可行的，因为我们熟知的「动态代理」就是这么做的。</p>
+<h2 id="字节码加载"><a href="#字节码加载" class="headerlink" title="字节码加载"></a>字节码加载</h2><p>编译器把高级语言编译成字节码文件，那么 JVM 又是怎么加载和执行字节码的呢？</p>
+<p>不知你注意到没，在使用 IDE 运行程序时，好像只要点击绿色箭头代码就可以运行了。IDE 好像有魔力一般，但实际上那个绿色箭头只是在后台「偷摸」地拼接一个命令行，启动一个 JVM ，仅此而已。</p>
+<p>你可以通过控制台查看到 IDE 帮你拼接的命令行，命令行中有一个参数 **”-classpath”**，这个 classpath 就指明了 JVM 加载字节码路径。想更多了解 Java 启动命令相关知识，可以参考我之前写的<a target="_blank" rel="noopener" href="https://www.yuque.com/greek-zzf/uc535m/lvzgfb">博客</a>。</p>
+<p>使用 classpath 指明了加载路径，于是 JVM 便使用类加载器 (ClassLoader) 加载字节码。</p>
+<p>类加载器只有一个作用，负责加载字节码文件，仅此而已。他也支持动态加载代码，动态生成代码等，用一段代码简单演示动态加载代码过程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Scanner</span> <span class="hljs-variable">scanner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>   <span class="hljs-type">String</span> <span class="hljs-variable">version</span> <span class="hljs-operator">=</span> scanner.next();<br><br>   <span class="hljs-type">File</span> <span class="hljs-variable">jar</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;fastjson-&quot;</span> + version + <span class="hljs-string">&quot;.jar&quot;</span>);<br>   <span class="hljs-keyword">if</span> (jar.exists()) &#123;<br>       <br>       <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLClassLoader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">URL</span>[]&#123;jar.toURI().toURL()&#125;);<br>       <span class="hljs-type">Class</span> <span class="hljs-variable">fastJson</span> <span class="hljs-operator">=</span> classLoader.loadClass(<span class="hljs-string">&quot;com.alibaba.fastjson.JSON&quot;</span>);<br>       System.out.println(fastJson.getField(<span class="hljs-string">&quot;VERSION&quot;</span>).get(<span class="hljs-literal">null</span>));<br>   &#125; <span class="hljs-keyword">else</span> &#123;<br>       System.out.println(jar.getName() + <span class="hljs-string">&quot; Not Found!&quot;</span>);<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<p>上诉代码在项目中没有引入任何依赖和 Jar 包，只是在项目根目录中放了两个不同版本的  FastJson jar 包。用户输入 FastJson 版本，类加载器去加载对应的 jar 包，获取成功打印 jar 包的版本信息，这就是个简单的动态加载过程。</p>
+<p>上诉代码可以让 ClassLoader 加载指定版本的 jar 包，其实热部署的原理也类似于此。通过监听器监听对应的文件或文件夹，倘若发生改变，则调用自定义的 ClassLoader 进行重新加载，达到热部署的目的。</p>
+<p>当然类加载器的场景还存在 Mock ，AOP 中，使用过 Mockito 或者 AOP 就会知道，他们都是通过<strong>字节码增强</strong>的方式生成目标对象的子类，然后交给 JVM 执行。</p>
+<h3 id="双亲委派加载模型"><a href="#双亲委派加载模型" class="headerlink" title="双亲委派加载模型"></a>双亲委派加载模型</h3><p>由于 ClassLoader 只负责加载字节码，因此完全有可能，编写一个恶意的字节码文件，让 ClassLoader 去加载执行它，破环我们的程序。为了程序的安全性，于是就有了<strong>「双亲委派加载模型」</strong>。</p>
+<p>在 Java 8 及之前的双亲委派加载模型如图：</p>
+<p><img src="/../picture/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/83a6b7ef-4646-4e08-bd37-8568ca3b1ff7.png" srcset="/img/loading.gif" lazyload alt="classloader.png"></p>
+<p>通过图中的关系，可以发现 JVM 的启动不止有一个类加载器，而是有三个。这三个类加载器各司其职，分工明确，且三个类加载器都是继承关系。</p>
+<ul>
+<li><strong>Application ClassLoader （应用类加载器）</strong>是负责加载 classpath 里面的包，即我们编写好的代码，该加载器继承 Extension ClassLoader。 </li>
+<li><strong>Extension ClassLoader （扩展类加载器）</strong>负责加载与运行程序相关的 jar 包，像使用的 ArrayList，Object 等等，该类加载器继承 Bootstrap ClassLoader。 </li>
+<li>** Bootstrap ClassLoader（启动类加载器） **负责加载 JVM 启动时至关重要的包。</li>
+</ul>
+<p>双亲委派加载模型简单描述就是：<strong>子加载器加载类之前，需要先去询问父加载器，如果父加载器不为空且找到该类，则直接返回，否则子加载器才去加载</strong>。</p>
+<p>在这个过程中你发现了吗？越核心的类都是由父加载器去加载的，这样在一定程度上保存了程序的安全。倘若你伪造一个 java.lang.Object 类，想让类加载器去加载该 Object 类，这是做不到的。当 Application ClassLoader 去加载伪造的 Object 时，就会先去询问父加载器是否加载该类，显然该 Object 类已经被 Extension ClassLoader 加载，只不过加载的 Object 并非你伪造的 Object，因此你伪造的 Object 并不会被加载。</p>
+<h3 id="神奇的类"><a href="#神奇的类" class="headerlink" title="神奇的类"></a>神奇的类</h3><p>自定义一个 ClassLoader 并且实现了 loadClass 方法，如果加载的类名字为 BadClass 则使用自定义的类加载器去加载，否则由父加载器加载。然后将加载好的 BadClass 字节码文件，实例化一个 BadClass 对象。详细代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.greek;<br><br><span class="hljs-keyword">import</span> java.io.File;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.nio.file.Files;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyClassLoader</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ClassLoader</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">BadClass</span> <span class="hljs-variable">bad</span> <span class="hljs-operator">=</span> (BadClass) <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyClassLoader</span>().loadClass(BadClass.class.getName()).newInstance();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Class&lt;?&gt; loadClass(String name) <span class="hljs-keyword">throws</span> ClassNotFoundException &#123;<br>        <span class="hljs-keyword">if</span> (name.contains(<span class="hljs-string">&quot;BadClass&quot;</span>)) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-type">byte</span>[] bytes = Files.readAllBytes(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;target/classes/com/greek/BadClass.class&quot;</span>).toPath());<br>                <span class="hljs-keyword">return</span> defineClass(name, bytes, <span class="hljs-number">0</span>, bytes.length);<br>            &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>                e.printStackTrace();<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassNotFoundException</span>(<span class="hljs-string">&quot;Class &quot;</span> + name + <span class="hljs-string">&quot; Not Found!&quot;</span>);<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>.loadClass(name);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>当你运行这段代码时，你会发现竟然报错了，在我的控制台中错误信息如下：</p>
+<p><img src="/../picture/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/162ca5ee-c88c-48af-8cd7-14fdd98ebfa0.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>什么？两个相同的类包名也完全一样，竟然不能互转，，真是令人大跌眼镜。</p>
+<p>那么为什么会这样呢？这是因为这两个 BadClass，不是由同一个类加载器加载的。BadClass 在 JVM 中是由 Application ClassLoader 加载的，上面的代码使用 MyClassLoader 覆盖 loadClass 逻辑，主动去加载 BadClass 并用加载的字节码实例化一个 BadClass 对象，但由于声明的对象和实例化的对象并非相同的类加载器加载的，就会导致类型转换异常。</p>
+<p>同样的在 Java 的 instanceof 方法，类加载器也会被检查，若不是同一个类加载器加载的类，则 instanceof 判断为 false，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">badClass</span> <span class="hljs-operator">=</span>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyClassLoader</span>().loadClass(BadClass.class.getName()).newInstance();<br>System.out.println(badClass <span class="hljs-keyword">instanceof</span> BadClass);<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="JIT-Compiler"><a href="#JIT-Compiler" class="headerlink" title="JIT Compiler"></a>JIT Compiler</h2><p>有了类加载器加载字节码，还需要将字节码「翻译」成对应平台的指令。这个「翻译」过程由两种方式：<strong>编译执行和解释执行</strong>。</p>
+<p><strong>解释执行</strong>就是每执行一行就把该行翻译成机器指令，类似于「同声传译」。自然他会比较慢，因为每次执行都需要一个转换的过程，但是它对于跨平台是很方便的，因为，不用操心平台是否能看懂字节码，只需要带个同声传译的翻译即可。</p>
+<p><strong>编译执行</strong>就是把要翻译的内容，提前翻译好，然后直接给到平台。这样的好处是执行快，平台不用等你翻译，它直接拿翻译好的文件阅读即可。缺点也很明显，就是不灵活，在 Windows 平台运行，要提前翻译成 Windows 的指令，在 Liunx 平台运行，又要翻译成 Liunx 的指令，且翻译后的文件都比较臃肿。</p>
+<p>那么 HotSpot 是用的那种方式呢？</p>
+<p>答案是混合模式，它既不想丢失解释执行的便利性，也不想失去编译执行的速度，所以采取了折中的方案。他把一些常用的方法采用编译执行编译好，以提升执行的代码执行速度，其他的则采用解释执行。</p>
+<p>JIT Compiler 全称是 Just In Time Compiler（即时编译器），HotSpot 就是使用该编译器动态地发现 JVM 运行时的<strong>热点</strong>，然后针对这些热点编译成相应的 native code ，提高运行效率。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>至此，字节码的加载与执行过程已经结束了，他的神秘面纱也被揭开。</p>
+<p>高级语言通过编译器编译成字节码，JVM 使用类加载器去加载字节码。字节码存在安全性问题，因此 JVM 采用双亲委派机制去加载字节码。又因为每次执行都需要将字节码编译成机器指令，效率并不高，因此采用了即时编译 JIT 技术，这样既保证了效率又保证了跨平台性。</p>
+<p>纵观整个过程发现，编程语言到可以执行的机器指令，经历了不止一次编译过程。把从高级语言到字节码的过程称为<strong>编译前端，</strong>从字节码到机器指令的过程称为<strong>编译后端。</strong>两个端各司其职，互不干扰，都是通过字节码这个「中介」交流<strong>。</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+        <a href="/tags/%E5%AD%97%E8%8A%82%E7%A0%81/">#字节码</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>字节码加载与执行</div>
+      <div>http://example.com/2022/03/03/字节码加载与执行/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年3月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/30/Jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" title="Jenkins 自动化部署">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Jenkins 自动化部署</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/26/JVM%20%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/" title="JVM 基本结构">
+                        <span class="hidden-mobile">JVM 基本结构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

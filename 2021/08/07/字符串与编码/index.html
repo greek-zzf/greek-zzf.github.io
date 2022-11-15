@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="我们都知道，在网络通信和存储的都是字节流，都是一大串的 0 和 1。不知道大家有没想过，存储既然是 0 和 1，为什么我们看到得都是一个个字符，汉子，英文？是不是计算机在背后偷偷的把字节转化成我们人类能看懂的语言？答案是肯定的。 字符集相关概念既然计算机帮我们把字节转成人类的语言，那么肯定存在着一种映射关系「字节 –&gt; 人类语言的映射」，我们把这种关系称为字符集。把字节转化成人类看懂的字符，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串与编码">
+<meta property="og:url" content="http://example.com/2021/08/07/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我们都知道，在网络通信和存储的都是字节流，都是一大串的 0 和 1。不知道大家有没想过，存储既然是 0 和 1，为什么我们看到得都是一个个字符，汉子，英文？是不是计算机在背后偷偷的把字节转化成我们人类能看懂的语言？答案是肯定的。 字符集相关概念既然计算机帮我们把字节转成人类的语言，那么肯定存在着一种映射关系「字节 –&gt; 人类语言的映射」，我们把这种关系称为字符集。把字节转化成人类看懂的字符，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/cover.png">
+<meta property="article:published_time" content="2021-08-07T17:10:00.000Z">
+<meta property="article:modified_time" content="2022-11-15T14:12:50.541Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="字符串">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/cover.png">
+  
+  
+  
+  <title>字符串与编码 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">字符串与编码</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-08-07 17:10" pubdate>
+          2021年8月7日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">字符串与编码</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>我们都知道，在网络通信和存储的都是字节流，都是一大串的 0 和 1。不知道大家有没想过，存储既然是 0 和 1，为什么我们看到得都是一个个字符，汉子，英文？是不是计算机在背后偷偷的把字节转化成我们人类能看懂的语言？答案是肯定的。</p>
+<h2 id="字符集相关概念"><a href="#字符集相关概念" class="headerlink" title="字符集相关概念"></a>字符集相关概念</h2><p>既然计算机帮我们把字节转成人类的语言，那么肯定存在着一种映射关系「字节 –&gt; 人类语言的映射」，我们把这种关系称为<strong>字符集</strong>。把字节转化成人类看懂的字符，这一过程称为<strong>编码</strong>，反之称为<strong>解码</strong>。</p>
+<p>假如世界都用同一份字符集，同一种编码和解码方式那么就不会存在我们常见的「乱码」问题了。但正是因为世界多样性，也导致了字符集的多样性，每个国家语言不同，所使用的字符集，编解码方式也可能不同。</p>
+<p>假如我们把阿拉伯数字看作字节，把不同语言的翻译看做编解码方式。因此，1，2，3 翻译成汉字就成了一，二，三；翻译成英文就成了 one，two，three。假如，本应该使用中文编码的字节，却使用了英文编码，这就会让没有学过英语的人看不懂，不懂 one，two，three 是什么，对于他们来说这就是<strong>乱码</strong>。</p>
+<h2 id="字符集-Unicode"><a href="#字符集-Unicode" class="headerlink" title="字符集 Unicode"></a>字符集 Unicode</h2><p>在字符集群魔乱舞时代，有人站了出来。他把所有的地区性编码方案废弃，重新搞了一个<strong>包括了地球上所有文化、所有字母和符号的编码 Unicode</strong>。其中 uni 是英文前缀，表示「单一，一个」，因此 Unicode 的字面意思也很好理解，百度百科上翻译成「统一码，也叫万国码、单一码」。</p>
+<p>Unicode 的设计非常的简单：<strong>从一个数字映射到一个字符</strong>。图中简单地演示了 unicode 的映射关系，实际上的对应关系并非如此。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/../picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/7fb15bf0-053f-43e0-97cf-d914e64d4df8.png" srcset="/img/loading.gif" lazyload alt="image.png"></h2><p>图中所示，把左边的数字编号称作<strong>码点</strong>（code point）。</p>
+<h3 id="Unicode-数据类型"><a href="#Unicode-数据类型" class="headerlink" title="Unicode 数据类型"></a>Unicode 数据类型</h3><p>现在换位思考下，如果让你来设计 Unicode 码表，你会用什么数据类型来存储上面的数字编号呢？</p>
+<p>现在来对比下这些数据类型关系</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">byte</span> --&gt; <span class="hljs-number">0</span>~<span class="hljs-number">255</span> --&gt; <span class="hljs-number">256</span><br>    <br><span class="hljs-type">short</span> --&gt; <span class="hljs-number">2</span> bytes --&gt; <span class="hljs-number">65536</span><br>    <br><span class="hljs-type">int</span> --&gt; <span class="hljs-number">4</span> bytes --&gt; 约 <span class="hljs-number">42</span> 亿<br></code></pre></td></tr></table></figure>
+
+<p>很显然 byte 不合适，256个数，存中文都不够。short 存中文可能勉强够用，但是这还要包含其他国家的文字啊，加起来肯定不够用。int 42 亿个，足够全世界的文字使用， 因此选用 int 类型，实际上 Unicode 也是这么做的。</p>
+<h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p>上面提到为了包含全世界所有的文字，Unicode 使用了 int 类型。int 4个字节，对于编号在前面的字符，就会造成空间浪费。例如编号为 1 的字符，把编号转换成字节就变成 “00000000  00000000  00000000 00000001”，我们会发现前三个字节都是 0，这样造成了空间浪费。本来一个字节就能表示的编号，硬是多占用了3个字节，编号靠后的还好，靠前的大多都浪费流量，浪费空间。</p>
+<p>如图我们把前四位编码成 4 个字节，编码后的前三个字节都是 0。更何况Unicode 兼容了 ASCII 码表，前128 位都是常用的一些字符，本来字母 “a” 只需要占用一个字节，经过 Unicode 编码后需要占用 4 个字节，不利于传输和存储。</p>
+<p><img src="/../picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/59ab9ba5-2ffa-416c-b1e8-2eef2d58c538.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h2 id="常见的两种编码方案：UTF-8，UTF-16"><a href="#常见的两种编码方案：UTF-8，UTF-16" class="headerlink" title="常见的两种编码方案：UTF-8，UTF-16"></a>常见的两种编码方案：UTF-8，UTF-16</h2><p>正是因为 Unicode 对于靠前的码位太占空间了，所以就有了 UTF-8，UTF-16 等编码方案，用来解决空间占用问题。其实我们也很容易想到一种解决方案：把常用的字符用一个字节存储，不常用的用多个字节存储，这样就避免了 Unicode 缺陷</p>
+<h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h3><p>UTF-16 根据码位所处的范围进行不同编码。</p>
+<p><strong>U+0000 至 U+D7FF 以及从 U+E000 至 U+FFFF 的码位</strong></p>
+<p>第一个 Unicode 平面（码位从 U+0000 到 U+FFFF ）包含了最常用的字符。只要处于这个范围内，UTF-16 就使用两个字节存储它。我们的汉字基本上都是处于该范围，因此在 UTF-16 中，汉字大多都是两个字节。</p>
+<p><strong>U+10000 至 U+10FFFF 的码位</strong></p>
+<p>当处于码点处于该范围时，UTF-16 就使用 4 个字节进行存储。因此，UTF-16 将常用的字符用 2 个字节存储，不常用的用 4 个字节存储，相比 Unicode 空间节省了不少。</p>
+<p><strong>一个简单的 UTF-16 编码过程</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-number">21608</span>  --&gt;  <span class="hljs-string">&quot;周&quot;</span>  <span class="hljs-comment">// 已知「周」字在 Unicode 的码位是 21608</span><br>------------------<br><span class="hljs-number">5468</span>     					<span class="hljs-comment">// 转换成 16 进制</span><br></code></pre></td></tr></table></figure>
+
+
+<p>「周」字的码位，转成 16 进制得到 5468，然后判断所属范围，很显然属于上面的第一种范围，因此「周」字需要两个字节存储 <code>54</code> <code>68</code>。我们可以在程序中打印出来 <code>System._out_.println(&#39;\u5468&#39;)</code>。</p>
+<p><strong>BOM</strong></p>
+<p>两个字节代表一个字符，在存储传输过程中存在着顺序问题。拿刚才的「周」字举例，虽然我们认为在传输过程中都是按照 <code>54 68</code>的顺序，但实际并非如此。在有的系统他是反过来传输的 <code>68 54</code>，为了解决这个问题，<strong>在文件的开头加入了几个不可见的字符，来声明字节顺序。这几个特殊字符称作 BOM（byte order mark），即字节顺序标记。</strong></p>
+<p>上面的字节存储传输的方式，也有专业的名称<strong>。</strong>这个在编码中叫做大端（<strong>Big Endian 简写 BE</strong>）和小端（<strong>Little Endian 简写 LE</strong>）。在很多文本编辑器也有出现，比如我在使用的 Notepad2，就支持 UTF-16 LE BOM 和 UTF-16 BE BOM 编码方式。</p>
+<p>顺带一说的是，Java 程序内部的存储编码方式就是 UTF-16。</p>
+<h3 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h3><p>先说一个结论：<strong>如果没有意外，所有的编码方案都改成 UTF-8，UTF-8 是对多语言支持最好的一种解决方案</strong>。在 Mac&#x2F;Linux 默认编码就是 UTF-8，由于历史原因，Windows 默认的中文编码是 GBK。</p>
+<p>UTF-8 是一种可变长的编码方式，那它是怎么做的呢？他对所有的码表进行分区，第一个分区占用一个字节，第二个占用两个字节，以此类推，最多支持到 6 个字节。UTF-8 兼容了 ASCII 码表，因此 ASCII 码表的字符在UTF-8 中占用一个字节，属于下面第一行的范围。我们使用的汉字，属于第三行的范围，因此汉字在 UTF-8 中编码占 3 个字节。下面展示了从 1 到 4分区范围。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">U+ <span class="hljs-number">0000</span> ~ U+  <span class="hljs-number">007</span>F<span class="hljs-punctuation">:</span> <span class="hljs-number">0</span>XXXXXXX<br>U+ <span class="hljs-number">0080</span> ~ U+  <span class="hljs-number">07</span>FF<span class="hljs-punctuation">:</span> <span class="hljs-number">110</span>XXXXX <span class="hljs-number">10</span>XXXXXX<br>U+ <span class="hljs-number">0800</span> ~ U+  FFFF<span class="hljs-punctuation">:</span> <span class="hljs-number">1110</span>XXXX <span class="hljs-number">10</span>XXXXXX <span class="hljs-number">10</span>XXXXXX<br>U+<span class="hljs-number">10000</span> ~ U+<span class="hljs-number">10</span>FFFF<span class="hljs-punctuation">:</span> <span class="hljs-number">11110</span>XXX <span class="hljs-number">10</span>XXXXXX <span class="hljs-number">10</span>XXXXXX <span class="hljs-number">10</span>XXXXXX<br></code></pre></td></tr></table></figure>
+
+<p>例如：「周」字的码位 21608，转换成 16 进制 5468 属于第三行的范围，根据他的编码规则会生成 3 个字节，编码过程如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json">	<span class="hljs-number">5</span>     <span class="hljs-number">4</span>     <span class="hljs-number">6</span>     <span class="hljs-number">8</span><br> <span class="hljs-number">0101</span>  <span class="hljs-number">0100</span>  <span class="hljs-number">0110</span>  <span class="hljs-number">1000</span>    对应的二进制<br>---------------------------<br> <span class="hljs-number">0101</span>    <span class="hljs-number">010001</span>   <span class="hljs-number">101000</span>   根据第三行的模板，每个字节中 <span class="hljs-string">&quot;x&quot;</span> 的数量分成三组<br><span class="hljs-number">1110</span>XXXX  <span class="hljs-number">10</span>XXXXXX <span class="hljs-number">10</span>XXXXXX   第三行模板<br><span class="hljs-number">11100101</span>  <span class="hljs-number">10010001</span> <span class="hljs-number">10101000</span>   代入模板<br>   E5        <span class="hljs-number">91</span>       A8     <br></code></pre></td></tr></table></figure>
+
+<p>不知道大家有没思考过一个问题：UTF-8 编码之后，计算机怎么知道该读几个字节？例如上面的 <code>11100101  10010001 10101000</code>计算机怎么知道这 3 个字节是一起的，而不是分 3 次读单个字节呢？</p>
+<p>其实仔细观察分区之后的模板就能发现端倪，第一分区首字节的第一位是 0，第二分区首字节前两位两个 1，第三个分区有三个1，计算机就是根据这个特点来进行读取的，当读到第一个字节前几位有几个 1 就读几个字节。刚才的「周」第一个字节有三个 1，因此计算机就连续读三个字节。由于这一特性，UTF-8 是不需要 BOM 的，但是 windows 的记事本默认都会加上 BOM，不支持不带 BOM 的编码（最近好像支持了），UTF-8 带</p>
+<p>这个模板是如何设计生成的呢？编解码的算法是如何实现的呢？这里不展开（主要是我也不会），<a target="_blank" rel="noopener" href="https://www.wikipedia.org/">维基百科</a>搜 UTF-8 就好了（推荐），或者访问<a target="_blank" rel="noopener" href="https://taoshu.in/c-utf-8.html">他人博客</a>，了解相关内容。</p>
+<h2 id="GBK"><a href="#GBK" class="headerlink" title="GBK"></a>GBK</h2><p>GBK（国标扩展） 字符集，简称国标扩。GBK 完全不鸟 Unicode 标准，对于中文统一采用 2 个字节编码，因此在 GBK 编码中汉字是占用两个字节。</p>
+<p>乱码的来源也与 GBK 有关，如果文件是用 Unicode 字符集编码，而你却使用 GBK 去解码，就会导致乱码问题。比如「周」字，在 Unicode 的码位是 21608，而在 GBK 的码位是 55004，通过去查 GBK 码位 21608 对应的字符就不是 「周」这个字了。</p>
+<p>现在互联网的主流都是使用 UTF-8 编码，GBK 只适合给国人使用的网站上，局限性太大。</p>
+<h2 id="简单的测试"><a href="#简单的测试" class="headerlink" title="简单的测试"></a>简单的测试</h2><p><strong>测试 1</strong>：一份用 UTF-16 编码的全英文文本，更改编码方式为 UTF-8，存储占用会减少吗？答案是会，因为 UTF-16对英文用两个字节编码，而 UTF-8 中英文属于第一分区，因此占用一个字节，所以改为 UTF-8 之后差不多减少一半的空间占用。</p>
+<p><strong>测试 2</strong>：一份用 UTF-8 编码的全汉字文本，更改编码方式为 UTF-16，和 GBK，存储占用会发生什么变化？答案是都会减少占用，GBK 对中文是两个字节编码，UTF-16 对大多数中文也是两个字节编码，而 UTF-8 对中文是 3 个字节编码，因此占用会减少。</p>
+<h2 id="一些小感悟"><a href="#一些小感悟" class="headerlink" title="一些小感悟"></a>一些小感悟</h2><p>写这篇博客的时候，遇到很多问题，本来只是想写 UTF-8 和 Unicode 的，越往下写的时候发现还有很多东西没有掌握，因此一边消化（幸运的是消化难度还能接收），一边写了这篇博客，终于是把字符，乱码相关的搞明白了。</p>
+<p>当我感叹 UTF-8 编解码算法的时候，搜了下发明者<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%82%AF%C2%B7%E6%B1%A4%E6%99%AE%E9%80%8A"> Ken Thompson</a>，这么多优秀的作品都与他有莫大的关联，Unix，正则，UTF-8，以及现在火热的 Go 语言，还获得图灵奖，我也只能顶礼膜拜。了解的越多，发现了计算机领域基本上所有伟大的东西，都是那么一小撮人发明的。如图是 Ken Thompson 相关的简介，想具体了解可以去维基百科搜索。</p>
+<p><img src="/../picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/61ce26eb-3169-4168-bb62-c1a1929f4bcb.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+        <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">#字符串</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>字符串与编码</div>
+      <div>http://example.com/2021/08/07/字符串与编码/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年8月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/11/String/" title="String">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">String</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/27/Java%20%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/" title="Java 异常体系">
+                        <span class="hidden-mobile">Java 异常体系</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
