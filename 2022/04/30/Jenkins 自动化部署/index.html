@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简介：Java 编写的最广泛使用的开源持续集成工具，非常易用，广泛的第三方插件支持，以及分布式构建。 文章所演示的项目地址： GitHub: https:&#x2F;&#x2F;github.com&#x2F;greek-zzf&#x2F;oh-my-jenkins.gitGitee: https:&#x2F;&#x2F;gitee.com&#x2F;geek-zzf&#x2F;oh-my-jenkins.git 安装War 包方式优点：安装启动非常方便。 缺点：与环境强绑定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins 自动化部署">
+<meta property="og:url" content="http://example.com/2022/04/30/Jenkins%20%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简介：Java 编写的最广泛使用的开源持续集成工具，非常易用，广泛的第三方插件支持，以及分布式构建。 文章所演示的项目地址： GitHub: https:&#x2F;&#x2F;github.com&#x2F;greek-zzf&#x2F;oh-my-jenkins.gitGitee: https:&#x2F;&#x2F;gitee.com&#x2F;geek-zzf&#x2F;oh-my-jenkins.git 安装War 包方式优点：安装启动非常方便。 缺点：与环境强绑定">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/cover.png">
+<meta property="article:published_time" content="2022-04-30T16:09:00.000Z">
+<meta property="article:modified_time" content="2022-11-23T09:04:22.688Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="Jenkins">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/cover.png">
+  
+  
+  
+  <title>Jenkins 自动化部署 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Jenkins 自动化部署</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-04-30 16:09" pubdate>
+          2022年4月30日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Jenkins 自动化部署</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>简介：Java 编写的最广泛使用的开源持续集成工具，非常易用，广泛的第三方插件支持，以及分布式构建。</p>
+<p>文章所演示的项目地址：</p>
+<p>GitHub: <a target="_blank" rel="noopener" href="https://github.com/greek-zzf/oh-my-jenkins.git">https://github.com/greek-zzf/oh-my-jenkins.git</a><br>Gitee: <a target="_blank" rel="noopener" href="https://gitee.com/geek-zzf/oh-my-jenkins.git">https://gitee.com/geek-zzf/oh-my-jenkins.git</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="War-包方式"><a href="#War-包方式" class="headerlink" title="War 包方式"></a>War 包方式</h3><p>优点：安装启动非常方便。</p>
+<p>缺点：与环境强绑定，服务器要为 Jenkins 提供部署项目所需要的环境，例如：Node、Java 等。 部署成服务需要使用对应平台的命令。</p>
+<p>安装步骤：</p>
+<ol>
+<li><p>访问 Jenkins 官网，找到安装方式，下载 War 包。或者直接点击<a target="_blank" rel="noopener" href="https://www.jenkins.io/download/">这里</a>下载。 </p>
+</li>
+<li><p>下载完成运行命令 <code>java -jar jenkins.war</code> ，等待几分钟。 </p>
+</li>
+<li><p>在浏览器中访问 <a href="http://localhost:8080，完成后续配置。">http://localhost:8080，完成后续配置。</a></p>
+</li>
+</ol>
+<h3 id="Docker-方式"><a href="#Docker-方式" class="headerlink" title="Docker 方式"></a>Docker 方式</h3><p>优点：与宿主机环境隔离，不依赖宿主机环境。注册成服务非常方便，只需要启动时设置好参数 <code>--restart=always</code> 即可。</p>
+<p>缺点：启动稍微复杂，需要配置好启动命令。</p>
+<p>安装步骤：</p>
+<ol>
+<li><p>访问 Jenkins 官网，找到 Docker 安装方式。或者直接点击<a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/book/installing/docker/">这里</a>访问。 </p>
+</li>
+<li><p>运行 Docker 命令如下 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell">step1: docker network create jenkins<br><br>step2: docker run --name jenkins-docker --rm --detach \<br>  --privileged --network jenkins --network-alias docker \<br>  --env DOCKER_TLS_CERTDIR=/certs \<br>  --volume jenkins-docker-certs:/certs/client \<br>  --volume jenkins-data:/var/jenkins_home \<br>  --publish 2376:2376 \ <br>  docker:dind --storage-driver overlay2   --insecure-registry 47.107.74.10:5000 <br> <br><br>step3: 创建 Dockerfile 文件，并把如下内容复制进去<br><br>    FROM jenkins/jenkins:2.332.2-jdk11<br>    USER root<br>    RUN apt-get update &amp;&amp; apt-get install -y lsb-release<br>    RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \<br>      https://download.docker.com/linux/debian/gpg<br>    RUN echo &quot;deb [arch=$(dpkg --print-architecture) \<br>      signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \<br>      https://download.docker.com/linux/debian \<br>      $(lsb_release -cs) stable&quot; &gt; /etc/apt/sources.list.d/docker.list<br>    RUN apt-get update &amp;&amp; apt-get install -y docker-ce-cli<br>    USER jenkins<br>    RUN jenkins-plugin-cli --plugins &quot;blueocean:1.25.3 docker-workflow:1.28&quot;<br><br>step4: docker build -t myjenkins-blueocean:2.332.2-1 .<br><br>step5: docker run --name jenkins-blueocean --rm --detach \<br>  --network jenkins --env DOCKER_HOST=tcp://docker:2376 \<br>  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \<br>  --publish 8080:8080 --publish 50000:50000 \<br>  --volume jenkins-data:/var/jenkins_home \<br>  --volume jenkins-docker-certs:/certs/client:ro \<br>  myjenkins-blueocean:2.332.2-1<br></code></pre></td></tr></table></figure>
+
+</li>
+<li><p>等待一会，在浏览器中访问 <a href="http://localhost:8080，完成后续配置。">http://localhost:8080，完成后续配置。</a></p>
+</li>
+</ol>
+<p><strong>注意</strong>：步骤4构建失败，可能是由于 Docker 权限问题，解决方案可参考<a target="_blank" rel="noopener" href="https://github.com/docker/buildx/issues/476">这里</a>。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul>
+<li><p>解锁 Jenkins：浏览器中提示输入管理员密码。War 在启动的控制台中会打印密码，或者页面提示的文件中。Docker 方式使用命令，查看容器日志信息即可看到 <code>docker logs jenkins-blueocean</code>。 </p>
+</li>
+<li><p>插件下载镜像设置：为了部署和运行项目，需要安装一些插件。首先需要给插件站点设置一个镜像，不然访问速度感人。配置路径 “Manager Jenkins -&gt; Manager Plugins -&gt; Advanced”，在底部的 <code>Update Site</code> 中把地址进行替换。这里提供一个国内可访问的镜像地址：<a target="_blank" rel="noopener" href="https://updates.jenkins-zh.cn/update-center.json%E3%80%82">https://updates.jenkins-zh.cn/update-center.json。</a></p>
+</li>
+<li><p>设置好插件镜像源之后，去搜索对应的插件，下载安装即可。 </p>
+</li>
+<li><p>下载并安装插件：由于项目是用 Git 来管理的，并且使用的是 Maven，因此需要下载这两个插件。</p>
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>创建 Job 之前，需要先了解一个 Job 任务涉及到哪些流程。Jenkins 给我们提供了以下几个模块：</p>
+<ul>
+<li><p><code>General</code> Job 描述，可选。 </p>
+</li>
+<li><p><code>Source Code Management</code> 源代码管理，有多个版本工具选择：Git、Svn 等。 </p>
+</li>
+<li><p><code>Build Triggers</code> 构建触发器，选择构建代码的时机 </p>
+<ul>
+<li>Trigger builds remotely，手动去触发。</li>
+<li>Build after other project are built，在其他项目构建完成后触发。</li>
+<li>Build periodically，周期的进行构建</li>
+<li>GitHub Hooks，当有代码更新到 GitHub，GitHub 会触发一个 Hooks，并通知 Jenkins 服务开始构建，这个需要在 GitHub 中配置推送地址信息。</li>
+<li>Poll SCM 定时任务轮询，填写 Cron 表达式指定轮询的时机。例如：每 10 分钟去检查 GitHub 仓库是否有代码更新。</li>
+</ul>
+</li>
+<li><p><code>Build Environment</code>构建环境，配置项目构建的环境，可以在构建的时候传递环境变量信息。 </p>
+</li>
+<li><p><code>Build</code> 可以选择构建所需步骤。 </p>
+</li>
+<li><p><code>Post-build Actions</code>可以指定项目完成构建之后的行为。</p>
+</li>
+</ul>
+<h2 id="手动创建-Job"><a href="#手动创建-Job" class="headerlink" title="手动创建 Job"></a>手动创建 Job</h2><p>在 Jenkins 中添加两个任务，一个用于拉取代码运行测试、打包任务，另一个可以手动选择版本的部署任务。</p>
+<h3 id="创建测试打包任务"><a href="#创建测试打包任务" class="headerlink" title="创建测试打包任务"></a>创建测试打包任务</h3><ol>
+<li>填写创建的 Job 信息</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/24e982a6-9b83-4233-99f0-15c083663bb5.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ol start="2">
+<li>选择 Git 作为代码管理工具，配置对应的仓库地址。如果是私密仓库，需要填写对应的账号密码。这里使用了 ssh 方式，并提前配置好了私钥信息。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/0c9f33b3-b50e-45dd-b984-8fdd5c4a1ea9.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ol start="3">
+<li>选择一个构建方式，这里我们选择 SCM，填写一个每 10 分钟轮询一次的 corn 表达式。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/415593ca-72bb-4786-a3c5-14271c5d15ac.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ol start="4">
+<li>构建的时候选择 <code>Execute shell</code> 并在文本框中填写要执行的脚本信息，这里我们填写 <code>mvn clean package</code>，该命令会执行清理、测试、打包操作，在 target 目录下生成 jar 包。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3fea80cf-d62d-4d27-a028-4bae6b70c59a.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ol start="5">
+<li>保存任务，回到页面。等待 10 分钟或者手动点击立即构建，即可开始构建。 控制台最终打印了文件夹下所有项目版本信息。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b452178d-9bdd-4873-98f7-663fd62ef8bf.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id="创建部署任务"><a href="#创建部署任务" class="headerlink" title="创建部署任务"></a>创建部署任务</h3><ol>
+<li>创建 deploy 任务，在页面中填写描述，并勾选 <code>This project is parameterized</code>，选择 String 参数，这里定义一个变量 version。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f0e1221-1b21-4ac1-a991-19753f4085ca.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ol start="2">
+<li>由于部署任务和打包任务是分开，此处无需在使用 Git 去拉取代码，也无需定义构建触发器，直接手动构建即可。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/8489f466-cf27-4f07-b07a-304f8b42769b.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ol start="3">
+<li>build 环节还是去执行一个 shell，这里我们配置一个 java 程序启动命令 <code>java -Dserver.port=5000 -jar  /c/Users/Administrator/Desktop/jenkins/$&#123;version&#125;.jar</code>指定 5000 端口，并且根据输入的版本号，去执行对应的 jar 包。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f823c65-51d5-4936-b226-d635fc86e3c3.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<ol start="4">
+<li>根据上个任务构建的输出，我们执行部署任务的构建。Jenkins 会弹出提示，此时输入对应的项目版本号，点击开始构建，等待构建完成项目就启动成功了。</li>
+</ol>
+<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b651a7f8-0267-42c9-861b-4ea128b5f596.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h2 id="使用-Jenkinsfile-创建-Job"><a href="#使用-Jenkinsfile-创建-Job" class="headerlink" title="使用 Jenkinsfile 创建 Job"></a>使用 Jenkinsfile 创建 Job</h2><p>图形化页面创建一个 Job 很方便，但是当 Jenkins 需要为多个项目创建 Job 时，一个一个手动创建就会很繁琐，并且 Job 信息也没办法进行版本管理。</p>
+<p>Jenkinsfile 就是来解决这个问题的，他将 Job 的配置信息用脚本语言来表示，这样只需要维护这个脚本即可。Jenkinsfile 就像是一份说明书，指导 Jenkins 的工作，让他自动帮我们完成配置。编写 Jenkinsfile 的脚本语言是 Groovy，推荐学习。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>整个流程如图：<br><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/70124ec6-6334-457c-9f47-4341127d490c.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><strong>创建流程</strong>：</p>
+<ul>
+<li><p>为项目编写 Dockerfile。</p>
+</li>
+<li><p>创建 Jenkinsfile。</p>
+</li>
+<li><p>使用 pipleline 语法编写脚本：使用 Dockerfile 文件 build 一个镜像，并上传到 Docker 私服。</p>
+</li>
+<li><p>使用一个新的 Job，用来获取 Docker 私服所有项目版本信息，支持选择对应版本部署。</p>
+</li>
+</ul>
+<h3 id="为项目编写-Dockerfile"><a href="#为项目编写-Dockerfile" class="headerlink" title="为项目编写 Dockerfile"></a>为项目编写 Dockerfile</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs groovy">FROM <span class="hljs-attr">java:</span>openjdk<span class="hljs-number">-8</span>u111-alpine<br><br>RUN mkdir /app<br><br>WORKDIR /app<br><br>COPY target<span class="hljs-regexp">/oh-my-jenkins-0.0.1-SNAPSHOT.jar /</span>app<br><br>EXPOSE <span class="hljs-number">8080</span><br><br>CMD [ <span class="hljs-string">&quot;java&quot;</span>, <span class="hljs-string">&quot;-jar&quot;</span>, <span class="hljs-string">&quot;oh-my-jenkins-0.0.1-SNAPSHOT.jar&quot;</span> ]<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="在-master-分支创建-Jenkinsfile-并编写对应的脚本"><a href="#在-master-分支创建-Jenkinsfile-并编写对应的脚本" class="headerlink" title="在 master 分支创建 Jenkinsfile 并编写对应的脚本"></a>在 master 分支创建 Jenkinsfile 并编写对应的脚本</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs groovy">pipeline &#123;<br>     agent any<br>     triggers &#123;<br>          pollSCM(<span class="hljs-string">&#x27;* * * * *&#x27;</span>)<br>     &#125;<br>     stages &#123;<br>        stage(<span class="hljs-string">&#x27;Test&#x27;</span>) &#123;<br>            agent &#123; docker &#123;<br>                image <span class="hljs-string">&quot;circleci/openjdk:8u212-jdk-stretch&quot;</span><br>                args <span class="hljs-string">&#x27;-v /usr/local/docker-cache:/root/.m2&#x27;</span><br>                            &#125;<br>                 &#125;<br>            steps &#123;<br>                sh <span class="hljs-string">&#x27;mvn clean package&#x27;</span><br>                stash <span class="hljs-attr">includes:</span> <span class="hljs-string">&#x27;**/target/*.jar&#x27;</span>, <span class="hljs-attr">name:</span> <span class="hljs-string">&#x27;app&#x27;</span><br>            &#125;<br>        &#125;<br><br>        stage(<span class="hljs-string">&#x27;Docker Build&#x27;</span>) &#123;<br>           steps &#123;<br>               echo <span class="hljs-string">&#x27;Starting to build docker image&#x27;</span><br><br>                unstash <span class="hljs-string">&#x27;app&#x27;</span><br>                script &#123;<br>                    <span class="hljs-keyword">def</span> customImage = docker.build(<span class="hljs-string">&quot;172.29.145.109:5000/on-my-jenkins:$&#123;new Date().format(&#x27;yyyy-MM-dd-HH-mm-ss&#x27;)&#125;&quot;</span>)<br>                    customImage.push()<br>                &#125;<br>           &#125;<br>        &#125;<br>     &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>该脚本定义了轮询任务，在 docker 中使用 java 环境运行 <code>mvn clean package</code>打包，并把它暂存。之后使用一个 docker build 构建镜像并推送到 docker 私服。由于私服地址和 Jenkins 都在同一个服务器，因此直接使用内网 ip。</p>
+<h3 id="在-deploy-分支创建-Jenkinsfile-并编写部署脚本"><a href="#在-deploy-分支创建-Jenkinsfile-并编写部署脚本" class="headerlink" title="在 deploy 分支创建 Jenkinsfile  并编写部署脚本"></a>在 deploy 分支创建 Jenkinsfile  并编写部署脚本</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs groovy"><span class="hljs-keyword">def</span> responseJson = <span class="hljs-keyword">new</span> URL(<span class="hljs-string">&quot;http://172.29.145.109:5000/v2/oh-my-jenkins/tags/list&quot;</span>)<br>        .getText(<span class="hljs-attr">requestProperties:</span> [<span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&quot;application/json&quot;</span>]);<br><br>println(responseJson)<br><br>Map response = <span class="hljs-keyword">new</span> groovy.json.JsonSlurperClassic().parseText(responseJson) <span class="hljs-keyword">as</span> Map;<br><br><span class="hljs-keyword">def</span> versionsStr = response.tags.join(<span class="hljs-string">&#x27;\n&#x27;</span>);<br><br>pipeline &#123;<br>     agent any<br><br>     stages &#123;<br>        stage(<span class="hljs-string">&#x27;Test&#x27;</span>) &#123;<br>            input &#123;<br>                message <span class="hljs-string">&quot;Choose a version&quot;</span><br>                ok <span class="hljs-string">&quot;Deploy&quot;</span><br>                parameters &#123;<br>                    choice(<span class="hljs-attr">choices:</span> versionsStr, <span class="hljs-attr">description:</span> <span class="hljs-string">&#x27;version&#x27;</span>, <span class="hljs-attr">name:</span> <span class="hljs-string">&#x27;version&#x27;</span>)<br>                &#125;<br>            &#125;<br>            steps &#123;<br>                sh <span class="hljs-string">&quot;ssh root@172.29.145.109 &#x27;docker rm -f oh-my-jenkins&#x27; || true&quot;</span><br>                sh <span class="hljs-string">&quot;ssh root@172.29.145.109 &#x27;docker run --name oh-my-jenkins -p 8081:8080 -d 172.29.145.109:5000/oh-my-jenkins:$&#123;version&#125;&#x27;&quot;</span><br>            &#125;<br>        &#125;<br>     &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>该脚本获取 Docker 私服的<code>oh-my-jenkins</code>镜像，部署我们选择的版本。</p>
+<h3 id="在-Jenkins-创建多分支流水线任务"><a href="#在-Jenkins-创建多分支流水线任务" class="headerlink" title="在 Jenkins 创建多分支流水线任务"></a>在 Jenkins 创建多分支流水线任务</h3><p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b439354a-e1a4-47f4-9bf4-06975e7d8c98.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>然后只需要配置仓库地址就好了，由于 GitHub 抽风，所以使用 Gitee 仓库地址。<br><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/4047e5a2-911f-4a91-9380-55c45988a209.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>创建完流水线任务，他会自动扫描仓库上的所有分支，并读取 Jenkinsfile 文件，执行命令。</p>
+<h3 id="选择版本部署"><a href="#选择版本部署" class="headerlink" title="选择版本部署"></a>选择版本部署</h3><p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3368c931-7653-4f8a-bc9e-df43d04ee7fc.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>当流水线分支创建完成之后，deploy 分支会等待我们选择版本，选择需要部署的版本，deploy 即可完成部署。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Jenkins/">#Jenkins</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Jenkins 自动化部署</div>
+      <div>http://example.com/2022/04/30/Jenkins 自动化部署/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年4月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/24/%E5%8D%95%E4%BE%8B%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="单例实现的几种方式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">单例实现的几种方式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/03/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/" title="字节码加载与执行">
+                        <span class="hidden-mobile">字节码加载与执行</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
