@@ -4,6 +4,50 @@
   
   
   <entry>
+    <title>MIT 6.824 分布式系统 - Introduction</title>
+    <link href="/2022/12/17/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"/>
+    <url>/2022/12/17/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/</url>
+    
+    <content type="html"><![CDATA[<h2 id="分布式系统基础架构"><a href="#分布式系统基础架构" class="headerlink" title="分布式系统基础架构"></a>分布式系统基础架构</h2><ul><li>存储</li><li>计算</li><li>通信（关于通信的详细内容可观看 6.829 计算机网络）</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>6.824</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>分布式，6.824</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Linux 服务化的几种方式</title>
+    <link href="/2022/12/13/Linux%20%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
+    <url>/2022/12/13/Linux%20%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<h2 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h2><p>使用 nohub 命令，例如运行一个 java 项目</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nohub java -jar xxx.jar<br></code></pre></td></tr></table></figure><h2 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h2><p><code>tmux</code> 全程 <code>terminal multiplexer</code> 意思是终端多路复用器。它可以启动一个新的终端进程，可以通过一些命令在当前终端和新终端之间来回切换。</p><p>因此，可以在新的终端进程中运行程序，然后使用命令切回到现有的终端即可。</p><p>tmux 一些常用的命令：</p><p>创建一个新的进程</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tmux<br></code></pre></td></tr></table></figure><p>回到当前终端</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">使用 control + b，再使用 d 即可<br></code></pre></td></tr></table></figure><p>回到新的进程中</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tmux attach<br></code></pre></td></tr></table></figure><h2 id="systemd"><a href="#systemd" class="headerlink" title="systemd"></a>systemd</h2><p><code>nohub</code> 和 <code>tmux</code> 的方法，都无法应对程序崩溃的情况，程序崩溃后需要人为重启。将程序执行改为系统服务，即可解决该问题。</p><p>此处使用 Unbuntu 的创建服务的方式举例：</p><p>创建一个配置文件 <code>my-program.service</code></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">[Unit]<br>Description= a service for java # 服务的描述<br>After=netwprk.target<br>StartLimitIntervalSec=0<br>[Service]<br>Type=simple<br>Restart=always # 自动重启<br>RestartSec=1<br>User=root<br>ExecStart=java -jar my-program.jar # 服务启动命令<br><br>[Install]<br>WantedBy=multi-user.target<br></code></pre></td></tr></table></figure><p>创建完成后，启动服务即可。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl start my-program<br></code></pre></td></tr></table></figure><p>服务配置详细信息，可以参考<a href="https://www.freedesktop.org/software/systemd/man/systemd.service.html">这里</a></p><h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>使用 docker 启动程序，在启动参数上加 <code>-d</code> 参数即可。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -d my-program-image<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Java 9 语言特性</title>
     <link href="/2022/11/22/java9%20history/"/>
     <url>/2022/11/22/java9%20history/</url>
