@@ -29,6 +29,27 @@
   
   
   <entry>
+    <title>Hexo 博客搭建</title>
+    <link href="/2022/12/18/Hexo-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    <url>/2022/12/18/Hexo-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
+    
+    <content type="html"><![CDATA[<p>这是一个简单的 Hexo 博客搭建教程，无需自己购买服务器，也能搭建属于自己的博客。</p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol><li><p>Gitee 账号或者 GitHub 账号。Gitee 账号和 GitHub 账号都很容易申请，考虑到博客的访问速度，更推荐使用 Gitee。然后新建一个公开的空仓库，仓库的命名需要和你的账号名保持一致。在 Gitee 中访问个人的主页，浏览器上的地址会变成 <code>gitee.com/xxx</code>，这个 <code>xxx</code>  就是你的账号名。同理，进入 GitHub 的个人主页，地址栏 <code>github.com/xxx</code>。</p></li><li><p>Git。电脑需要安装 Git，使用 <code>git --version</code> 确保 Git 是安装成功的。</p></li><li><p>Node 环境。Node 环境安装也很简单，百度关键词 <code>nodejs</code> 进入官网下载，安装了过程无脑下一步即可。安装完成后，控制台使用 <code>node -v</code>命令，打印出 node 的版本信息即为成功。例如我的电脑打印的 node 版本信息 <code>v19.1.0</code>。</p></li><li><p>安装 Hexo。Node 环境准备好之后，使用命令 <code>npm install -g hexo-cli</code> 安装 Hexo，等待控制台输出完成即可，使用 <code>hexo -v</code> 验证是否安装成功。Hexo 官方文档有详细的安装方法，可以<a href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85">参考</a>。</p></li><li><p>至此，所有准备工作已完成。</p></li></ol><h2 id="快速搭建"><a href="#快速搭建" class="headerlink" title="快速搭建"></a>快速搭建</h2><p> 首先，使用 hexo 命令创建一个 <code>blog</code> 文件夹，文件夹的名称和路径自己指定。为了规避一些潜在的问题，路径最好是英文的。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo init blog<br></code></pre></td></tr></table></figure><p>等待一会，blog 文件夹就创建成功了。然后进入到刚才创建的目录。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd blog<br></code></pre></td></tr></table></figure><p>安装所需依赖。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install <br></code></pre></td></tr></table></figure><p>依赖安装完成后，使用命令在本地访问我们搭建的博客</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo server<br></code></pre></td></tr></table></figure><p>此时在浏览器上访问 <code>http://localhost:4000</code> 即可看到搭建的 hexo 博客了。停止访问只需要 <code>Ctrl + C</code>。</p><h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><p>博客能本地访问，无法满足大多数人的需求，搭建博客的目的就是为了能够随时随地访问。</p><p>在 blog 文件夹中使用 Git 命令，将文件夹推送到远程仓库。</p><p>由于 blog 文件夹中没有 .git 文件，无法使用 git 命令，需要先进行初始化</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git init<br></code></pre></td></tr></table></figure><p>关联远程仓库地址</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git remote add origin &lt;远程仓库地址&gt;<br></code></pre></td></tr></table></figure><p>使用 git 命令提交，推送到远程仓库</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs git"># 添加所有文件<br>git add .<br><br># 提交<br>git commit -m &#x27;init blog&#x27;<br><br># 推送到远程仓库<br>git push origin master<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>博客</tag>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Linux 服务化的几种方式</title>
     <link href="/2022/12/13/Linux%20%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
     <url>/2022/12/13/Linux%20%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
