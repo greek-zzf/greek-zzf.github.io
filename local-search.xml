@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Hexo 博客搭建</title>
+    <link href="/2022/12/19/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    <url>/2022/12/19/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
+    
+    <content type="html"><![CDATA[<p>这是一个简单的 Hexo 博客搭建教程，无需自己购买服务器，也能搭建属于自己的博客。</p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol><li><p>Gitee 账号或者 GitHub 账号。Gitee 账号和 GitHub 账号都很容易申请，考虑到博客的访问速度，更推荐使用 Gitee。然后新建一个公开的空仓库，仓库的命名需要和你的账号名保持一致。在 Gitee 中访问个人的主页，浏览器上的地址会变成 <code>gitee.com/xxx</code>，这个 <code>xxx</code>  就是你的账号名。同理，进入 GitHub 的个人主页，地址栏 <code>github.com/xxx</code>。</p></li><li><p>Git。电脑需要安装 Git，使用 <code>git --version</code> 确保 Git 是安装成功的。</p></li><li><p>Node 环境。Node 环境安装也很简单，百度关键词 <code>nodejs</code> 进入官网下载，安装了过程无脑下一步即可。安装完成后，控制台使用 <code>node -v</code>命令，打印出 node 的版本信息即为成功。例如我的电脑打印的 node 版本信息 <code>v19.1.0</code>。</p></li><li><p>安装 Hexo。Node 环境准备好之后，使用命令 <code>npm install -g hexo-cli</code> 安装 Hexo，等待控制台输出完成即可，使用 <code>hexo -v</code> 验证是否安装成功。Hexo 官方文档有详细的安装方法，可以<a href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85">参考</a>。</p></li><li><p>至此，所有准备工作已完成。</p></li></ol><h2 id="快速搭建"><a href="#快速搭建" class="headerlink" title="快速搭建"></a>快速搭建</h2><p> 首先，使用 hexo 命令创建一个 <code>blog</code> 文件夹，文件夹的名称和路径自己指定。为了规避一些潜在的问题，文件夹名称和路径最好是英文的。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo init blog<br></code></pre></td></tr></table></figure><p>等待一会，blog 文件夹就创建成功了。需要注意的是，blog 中默认个 <code>.gitignore</code> 文件，需要将 <code>public/</code> 这行删除，后续步骤会使用到。然后进入到刚才创建的目录。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd blog<br></code></pre></td></tr></table></figure><p>安装所需依赖。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install <br></code></pre></td></tr></table></figure><p>将 md 文件生成 html 文件，此时 blog 目录下自动生成 <code>public</code> 文件夹，用于保存 html 文件。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo generate<br></code></pre></td></tr></table></figure><p>之后，使用命令在本地访问我们搭建的博客，看看效果。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo server<br></code></pre></td></tr></table></figure><p>此时在浏览器上访问 <code>http://localhost:4000</code> 即可看到搭建的 hexo 博客了。停止访问只需要 <code>Ctrl + C</code>。</p><h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><p>博客能本地访问，无法满足大多数人的需求，搭建博客的目的就是为了能够随时随地访问。</p><p>在 blog 文件夹中使用 Git 命令，将文件夹推送到远程仓库。</p><p>由于 blog 文件夹中没有 .git 文件，无法使用 git 命令，需要先进行初始化</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git init<br></code></pre></td></tr></table></figure><p>关联远程仓库地址</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git remote add origin &lt;远程仓库地址&gt;<br></code></pre></td></tr></table></figure><p>使用 git 命令提交，推送到远程仓库。需要注意的是，只需要将生成好的 html 文件推送到远程仓库，因此推送 <code>public</code> 下的所有文件即可。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs git"># 添加 public 下的所有文件<br>git add public/<br><br># 提交<br>git commit -m &#x27;init blog&#x27;<br><br># 推送到远程仓库<br>git push origin master<br></code></pre></td></tr></table></figure><p>推送成功后，远程仓库的目录结构应与下图类似</p><p><img src="/../picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/directory-tree.png"></p><h2 id="使用-pages-服务"><a href="#使用-pages-服务" class="headerlink" title="使用 pages 服务"></a>使用 pages 服务</h2><p>Gitee 和 GitHub 都提供了 <code>pages</code> 服务，<code>pages</code> 服务简单来说，就是让你的 html 文件能被其他人访问，这样就达到了博客共享的目的。</p><p><img src="/../picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/flowsheet.png" alt="ceui"></p><p>这个一整套流程就是：编写博客（markdown），使用 <code>hexo generate</code> 将 md 文件编译成 html 文件，使用 git 命令将文件推送到远程仓库，配置好 pages 服务即可。当然，pages 服务无需重复配置，只需要指定一次即可。</p><p>由于 Gitee 使用 pages 要实名认证，这里使用 <code>Github pages</code> 服务演示，原理都是一样的。</p><p><img src="/../picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github-pages-step.png" alt="github-pages-step"></p><p>这里告诉了 Github 要从哪个分支，哪个目录部署 pages 服务。如果你使用的是 Gitee Pages，原理也是一样的。pages 服务会去找 <code>index.html</code> 作为站点的入口文件。</p><p>等待片刻，就可以使用 <code>https://你的github账号名.github.io</code> 来访问你的博客了。</p><h2 id="添加自己的博客"><a href="#添加自己的博客" class="headerlink" title="添加自己的博客"></a>添加自己的博客</h2><p>以上部署好之后，可以开始编写自己的博客了。只需要将编写好的 markdown 文件放入 <code>blog/source/_posts</code> 即可。由于 hexo 默认的资源路径是 <code>source</code>，因此图片也应该放在该文件夹下。</p><p>博客添加完成后，需要重新编译生成 html 文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo generate<br></code></pre></td></tr></table></figure><p>编译完成后，走上面的提交操作，把 html 文件推送到远程仓库。</p><h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>hexo 提供了大量的第三方主题，可以使用主题来美化博客。这里使用 <code>fluid</code> 主题举例，主题的官方文档点击<a href="https://hexo.fluid-dev.com/docs/start/">这里</a>。</p><p>使用主题很简单，只需要按照它官方文档的要求来即可。</p><p>例如 <code>fluid</code> 的官方文档说明如下</p><p><img src="/../picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/fluid-theme.png" alt="fluid"></p><p>将主题解压到 <code>blog/themes</code> 后，重命名为 <code>fluid</code>，然后修改 <code>blog/_config.yml</code> 文件，把 <code>theme</code> 字段替换为 <code>fluid</code>，语言也可以设置成中文。</p><p>主题设置好之后，重新编译，提交，推送到远程仓库即可。</p><p>若遇到主题样式不生效，可以先执行 <code>hexo clean</code> ，之后再执行 <code>hexo generate</code> 重新编译即可。</p><p>若一切妥当，你的主题应该与我的<a href="https://greek-zzf.github.io/">博客</a>基本一致。</p><h2 id="尾巴"><a href="#尾巴" class="headerlink" title="尾巴"></a>尾巴</h2><p><code>blog</code> 文件夹下的文件，并没有一一细说其作用，日常只需要关心 <code>public</code> <code>source</code> <code>_config.yml</code> 几个文件即可。</p><p><code>_config.yml</code> 是整个博客的配置文件，有关的参数可以参考官方文档，有详细的说明。</p><p>同样主题的细节配置，比如字体样式，大小，首页图片等等，都是以主题的官方文档为准。</p><p>最后，期待你能根据我的教程，搭建满意的博客。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>教程</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>博客</tag>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>MIT 6.824 分布式系统 - Introduction</title>
     <link href="/2022/12/19/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/"/>
     <url>/2022/12/19/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/</url>
@@ -21,27 +48,6 @@
     <tags>
       
       <tag>分布式，6.824</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Hexo 博客搭建</title>
-    <link href="/2022/12/19/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    <url>/2022/12/19/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
-    
-    <content type="html"><![CDATA[<p>这是一个简单的 Hexo 博客搭建教程，无需自己购买服务器，也能搭建属于自己的博客。</p><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol><li><p>Gitee 账号或者 GitHub 账号。Gitee 账号和 GitHub 账号都很容易申请，考虑到博客的访问速度，更推荐使用 Gitee。然后新建一个公开的空仓库，仓库的命名需要和你的账号名保持一致。在 Gitee 中访问个人的主页，浏览器上的地址会变成 <code>gitee.com/xxx</code>，这个 <code>xxx</code>  就是你的账号名。同理，进入 GitHub 的个人主页，地址栏 <code>github.com/xxx</code>。</p></li><li><p>Git。电脑需要安装 Git，使用 <code>git --version</code> 确保 Git 是安装成功的。</p></li><li><p>Node 环境。Node 环境安装也很简单，百度关键词 <code>nodejs</code> 进入官网下载，安装了过程无脑下一步即可。安装完成后，控制台使用 <code>node -v</code>命令，打印出 node 的版本信息即为成功。例如我的电脑打印的 node 版本信息 <code>v19.1.0</code>。</p></li><li><p>安装 Hexo。Node 环境准备好之后，使用命令 <code>npm install -g hexo-cli</code> 安装 Hexo，等待控制台输出完成即可，使用 <code>hexo -v</code> 验证是否安装成功。Hexo 官方文档有详细的安装方法，可以<a href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85">参考</a>。</p></li><li><p>至此，所有准备工作已完成。</p></li></ol><h2 id="快速搭建"><a href="#快速搭建" class="headerlink" title="快速搭建"></a>快速搭建</h2><p> 首先，使用 hexo 命令创建一个 <code>blog</code> 文件夹，文件夹的名称和路径自己指定。为了规避一些潜在的问题，文件夹名称和路径最好是英文的。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo init blog<br></code></pre></td></tr></table></figure><p>等待一会，blog 文件夹就创建成功了。需要注意的是，blog 中默认个 <code>.gitignore</code> 文件，需要将 <code>public/</code> 这行删除，后续步骤会使用到。然后进入到刚才创建的目录。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd blog<br></code></pre></td></tr></table></figure><p>安装所需依赖。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install <br></code></pre></td></tr></table></figure><p>将 md 文件生成 html 文件，此时 blog 目录下自动生成 <code>public</code> 文件夹，用于保存 html 文件。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo generate<br></code></pre></td></tr></table></figure><p>之后，使用命令在本地访问我们搭建的博客，看看效果。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo server<br></code></pre></td></tr></table></figure><p>此时在浏览器上访问 <code>http://localhost:4000</code> 即可看到搭建的 hexo 博客了。停止访问只需要 <code>Ctrl + C</code>。</p><h2 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h2><p>博客能本地访问，无法满足大多数人的需求，搭建博客的目的就是为了能够随时随地访问。</p><p>在 blog 文件夹中使用 Git 命令，将文件夹推送到远程仓库。</p><p>由于 blog 文件夹中没有 .git 文件，无法使用 git 命令，需要先进行初始化</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git init<br></code></pre></td></tr></table></figure><p>关联远程仓库地址</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs git">git remote add origin &lt;远程仓库地址&gt;<br></code></pre></td></tr></table></figure><p>使用 git 命令提交，推送到远程仓库。需要注意的是，只需要将生成好的 html 文件推送到远程仓库，因此推送 <code>public</code> 下的所有文件即可。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs git"># 添加 public 下的所有文件<br>git add public/<br><br># 提交<br>git commit -m &#x27;init blog&#x27;<br><br># 推送到远程仓库<br>git push origin master<br></code></pre></td></tr></table></figure><p>推送成功后，远程仓库的目录结构应与下图类似</p><p><img src="/../picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/directory-tree.png"></p><h2 id="使用-pages-服务"><a href="#使用-pages-服务" class="headerlink" title="使用 pages 服务"></a>使用 pages 服务</h2><p>Gitee 和 GitHub 都提供了 <code>pages</code> 服务，<code>pages</code> 服务简单来说，就是让你的 html 文件能被其他人访问，这样就达到了博客共享的目的。</p><p><img src="/../picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/flowsheet.png" alt="ceui"></p><p>这个一整套流程就是：编写博客（markdown），使用 <code>hexo generate</code> 将 md 文件编译成 html 文件，使用 git 命令将文件推送到远程仓库，配置好 pages 服务即可。当然，pages 服务无需重复配置，只需要指定一次即可。</p><p>由于 Gitee 使用 pages 要实名认证，这里使用 <code>Github pages</code> 服务演示，原理都是一样的。</p><p><img src="/../picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github-pages-step.png" alt="github-pages-step"></p><p>这里告诉了 Github 要从哪个分支，哪个目录部署 pages 服务。如果你使用的是 Gitee Pages，原理也是一样的。pages 服务会去找 <code>index.html</code> 作为站点的入口文件。</p><p>等待片刻，就可以使用 <code>https://你的github账号名.github.io</code> 来访问你的博客了。</p><h2 id="添加自己的博客"><a href="#添加自己的博客" class="headerlink" title="添加自己的博客"></a>添加自己的博客</h2>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>博客</tag>
-      
-      <tag>Hexo</tag>
       
     </tags>
     
