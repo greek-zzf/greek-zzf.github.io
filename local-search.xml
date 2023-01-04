@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>MIT 6.824 分布式系统 - Introduction</title>
+    <link href="/2023/01/04/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/"/>
+    <url>/2023/01/04/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/</url>
+    
+    <content type="html"><![CDATA[<h2 id="分布式系统基础架构"><a href="#分布式系统基础架构" class="headerlink" title="分布式系统基础架构"></a>分布式系统基础架构</h2><ul><li>存储</li><li>计算</li><li>通信（关于通信的详细内容可观看 6.829 计算机网络）</li></ul><h2 id="实现分布式所需的工具"><a href="#实现分布式所需的工具" class="headerlink" title="实现分布式所需的工具"></a>实现分布式所需的工具</h2><ul><li>RPC (Remote procedure call)</li><li>线程</li><li>并发控制</li></ul><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><ul><li>分布式系统的扩展，带来便利。<ul><li>高性能</li><li>高容错</li></ul></li><li>扩展带来的几个问题<ul><li>容错性（Fault Tolerance）</li><li>可用性 （Availability）</li><li>可恢复（Recoverability）</li></ul></li><li>解决容错的手段<ul><li>避免写入非易失性存储（Non-Volatile Storage）</li><li>使用复制，来增加容错（Replicated）</li></ul></li></ul><h2 id="一致性（Consistency）"><a href="#一致性（Consistency）" class="headerlink" title="一致性（Consistency）"></a>一致性（Consistency）</h2><p>使用一个 key value 例子说明 <code>强一致性</code>(Strong Consistency) 和 <code>弱一致性</code>(Weak Consistency)</p><h2 id="Google-的-MapReduce"><a href="#Google-的-MapReduce" class="headerlink" title="Google 的 MapReduce"></a>Google 的 MapReduce</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>6.824</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>分布式，6.824</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>2022-年终总结</title>
     <link href="/2022/12/29/2022-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
     <url>/2022/12/29/2022-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</url>
@@ -21,31 +46,6 @@
     <tags>
       
       <tag>年终总结</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>MIT 6.824 分布式系统 - Introduction</title>
-    <link href="/2022/12/29/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/"/>
-    <url>/2022/12/29/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/</url>
-    
-    <content type="html"><![CDATA[<h2 id="分布式系统基础架构"><a href="#分布式系统基础架构" class="headerlink" title="分布式系统基础架构"></a>分布式系统基础架构</h2><ul><li>存储</li><li>计算</li><li>通信（关于通信的详细内容可观看 6.829 计算机网络）</li></ul><h2 id="实现分布式所需的工具"><a href="#实现分布式所需的工具" class="headerlink" title="实现分布式所需的工具"></a>实现分布式所需的工具</h2><ul><li>RPC (Remote procedure call)</li><li>线程</li><li>并发控制</li></ul><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><ul><li>分布式系统的扩展，带来便利。<ul><li>高性能</li><li>高容错</li></ul></li><li>扩展带来的几个问题<ul><li>容错性（Fault Tolerance）</li><li>可用性 （Availability）</li><li>可恢复（Recoverability）</li></ul></li><li>解决容错的手段<ul><li>避免写入非易失性存储（Non-Volatile Storage）</li><li>使用复制，来增加容错（Replicated）</li></ul></li></ul><h2 id="一致性（Consistency）"><a href="#一致性（Consistency）" class="headerlink" title="一致性（Consistency）"></a>一致性（Consistency）</h2><p>使用一个 key value 例子说明 <code>强一致性</code>(Strong Consistency) 和 <code>弱一致性</code>(Weak Consistency)</p><h2 id="Google-的-MapReduce"><a href="#Google-的-MapReduce" class="headerlink" title="Google 的 MapReduce"></a>Google 的 MapReduce</h2>]]></content>
-    
-    
-    <categories>
-      
-      <category>6.824</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>分布式，6.824</tag>
       
     </tags>
     
@@ -241,6 +241,25 @@
       <tag>Jenkins</tag>
       
     </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>interview</title>
+    <link href="/2022/04/28/interview/"/>
+    <url>/2022/04/28/interview/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Java-基础"><a href="#Java-基础" class="headerlink" title="Java 基础"></a>Java 基础</h2><ul><li>为什么需要装插箱？ <ul><li>为了兼容集合类，由于 List 不放便，因此使用装箱类型表示他的集合 List</li></ul></li><li>Method.invoke(obj,args) &#x2F; Method.invoke(null,args) static &#x2F; non-static 字段同理。 </li><li>异常中 finally 中的字节码实现，是将 Finally 块中的代码分别复制到 try 和 catch 末尾的。</li></ul><h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><ul><li>基本的 IO 模型：阻塞、基于流的。</li><li>基本的 IO 模型：由于是阻塞的，因此被迫有多个线程才能同时处理多个 IO 事件、有多个线程就会产生竞争条件（锁、同步、CAS）</li><li>为什么需要 NIO：线程、上下文切换及其昂贵、IO 多路复用。</li></ul><h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><ul><li>栈内存分配？何时分配？ <ul><li>当代码中创建了「无人引用」的对象时，编译器在编译过程会将代码优化，当方法栈被调用时该对象在栈上进行分配，简轻 GC 的负担。</li></ul></li><li>方法区常量池 <ul><li>Class 对象，Java 7 永久代、Java 8 元空间。</li></ul></li><li>字节码转换：编译器前端后端 <ul><li>java -&gt; 抽象语法树 -&gt; class （编译器前端）</li></ul></li><li>字节码指令（参照 Java 虚拟机规范） <ul><li>INVOKESPECIAL：调用特殊的方法：construct、private、super、static 方法</li><li>INVOKEVIRTUAL：方法调用</li><li>PUTFIELD：对象写值，例如：user.name &#x3D; “xxx”；</li></ul></li><li>Java 8 的三层类加载体系： <ul><li>Bootstrap (JVM 核心类) &#x2F; Ext(扩展类加载器) &#x2F; App (应用类加载器)</li></ul></li><li>常用 JVM 命令与问题排查 <ul><li>jps：列举 jvm 进程信息。jstack：线程调用栈信息。jmap：dump 堆内存信息。</li></ul></li><li>Java 的引用链 <ul><li>日常使用的都是「强引用」，弱引用、虚引用、影子引用</li></ul></li><li>什么是垃圾？ <ul><li>可达性分析，沿着 GC root 能访问到的都是非垃圾、其他都是垃圾</li></ul></li><li>GC root 有哪些？ <ul><li>线程、native 方法、栈帧中的局部变量表、Class 引用的 static field</li></ul></li><li>什么是 safepoint？ <ul><li>所有线程停止的地方（安全点）</li></ul></li><li>GC  过程 <ul><li>等待 safepoint （干活的人都停下来）</li><li>引用分析 (找到垃圾)</li><li>Finalize 队列 （把垃圾放到队列，最终判断是否要回收）</li><li>分代垃圾回收 （回收垃圾）</li></ul></li><li>分代垃圾回收 <ul><li>年轻代：Survivor0 &#x2F; Survivor1 &#x2F; Eden</li><li>GC 次数多了，提升到老年代。</li><li>永久代 &#x2F; 元空间</li></ul></li><li>不同的垃圾回收算法 <ul><li>老年代&#x2F;年轻代（串行、并行算法），年轻代：压缩拷贝 老年代：压缩整理</li><li>之前的 GC 需要一个 STW 过程，因此为了降低 STW 的时间使用了 CMS，又由于与之前的串行并行不兼容，因此单独使用了一个 ParNew</li><li>当前算法：G1。 未来算法：Shenandoad &#x2F; ZGC</li></ul></li><li>GC 调优：参考网上文档，看看过程。</li><li>GC 问题：OOM、CPU 100% ( cpu 一值在执行，死循环 )</li></ul><h2 id="多线程基础"><a href="#多线程基础" class="headerlink" title="多线程基础"></a>多线程基础</h2><ul><li>Thread &#x2F; Runnable &#x2F; Callable 关系 <ul><li>Thread 是真正的线程，对应内核中的线程。Runable 无法返回，且不抛出 checked 异常。Callable 只能交由线程池运行。</li></ul></li><li>Thread 声明周期： <ul><li>new: 线程创建</li><li>runnable: 分配了任务</li><li>terminated: run 方法执行完。</li><li>blocked: 线程阻塞、等待获取锁</li><li>waiting:  等待、等待被唤醒</li><li>time waiting: 超时等待。</li></ul></li><li>ThreadLocal 实现原理： <ul><li>具体的数据并非保存在 ThreadLocal，而是保存在线程里面。好处就是：线程结束或者销毁，他所持有的数据也会被销毁。</li></ul></li><li>InterruptedException 异常，当 wait、sleep 等方法运行抛出。用于线程任务的中断。</li></ul><h2 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h2><ul><li>synchronized 锁住的是什么? <ul><li>锁住的永远都是对象，有普通对象实例，Class 对象，this</li></ul></li><li>synchronized 底层实现 <ul><li>方法：modifiers - sync  有对应的标志位</li><li>代码块：进入的时候有 MONITORENTER &#x2F; MONITOREXIT 两条字节码指令。</li></ul></li><li>锁升级（膨胀）、锁消除、锁粗化、自旋锁（八股先不急）</li><li>volatile 是什么？ <ul><li>关键字，保证了共享变量对其他线程的可见性，任何一个线程写入之后，其他线程应该都可见。</li><li>实现：JVM 立刻把共享变量刷新到主内存，其他线程都从主内存读即可。</li></ul></li><li>指令重排序 <ul><li>编译器发现同一线程的指令执行互不干扰，于是与不同的顺序方式去执行。</li></ul></li><li>为什么有同步的时候不需要 volatile ?（有规定） <ul><li>synchronized &#x2F; Lock &#x2F; AtomicX</li></ul></li></ul><h2 id="JUC-包（简化多线程开发）"><a href="#JUC-包（简化多线程开发）" class="headerlink" title="JUC 包（简化多线程开发）"></a>JUC 包（简化多线程开发）</h2><ul><li>乐观锁和悲观锁 <ul><li>悲观锁，Synchronized，锁住的对象在某一时刻只能被一个线程持有，严格保证了数据安全，但是上下文切换的性能开销相对较大。例子：一群人维圈抢一个凳子，谁快谁先做椅子，抢到椅子的人离开后，剩下那群人继续抢这个椅子，一直持续下去。</li><li>乐观锁，基于 CAS。</li></ul></li><li>AQS （抽象的队列同步器）原理：基于队列的同步容器（工具），里面有一个状态，该状态是原子更新的，如果没有办法成功更新该状态，则代表没有线程获取锁，反之有线程获取到锁。</li><li>CAS 实现和底层原理： <ul><li>原理：内存位置的内容与给定值进行比较，并且仅当它们相同时，才将该内存位置的内容修改为给定的新值。</li><li>例子：内存位置 V，程序执行从 V 中取到的值为 10，需要对值进行自增 1 操作，因此新值为 11 。程序开始执行，之前从 V 中取到的值为 10，获取当前 V 中的值，如果为 10，表示 V 中的值没有被修改，因此把 11 放进 V 中，如果为 11  表示 V 中的值被其他线程篡改了，因此此次更新失败，并把现在 v 中的值 11 返回保存，继续进行重试，直到成功。</li></ul></li><li>ConcurrentHashMap 原理： <ul><li>Java 8：哈希表加链表或红黑树，并发扩容，CAS。锁的粒度很细。</li></ul></li><li>CountDownLatch：主线程 await 等待，其他线程使用 countDown 数量减1，数量为 0 时，继续执行主线程代码。 <ul><li>主线程：做核酸。其他线程：核酸排队，10人一组。工作人员清点组人数，来一个就减 1 直到减为 0，安排该组进行核酸。</li></ul></li><li>CyclicBarrier：await 等待，当所有数量的线程都在 await，开始执行。 <ul><li>每个大白需要负责一条核酸线路，共 5 条。需要所有大白在场，才开始进行核酸检测，先来的大白就等待（await），直到5个人都来齐了，开始进行核酸检测。</li></ul></li><li>线程池（一家公司，核心员工数量 预计10人，除核心员工外还可以多招5个外包员工） <ul><li>参数：核心员工、外包员工人数、超过多长时间没事干就开除员工</li><li>如何工作： <ol><li>当新项目来的时候，发现核心员工数量不到10人，招一个核心员工来处理这个项目。</li><li>如果项目来的时候，所有核心员都在干活，那我们就给尝试给项目排期（放入队列）</li><li>如果排期失败（核心员工没时间处理新项目），就去招一个外包员工。如果人数已经达到最大上限（核心员工+外包员工 &#x3D; 15）或者公司倒闭了，就拒绝该新项目（拒绝项目也有策略）。</li></ol></li><li>公司接不了新项目了，如何拒绝： <ul><li>放弃该项目</li><li>谁建的新项目，自己去执行</li><li>直接丢弃排期项目中最晚的项目，然后再把该新项目加入排期，再去试试看能不能完成。</li><li>直接摆烂、不管这个丢弃的项目</li></ul></li><li>需要注意的地方 <ul><li>需要明确项目中最大支持的线程</li><li>大概知道线程池的工作状态</li></ul></li></ul></li></ul><h2 id="计算机原理-x2F-操作系统"><a href="#计算机原理-x2F-操作系统" class="headerlink" title="计算机原理&#x2F;操作系统"></a>计算机原理&#x2F;操作系统</h2><ul><li>进程之间的通信：管道 &#x2F; 信号 &#x2F; 共享内存 &#x2F; socket (tcp)</li><li>僵尸进程 <ul><li>当父进程创建了子进程，且子进程销毁后，子进程会留下 task 数据结构，exit code 等相关信息保留一段时间，便于父进程调用，此时子进程是僵尸状态。父进程调用后就会删除相关信息，但是当父进程不调用或者自身销毁后，子进程的留下的信息如何处理？</li><li>解决方法：Linux 的 init 进程会定时把自身设置僵尸进程的父亲，然后把他们清理。</li></ul></li><li>常见系统问题排查与僵尸进程</li></ul><h2 id="TCP-x2F-UDP-x2F-HTTP-x2F-HTTPS-x2F-SSH"><a href="#TCP-x2F-UDP-x2F-HTTP-x2F-HTTPS-x2F-SSH" class="headerlink" title="TCP &#x2F; UDP &#x2F; HTTP &#x2F; HTTPS &#x2F; SSH"></a>TCP &#x2F; UDP &#x2F; HTTP &#x2F; HTTPS &#x2F; SSH</h2><ul><li>tcp 可靠传输，自动重传。三次握手、四次挥手 <ul><li>明文、基于流。</li></ul></li><li>udp 尽最大可能交付，允许错误发生。场景：视频、语音、直播。</li><li>SSH 连接流程 <ul><li>在服务器上设置自己的公钥信息。</li><li>使用 SSH 命令连接服务器，此时 SSH 会用你的私钥加密一小段数据，传输给服务器。</li><li>服务器使用公钥，进行解密，解密成功建立连接。</li></ul></li><li>RSA 非对称加密 <ul><li>公加私解：保密传输</li><li>私加公解：数字签名</li></ul></li><li>HTTPS 的 SSL handshake 流程 <ul><li>请求服务器，服务器用私钥加密一段数据（数字签名），把加密后的数据和公钥返回给客户端</li><li>计算机中的 CA 机构对公钥进行检查认证，验证通过往下执行，否则会提示。</li><li>客户端根据用返回的公钥对加密的数据进行解密，解密成功即可确认该服务器是想要请求的服务器。</li><li>客户端用公钥加密一段数据（对称加密算法），返回给服务器。服务器用私钥进行解密，得到对称加密算法，此时客户端与服务器 HTTPS 连接已经建立完成</li><li>后续的通信使用对称加密算法，对内容进行加密解密。</li></ul></li></ul><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><ul><li>Redis 为什么这么快？ <ul><li>单线程，避免了上下文切换。</li><li>数据结构优化</li><li>IO 多路复用</li></ul></li><li>Redis 支持的数据结构 <ul><li>String &#x2F; List &#x2F; Set &#x2F; Zset &#x2F; Hash</li><li>延时队列实现 - Zset score 设置为时间戳</li><li>不带消费保证消息队列</li></ul></li><li>Redis 的两种持久化 <ul><li>RDB &#x2F; AOF：全量 &#x2F; 增量</li><li>BGSAVE &#x2F; CopyOnWrite</li></ul></li><li>Redis 淘汰策略 <ul><li>LRU - Least Recent Used 最近最少使用</li><li>noeviction 不淘汰，内存超过设置的值丢出异常。</li><li>allkeys-lru 所有的 key 使用 lru 的方式淘汰</li><li>volatile-lru 过期的 key 使用 lru 的方式淘汰</li><li>allkeys-random 所有的 key 随机淘汰</li><li>volatile-random 所有过期的 key 随机淘汰</li><li>volatile-ttl 淘汰超时的 key，和快要过期的 key</li></ul></li><li>Redis 主从？ <ul><li>一个 Master， 若干个 Slave 同步</li></ul></li><li>Redis 哨兵机制 <ul><li>Master 和若干个 slave，以及 Sentinel，其中 Sentinel 用来监控 redis 集群状态。当 master 挂掉，Sentinel 就会知道，并且选一个 slave 称为新的 master，然后通知应用程序做变更。</li></ul></li><li>分布式锁 <ul><li>SETNX TIMEOUT，命令在指定的 key 不存在时，为 key 设置指定的值，这种情况下等同 <a href="https://www.redis.com.cn/commands/set.html">SET</a> 命令。当 <code>key</code>存在时，什么也不做。并设置个超时时间避免死锁。</li><li>redlocks?</li></ul></li><li>缓存雪崩 <ul><li>缓存突然挂了，所有的流量涌到数据库上</li><li>解决方案：限流（熔断）只处理指定数量流量、服务降级。</li></ul></li><li>缓存穿透 <ul><li>使用一个不存在的 key 频繁 访问数据库。</li><li>解决方法：把找不到的情况也放在 redis 中，同正常的情况一致处理。</li></ul></li><li>缓存与数据库的一致性（左耳朵耗子：<a href="https://coolshell.cn/articles/17416.html">缓存更新的条路</a>)</li></ul><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ul><li>B+ 树，是多叉树，高度很低。Hash 索引。</li><li>B+ 树特点：减少磁盘 IO，每次读取尽可能多的数据、范围查找、磁盘预读（把数据和周围的数据都读取做缓存）</li><li>Hash特点：快，但是无法进行范围查找</li><li>聚簇索引和非聚簇索引 <ul><li>InnoDB 聚簇索引，只有主索引关联对应并持有的数据，非主索引存储主索引的指针（也称回表），因此通过非主索引的查找如下：非主索引 -&gt; 主索引 -&gt; 数据。</li><li>MyISAM 非聚簇索引，主索引和非主索引都关联并持有数据。</li></ul></li><li>乐观锁悲观锁</li><li>各种隔离等级</li><li>MySQL 索引优化 <ul><li>最左匹配原则：创建联合索引 “a,b,c” 时，实际上创建了三个索引，a索引，a,b 索引，a,b,c 索引。根据查询条件选择索引。</li><li>排查：explain 命令，查看对应的语句使用索引的情况。</li><li>索引失效：不满足最左匹配或者使用了函数。例如：where date(create_at) &lt; ‘2022-05-01’</li></ul></li><li>MySQL 主从 <ul><li>什么是 Binlog: 记录所有对数据库更改的一个日志，二进制文件。用于数据库主从同步和备份。</li><li>主从同步过程：主库发生写请求，对应的 Binlog 会进行修改。binlog 会发送给从库，binlog在从库中有个 relaylog(中继日志)，把relaylog 和当期那从库合并。</li></ul></li></ul><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><h2 id="RPC-与-Dubbo"><a href="#RPC-与-Dubbo" class="headerlink" title="RPC 与 Dubbo"></a>RPC 与 Dubbo</h2><ul><li>RPC 是如何工作？ <ul><li>代理模式：JDK 动态代理、Cglib 字节码增强</li><li>二者优缺点：本质都是生成一个字节码，JDK 只能代理接口，而 Cglib 是代理一个类，功能更强大。</li></ul></li><li>Dubbo 是如何工作？ <ul><li>官网图</li></ul></li><li>负载均衡、服务注册、健壮性 <ul><li>负载均衡算法：roundrobin（轮流）、加权轮流、Sticky（粘性）、hash（客户端 ip 进行 hash）</li><li>服务注册：每个服务提供者把自己注册到服务中心中</li><li>健壮性： <ul><li>当注册中心挂掉，不影响到消费者和服务者通信。</li><li>当服务提供者挂掉后，服务消费者应自动的重连下一个机器，自动恢复</li><li>所有的提供者挂掉，消费者可以预先配置默认的返回值</li></ul></li></ul></li><li>限流算法 <ul><li>计数器：设定接口的值，例如1000，每个请求进来都减1，当变成负数之后，不处理请求。后台设置定时任务，每秒将该值设置为 1000，这样就可以达到 1000qps。缺点：1000 瞬间变成0，服务器会一直拒绝其他请求，导致无响应。</li><li>漏桶：请求都放在漏斗中，处理完成的请求通过尖嘴流出，漏斗溢出的请求不处理。</li><li>令牌桶：令牌生成器，往桶里放令牌。每个请求需要去桶拿令牌消耗，能拿到请求继续，否则请求结束。当令牌桶的令牌被消耗完之后，请求则需要等待令牌生成器生成令牌，才能往下继续。</li></ul></li></ul><h2 id="Zookeeper-与分布式"><a href="#Zookeeper-与分布式" class="headerlink" title="Zookeeper 与分布式"></a>Zookeeper 与分布式</h2><ul><li>分布式序列号生成算法 <ul><li>雪花算法</li></ul></li><li>分布式事务</li><li>分布式一致性 <ul><li>强一致：用户所做的修改所有服务器上立刻得到更新，可用性和性能相对差</li><li>弱一致（最终一致）：下完订单，刷新回到未付款状态，再次刷新已支付</li></ul></li><li>保证分布式一致性 <ul><li>一致性 Hash，请求计算 hash 选择最近的 hash 节点。节点分布不均，可以设置虚拟节点</li></ul></li></ul><h2 id="Spring-x2F-SpringMVC-x2F-Spring-Boot"><a href="#Spring-x2F-SpringMVC-x2F-Spring-Boot" class="headerlink" title="Spring &#x2F; SpringMVC &#x2F; Spring Boot"></a>Spring &#x2F; SpringMVC &#x2F; Spring Boot</h2><ul><li>IOC &#x2F; DI 及其实现原理</li><li>容器 &#x2F; bean 声明周期</li><li>AOP 实现及原理：JDK 动态代理和 Cglib 字节码增强。</li><li>设计模式：refresh 模板方法，单例模式，代理模式，工厂模式。</li><li>Spring Boot 改进 <ul><li>流程配置全部自动化掉，Spring 和 SpringMVC 有的他都有</li><li>基于注解的，减少 xml</li><li>Auto configuration 自动配置</li><li>内置 Tomcat 等 Servlet 容器</li></ul></li><li>Spring Boot 缺点 <ul><li>像魔法，封装的太好了。使用者不明白他是如何工作的</li><li>jar 包比较大，内存比较多</li></ul></li></ul><h2 id="CI-与持续集成"><a href="#CI-与持续集成" class="headerlink" title="CI 与持续集成"></a>CI 与持续集成</h2><ul><li>概念：程序员写代码，提交代码，测试环境中进行测试，测试无误发布到生产环境，生产环境出 bug 又要回滚。可以看到从提交代码之后的每个步骤，程序员都需要手动的进行操作，比如发布，部署项目，手动测试项目，回滚项目等等。我们要做的是，程序员只需要负责编写和提交代码，剩下的工作都交给自动化工具去做。 </li><li>流程：本地开发环境 -&gt; 版本控制系统 (Git) -&gt; CI 服务器（Jenkins）-&gt; 测试环境服务器、预生产服务器、生产服务器</li></ul><h2 id="what-do-you-do"><a href="#what-do-you-do" class="headerlink" title="what do you do?"></a>what do you do?</h2><ul><li>研究文本抄袭算法 SimHash、了解 Handlp、斯坦福 MOSS 服务。</li><li>学英语</li><li>Java 8 - Java 18 历代的变化，有哪些新特性，自己的项目在使用 Java 17</li><li>简单学习了 LaTeX，CV 也是使用开源项目 Awsome CV 和 LaTex 编排的。</li><li>学习 Groovy 脚本语言</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习笔记</category>
+      
+    </categories>
+    
     
   </entry>
   
