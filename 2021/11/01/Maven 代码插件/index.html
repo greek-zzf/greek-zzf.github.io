@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Greek">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="代码规范检查工具 CheckStyle功能checkstyle 插件能帮助我们规范代码行为，尽可能地检查代码的坏味道。 配置checkStyle 插件配置很简单，主要是分两步：引入插件，编写代码规则 xml。 引入插件的配置如下： 12345678910111213141516171819&lt;plugin&gt;          &lt;groupId&gt;org.apache.maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven 代码插件">
+<meta property="og:url" content="http://example.com/2021/11/01/Maven%20%E4%BB%A3%E7%A0%81%E6%8F%92%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="代码规范检查工具 CheckStyle功能checkstyle 插件能帮助我们规范代码行为，尽可能地检查代码的坏味道。 配置checkStyle 插件配置很简单，主要是分两步：引入插件，编写代码规则 xml。 引入插件的配置如下： 12345678910111213141516171819&lt;plugin&gt;          &lt;groupId&gt;org.apache.maven">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-01T19:56:00.000Z">
+<meta property="article:modified_time" content="2023-01-04T08:58:23.229Z">
+<meta property="article:author" content="Greek">
+<meta property="article:tag" content="maven">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Maven 代码插件 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Maven 代码插件</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-11-01 19:56" pubdate>
+          2021年11月1日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          48 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Maven 代码插件</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="代码规范检查工具-CheckStyle"><a href="#代码规范检查工具-CheckStyle" class="headerlink" title="代码规范检查工具 CheckStyle"></a>代码规范检查工具 CheckStyle</h2><h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><p>checkstyle 插件能帮助我们规范代码行为，尽可能地检查代码的坏味道。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>checkStyle 插件配置很简单，主要是分两步：引入插件，编写代码规则 xml。</p>
+<p><strong>引入插件的配置如下：</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-checkstyle-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">configLocation</span>&gt;</span>$&#123;basedir&#125;/src/main/resources/checkstyle.xml<span class="hljs-tag">&lt;/<span class="hljs-name">configLocation</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">includeTestSourceDirectory</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">includeTestSourceDirectory</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">enableRulesSummary</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">enableRulesSummary</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>compile<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>compile<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                      <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>check<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                  <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>              <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>引入插件的坐标，在   中配置插件的一些属性， <code>configLocation</code> 配置了要使用的规则文件位置，如若不配置则默认使用 sun 公司提供的代码规范配置。<code>includeTestSourceDirectory</code> 是否检查测试代码规范 ，<code>enableRulesSummary</code> 是否开启规则摘要等等，详细的配置信息请<a target="_blank" rel="noopener" href="https://maven.apache.org/plugins/maven-checkstyle-plugin/checkstyle-mojo.html">点击</a></p>
+<p>在标签中将 checkstyle 插件的 check 目标绑定到 default 生命周期的 compile 阶段。当使用 <code>mvn compile</code> 编译代码时，checkStyle 便会执行 check 目标，或者手动执行 <code>mvn checkstyle:check</code></p>
+<p><strong>编写代码规则 xml：</strong></p>
+<p>代码规则已经有现成的模板，因此可以直接使用现成的模板，或者根据已有的模板进行修改。比如 sun 公司的代码规范，以及 google 的代码规范。以下是个人开发中经常使用的代码规则，可根据需要修改。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span>?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">module</span> <span class="hljs-keyword">PUBLIC</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;-//Puppy Crawl//DTD Check Configuration 1.1//EN&quot;</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;http://www.puppycrawl.com/dtds/configuration_1_1.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;Checker&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;localeLanguage&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;en&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;NewlineAtEndOfFile&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lineSeparator&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;lf&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;FileTabCharacter&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;fileExtensions&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;java,xml&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RegexpSingleline&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- \s matches whitespace character, $ matches end of line. --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;format&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;\s+$&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;message&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;Line has trailing spaces.&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;TreeWalker&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;IllegalImport&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RedundantImport&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;UnusedImports&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;NeedBraces&quot;</span>/&gt;</span><br>     	<span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;JavadocMethod&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;scope&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;public&quot;</span>/&gt;</span><br>      	<span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ModifierOrder&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RedundantModifier&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;UpperEll&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;LeftCurly&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;NeedBraces&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;RightCurly&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;GenericWhitespace&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;WhitespaceAfter&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">module</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;NoWhitespaceBefore&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">module</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>需要注意的是，规则文件的目录名称需要与插件配置的地址一致，否则插件无法使用自己编写的规则。</p>
+<h2 id="代码缺陷检查工具-SpotBugs"><a href="#代码缺陷检查工具-SpotBugs" class="headerlink" title="代码缺陷检查工具 SpotBugs"></a>代码缺陷检查工具 SpotBugs</h2><h3 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h3><p>SpotBugs 的前身是 FindBugs，从字面意思很好理解就是帮我们的代码找 bug，当然这个 bug 指的是代码层面的，而不是业务上的。特别说明，SpotBugs 检查的是编译后的字节码文件，而非源代码。</p>
+<h3 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h3><p>SpotBugs 的配置也很简单：引入插件依赖，并在插件中做配置即可</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--     SpotBugs 插件      --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.github.spotbugs<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spotbugs-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.12<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>              <span class="hljs-comment">&lt;!-- 此处的依赖用于指定 spotbugs 的版本，不引入该依赖，插件默认会有一个提供一个版本 --&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.github.spotbugs<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spotbugs<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.4.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>              <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>spotbugs<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>verify<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span><br>                  <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                      <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>check<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                  <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>              <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>由于 SpotBugs 是检查字节码文件，因此需要将 SpotBugs 的目标绑定到 compile 之后的阶段，上述配置将 SpotBugs 绑定到 default 生命周期的 verify 阶段，亦可以直接使用命令 <code>mvn spotbugs:check</code> 执行目标。</p>
+<p>对于一些不需要 SpotBugs 检查的方法或者类需要在 pom 中引入如下依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.google.code.findbugs<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>annotations<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.0.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+<p>引入依赖后，在对应的类或者方法上添加 <code>@SuppressFBWarnings(&quot;EI_EXPOSE_REP&quot;)</code> 其中括号中替换为对应的错误类型，更多关于 SpotBugs 的配置信息请<a target="_blank" rel="noopener" href="https://spotbugs.github.io/spotbugs-maven-plugin/check-mojo.html">点击</a></p>
+<h2 id="测试覆盖率报告插件-Jacoco"><a href="#测试覆盖率报告插件-Jacoco" class="headerlink" title="测试覆盖率报告插件 Jacoco"></a>测试覆盖率报告插件 Jacoco</h2><h3 id="功能-2"><a href="#功能-2" class="headerlink" title="功能"></a>功能</h3><p>给单元测试生成测试覆盖率报告，覆盖率报告可以详细的查看测试覆盖到的地方。</p>
+<h3 id="配置-2"><a href="#配置-2" class="headerlink" title="配置"></a>配置</h3><p>给 Junit 测试生成测试报告配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.jacoco<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jacoco-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.8.7<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>             <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>default-prepare-agent<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                         <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>prepare-agent<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                     <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>default-report<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>                   	<span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>verify<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                         <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>report<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                     <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>                 <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>default-check<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                         <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>check<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                     <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>                     <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>                         <span class="hljs-tag">&lt;<span class="hljs-name">rules</span>&gt;</span><br>                             <span class="hljs-tag">&lt;<span class="hljs-name">rule</span>&gt;</span><br>                                 <span class="hljs-tag">&lt;<span class="hljs-name">element</span>&gt;</span>BUNDLE<span class="hljs-tag">&lt;/<span class="hljs-name">element</span>&gt;</span><br>                                 <span class="hljs-tag">&lt;<span class="hljs-name">limits</span>&gt;</span><br>                                     <span class="hljs-tag">&lt;<span class="hljs-name">limit</span>&gt;</span><br>                                         <span class="hljs-tag">&lt;<span class="hljs-name">counter</span>&gt;</span>COMPLEXITY<span class="hljs-tag">&lt;/<span class="hljs-name">counter</span>&gt;</span><br>                                         <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>COVEREDRATIO<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>                                         <span class="hljs-tag">&lt;<span class="hljs-name">minimum</span>&gt;</span>0.60<span class="hljs-tag">&lt;/<span class="hljs-name">minimum</span>&gt;</span><br>                                     <span class="hljs-tag">&lt;/<span class="hljs-name">limit</span>&gt;</span><br>                                 <span class="hljs-tag">&lt;/<span class="hljs-name">limits</span>&gt;</span><br>                             <span class="hljs-tag">&lt;/<span class="hljs-name">rule</span>&gt;</span><br>                         <span class="hljs-tag">&lt;/<span class="hljs-name">rules</span>&gt;</span><br>                     <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>                 <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>             <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>配值 Jacoco 的 report 目标绑定到 verify 阶段，当运行 <code>mvn verify</code>命令时，会生成代码测试覆盖率报告。</p>
+<p>Jacoco 排除文件的配置也需要注意：当我们既需要在生成报告中排除，又需要在检查测试覆盖率中排除时，可以在插件依赖下声明如下，configuration 与插件的 <code>executions</code>在同一级。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">excludes</span>&gt;</span><br>           <span class="hljs-tag">&lt;<span class="hljs-name">exclude</span>&gt;</span>com/greek/shop/entity/*<span class="hljs-tag">&lt;/<span class="hljs-name">exclude</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">excludes</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>仅需要在某些目标执行是过滤文件，则在对应目标的配置中加入上面的代码。例如要在 report 目标中排除文件，则要在 report 对应的 <code>execution</code> 里面添加上面的配置。</p>
+<p>官方文档中针对单元测试和集成测试有不同的配置方法请<a target="_blank" rel="noopener" href="https://www.eclemma.org/jacoco/trunk/doc/maven.html">点击</a>查看，关于 report 的具体配置，以及相关参数也可点击<a target="_blank" rel="noopener" href="https://www.eclemma.org/jacoco/trunk/doc/report-mojo.html">这里</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-chain-item">学习笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/maven/">#maven</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Maven 代码插件</div>
+      <div>http://example.com/2021/11/01/Maven 代码插件/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Greek</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年11月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/12/08/Docker%20%E5%9F%BA%E7%A1%80/" title="Docker 基础">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker 基础</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/20/Java%208%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="Java 8 函数式编程">
+                        <span class="hidden-mobile">Java 8 函数式编程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
