@@ -475,7 +475,7 @@
     
     <tags>
       
-      <tag>maven</tag>
+      <tag>Maven</tag>
       
     </tags>
     
@@ -571,18 +571,10 @@
     <content type="html"><![CDATA[<p><strong>劝退提醒</strong>：不了解 maven 坐标机制，没有使用过 maven 插件，不了解 maven 插件命令的，可以关闭文章了。</p><p>我们经常在项目中引入包，使用 <code>&lt;dependency&gt;</code> 标签，然后填写包的坐标信息， Maven 就可以帮我们引入该 jar 包。当本地存在该 jar 包时，就从本地引入该 jar 包，否则就从远程仓库引入。</p><p>这背后的解析机制是什么呢？</p><h2 id="依赖解析机制"><a href="#依赖解析机制" class="headerlink" title="依赖解析机制"></a>依赖解析机制</h2><p>依赖解析的背后机制可以概括如下：</p><ol><li><p>依赖范围是 <code>system</code>，maven 就会从本地加载该 jar 包，完成构建。</p></li><li><p>正常解析依赖坐标，先去本地仓库找，找到就完成构建。</p></li><li><p>本地找不到，并且显示的指定了版本信息，就去远程仓库中遍历，找到并下载解析。</p></li><li><p>如果依赖的版本信息并没有指定，而是使用 <code>RELEASE</code>或者 <code>LATEST</code>，他会找到远程仓库的<strong>元数据</strong>和本地的元数据进行合并，然后计算出真正的版本号。元数据指的就是仓库中 <code>groupId/artifactId/maven-metadata.xml</code>文件，例如我们打开 guava 包的元数据。元数据位置就在 com.google.guava&#x2F;guava 包下，打开可以看到如下信息：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">metadata</span> <span class="hljs-attr">modelVersion</span>=<span class="hljs-string">&quot;1.1.0&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.google.guava<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>guava<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">versioning</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">latest</span>&gt;</span>30.1.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">latest</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">release</span>&gt;</span>30.1.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">release</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">versions</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r03<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r05<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r06<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r07<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r08<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>r09<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>...<br>  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1-android<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1.1-android<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>30.1.1-jre<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">versions</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">lastUpdated</span>&gt;</span>20210319161151<span class="hljs-tag">&lt;/<span class="hljs-name">lastUpdated</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">versioning</span>&gt;</span><br>&lt;/metadata<br></code></pre></td></tr></table></figure><p> 上面的信息展示了 latest，release 对应的版本号，以及 guava 包的历代版本号，以及最近一次更新时间。例如我们引入 guava，并使用 latest 版本，maven 就会合并元数据，然后计算出 latest 对应的版本号，然后从本地仓库找到改版本的 guava，没有则去远程仓库下载。</p></li><li><p>依赖的版本是 SNAPSHOT，则同样获取远程元数据与本地合并，计算版本信息，获取对应版本的包。</p></li><li><p>如果依赖版本为时间戳的快照版本，就会先转换成非时间戳的快照版本，然后去解析下载。</p></li><li><p>maven 3 中如果不指定 version，则默认解析使用 RELEASE 版本。</p></li></ol><h2 id="插件解析机制"><a href="#插件解析机制" class="headerlink" title="插件解析机制"></a>插件解析机制</h2><p>我们常用的 maven 插件命令都是 <code>mvn dependency:tree</code> <code>mvn flyway:migrate</code>，诸如此类的，他们的格式都是 <code>mvn 插件前缀:目标</code>。</p><p>为了方便用户使用和配置插件，maven 不需要用户提供完整的坐标信息，就能解析得到正确的插件。那么问题来了，maven 是怎么确定插件的坐标和版本的呢？例如 <code>mvn dependency:tree</code> 他执行了什么插件，插件坐标版本信息是什么？</p><p>插件的解析机制和依赖解析机制基本一致，不同的是远程仓库不一样。配置插件的远程仓库地址需要使用 <code>&lt;pluginRepository&gt;</code> 标签配置，如下：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">pluginRepositories</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">pluginRepository</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">pluginRepository</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">pluginRepositories</span>&gt;</span><br></code></pre></td></tr></table></figure><p>除了 <code>&lt;pluginRepositories&gt;</code>和 <code>&lt;pluginRepository&gt;</code>不同，其他的与依赖的仓库配置信息一致。</p><h3 id="默认的-groupId"><a href="#默认的-groupId" class="headerlink" title="默认的 groupId"></a>默认的 groupId</h3><p>在 pom 文件在红配置插件信息的时候，如果插件是 maven 官方的插件（groupId 为 org.apache.maven.plugins），就可以省略 groupId 的配置。如下是官方的 clean 插件配置，没有指定 groupId，但是解析坐标的时候会带上。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-clean-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>     <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br></code></pre></td></tr></table></figure><p>在插件配置中，不推荐省略 groupId 的写法，但这与我们使用 maven 插件命令有关。</p><h3 id="省略版本信息"><a href="#省略版本信息" class="headerlink" title="省略版本信息"></a>省略版本信息</h3><p>maven 的核心插件都在超级 pom 中显示的声明了具体的版本信息，因此当这些插件未指定版本信息的时候，就会使用超级 pom 中指定的插件版本。</p><p>如果是非核心插件，且未指定版本信息。在 maven2 中默认解析至 latest，maven3 默认解析至 release，具体的解析过程与依赖解析一致，都是根据合并计算元数据，得到具体的版本信息。</p><h3 id="插件前缀解析"><a href="#插件前缀解析" class="headerlink" title="插件前缀解析"></a>插件前缀解析</h3><p>我们使用命令 <code>mvn dependency:tree</code> 插件前缀是 dependency，我们是如何根据这个前缀信息得到该插件的完整坐标呢？</p><p>这就需要结合上面的知识了，首先存在一个保存 groupId 和 artifactId 对应关系的文件 maven-metadata.xml，该文件存在 groupId &#x2F; maven-metadata.xml。由于上面的 dependency 是官方插件，因此 groupId 为 <code>org.apache.maven.plugins</code> ，我们去远程仓库找到该文件，如下图。</p><p><img src="/../picture/Maven%E4%BE%9D%E8%B5%96%E4%B8%8E%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%9C%BA%E5%88%B6/91808d7d-667b-4874-bf53-33765521e002.png" alt="image.png"></p><p>我们可以找到插件前缀 dependency 对应的 articfactId 是 <code>maven-dependency-plugin</code>，因此插件的完整坐标可以确定了。</p><p><strong>获取 groupId</strong></p><p>这里还有个问题，因为我们是提前知道 dependency 是官方的插件，可以推出他的 groupId ，但是 maven 是怎么知道它的 groupId 呢？</p><p>maven 的主要插件都在 <code>[https://repo1.maven.org/maven2/org/apache/maven/plugins](https://repo1.maven.org/maven2/org/apache/maven/plugins)</code>和<code>[https://repository.codehaus.org/org/code-haus/mojo](https://repository.codehaus.org/org/code-haus/mojo)</code>下，他们对应的 groupId 分别是 <code>org.apache.maven.plugins</code> 和 <code>org.codehaus.mojo</code>。maven 解析插件的时候就会默认使用这两个 groupId 去匹配，检查 org&#x2F;apache&#x2F;maven&#x2F;plugins&#x2F;maven-metadata.xml，org&#x2F;codehaus.momjo&#x2F;maven-metadata.xml 文件，判断是否有匹配的插件前缀，如果有则获取对应的坐标信息，完成解析。</p><p>倘若想使用的插件是第三方的，就可以通过配置 setting.xml 文件，让 maven 也检查其他 groupId 上的仓库 metadata.xml 文件。</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">setting</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">pluginGroups</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">pluginGroup</span>&gt;</span>第三方仓库 groupId<span class="hljs-tag">&lt;/<span class="hljs-name">pluginGroup</span>&gt;</span>  <br>  <span class="hljs-tag">&lt;/<span class="hljs-name">pluginGroups</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">setting</span>&gt;</span><br></code></pre></td></tr></table></figure><p><strong>示例</strong></p><p>解析 dependency:tree 命令</p><ol><li><p>先使用默认的和配置的第三方的  groupId 去找到对应的 <code>maven-metadata.xml</code>文件，然后检查是否包含 dependency 前缀信息。</p></li><li><p>包含前缀信息，获取对应 articfactId，不包含则使用下一个 groupId 的 maven-metadata.xml 文件。如果所有都获取不到，则报错。</p></li><li><p>获取到 articfactId 之后根据上面 <a href="#Ueudm">获取版本信息</a>，即可得到完整的坐标，完成解析执行。</p></li></ol>]]></content>
     
     
-    <categories>
-      
-      <category>Maven</category>
-      
-    </categories>
-    
     
     <tags>
       
       <tag>Maven</tag>
-      
-      <tag>插件</tag>
       
     </tags>
     
@@ -600,12 +592,16 @@
     
     <categories>
       
-      <category>Maven</category>
-      
       <category>学习笔记</category>
       
     </categories>
     
+    
+    <tags>
+      
+      <tag>Maven</tag>
+      
+    </tags>
     
   </entry>
   
@@ -625,6 +621,12 @@
       
     </categories>
     
+    
+    <tags>
+      
+      <tag>Collection</tag>
+      
+    </tags>
     
   </entry>
   
@@ -928,12 +930,6 @@
     
     <content type="html"><![CDATA[<p>记录一次 maven 包冲突解决过程，项目地址<a href="https://github.com/hcsp/resolve-package-conflict">链接</a>。</p><h2 id="查看错误方法"><a href="#查看错误方法" class="headerlink" title="查看错误方法"></a>查看错误方法</h2><p>首先要将项目克隆到本地，然后运行，找到出错的位置，以及出错的信息。<br> <img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/1eb20e3c-d218-44f4-a995-61be864a19e4.png" alt="image.png"><br>如图所示，错误的位置在 MainTest.java 文件第六行，错误信息 <code>NoSuchMethod</code> ，表示没有找到这个方法。根据位置提示，一层一层往下找，发现原来是 A.java 这个类中调用的 <code>getJsonpFunction</code> 方法找不到</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/1eb93ac6-bf86-4f27-8f3f-5b0e0f6978ce.png" alt="image.png"></p><h2 id="查看包冲突"><a href="#查看包冲突" class="headerlink" title="查看包冲突"></a>查看包冲突</h2><p>通过使用 maven helper 插件查看包的依赖树。如图所示，spring-web:5.1.8.RELEASE 版本和 spring-web:4.3.6.RELEASE 版本冲突了。图上的 4.3.6 版本为红色，可知，maven 使用的是 5.1.8 版本。我们根据 maven 解决包冲突的就近原则来看，5.1.8 离项目的距离为1，4.3.6 的距离为2，因此保留5.1.8版本，再次证实了这一点。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/bcd7d3b1-5625-4466-9bff-4d7fa1cf4a7c.png" alt="image.png"></p><h2 id="追根溯源"><a href="#追根溯源" class="headerlink" title="追根溯源"></a>追根溯源</h2><p>既然知道了是 spring-web 这个包的问题。我们就访问 maven 仓库，找到对应的版本，访问他的 github 主页。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/529dcfcc-07f4-4315-b0bc-e1fc3b11c480.png" alt="image.png"><br>找到了 github 仓库，进入报错的那个类，通过切换 tags 来切换不同版本对应的源代码，两者进行比较。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/cb13c43d-19fe-41db-9552-443f008f598a.png" alt="image.png"><br>对比发现在5.1.8版本 org.springframework.http.converter.json.MappingJacksonValue 中不存在 <code>getJsonpFunction</code>  这个方法。而 4.3.6 中却有。因此可以断定，我们项目本该使用 4.3.6 版本，而 maven 帮我们剔除了 4.3.6 版本，保留了 5.1.8 版本，导致找不到 <code>getJsonFunction</code> 而报错。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/a26925af-9758-4767-8e5a-107165edd81b.png" alt="image.png"></p><h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>知道了冲突的原因，我们就只需要把 5.1.8 版本的依赖注释掉就行，这样 maven 就会帮我们加载 4.3.6 版本的包了。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/4efcceb9-a459-4eb2-bda3-58ab8f6dda90.png" alt="image.png"><br>同时也可以将 5.1.8 版本的依赖改成 4.3.6 版本，解决冲突。</p>]]></content>
     
-    
-    <categories>
-      
-      <category>Maven</category>
-      
-    </categories>
     
     
     <tags>
