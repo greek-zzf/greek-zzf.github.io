@@ -600,6 +600,8 @@
     
     <categories>
       
+      <category>Maven</category>
+      
       <category>学习笔记</category>
       
     </categories>
@@ -926,6 +928,12 @@
     
     <content type="html"><![CDATA[<p>记录一次 maven 包冲突解决过程，项目地址<a href="https://github.com/hcsp/resolve-package-conflict">链接</a>。</p><h2 id="查看错误方法"><a href="#查看错误方法" class="headerlink" title="查看错误方法"></a>查看错误方法</h2><p>首先要将项目克隆到本地，然后运行，找到出错的位置，以及出错的信息。<br> <img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/1eb20e3c-d218-44f4-a995-61be864a19e4.png" alt="image.png"><br>如图所示，错误的位置在 MainTest.java 文件第六行，错误信息 <code>NoSuchMethod</code> ，表示没有找到这个方法。根据位置提示，一层一层往下找，发现原来是 A.java 这个类中调用的 <code>getJsonpFunction</code> 方法找不到</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/1eb93ac6-bf86-4f27-8f3f-5b0e0f6978ce.png" alt="image.png"></p><h2 id="查看包冲突"><a href="#查看包冲突" class="headerlink" title="查看包冲突"></a>查看包冲突</h2><p>通过使用 maven helper 插件查看包的依赖树。如图所示，spring-web:5.1.8.RELEASE 版本和 spring-web:4.3.6.RELEASE 版本冲突了。图上的 4.3.6 版本为红色，可知，maven 使用的是 5.1.8 版本。我们根据 maven 解决包冲突的就近原则来看，5.1.8 离项目的距离为1，4.3.6 的距离为2，因此保留5.1.8版本，再次证实了这一点。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/bcd7d3b1-5625-4466-9bff-4d7fa1cf4a7c.png" alt="image.png"></p><h2 id="追根溯源"><a href="#追根溯源" class="headerlink" title="追根溯源"></a>追根溯源</h2><p>既然知道了是 spring-web 这个包的问题。我们就访问 maven 仓库，找到对应的版本，访问他的 github 主页。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/529dcfcc-07f4-4315-b0bc-e1fc3b11c480.png" alt="image.png"><br>找到了 github 仓库，进入报错的那个类，通过切换 tags 来切换不同版本对应的源代码，两者进行比较。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/cb13c43d-19fe-41db-9552-443f008f598a.png" alt="image.png"><br>对比发现在5.1.8版本 org.springframework.http.converter.json.MappingJacksonValue 中不存在 <code>getJsonpFunction</code>  这个方法。而 4.3.6 中却有。因此可以断定，我们项目本该使用 4.3.6 版本，而 maven 帮我们剔除了 4.3.6 版本，保留了 5.1.8 版本，导致找不到 <code>getJsonFunction</code> 而报错。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/a26925af-9758-4767-8e5a-107165edd81b.png" alt="image.png"></p><h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>知道了冲突的原因，我们就只需要把 5.1.8 版本的依赖注释掉就行，这样 maven 就会帮我们加载 4.3.6 版本的包了。</p><p><img src="/../picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/4efcceb9-a459-4eb2-bda3-58ab8f6dda90.png" alt="image.png"><br>同时也可以将 5.1.8 版本的依赖改成 4.3.6 版本，解决冲突。</p>]]></content>
     
+    
+    <categories>
+      
+      <category>Maven</category>
+      
+    </categories>
     
     
     <tags>
