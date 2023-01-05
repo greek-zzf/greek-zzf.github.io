@@ -19,21 +19,21 @@
     <meta name="description" content="在 Java 中，离开方法的手段可以 靠 return 方法返回，而异常是 return 方法之外，离开方法的手段。 在实际工作中，经常会遇到空指针、找不到、文件找不到，等等不计其数的异常情况。那么 Java 中如何处理这些异常呢？ try &#x2F; catch &#x2F; finally当对一个文件进行写入操作的时候，所使用的 IDE 就会提醒，可能存在异常，需要处理。于是我们按照 IDE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 异常体系">
-<meta property="og:url" content="http://example.com/2021/05/27/Java%20%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="https://greek-zzf.github.io/2021/05/27/Java%20%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/index.html">
+<meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="在 Java 中，离开方法的手段可以 靠 return 方法返回，而异常是 return 方法之外，离开方法的手段。 在实际工作中，经常会遇到空指针、找不到、文件找不到，等等不计其数的异常情况。那么 Java 中如何处理这些异常呢？ try &#x2F; catch &#x2F; finally当对一个文件进行写入操作的时候，所使用的 IDE 就会提醒，可能存在异常，需要处理。于是我们按照 IDE">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/picture/Java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/cover.png">
+<meta property="og:image" content="https://greek-zzf.github.io/picture/Java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/cover.png">
 <meta property="article:published_time" content="2021-05-27T22:29:00.000Z">
-<meta property="article:modified_time" content="2023-01-04T09:52:10.542Z">
+<meta property="article:modified_time" content="2023-01-05T02:21:23.355Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/picture/Java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/cover.png">
+<meta name="twitter:image" content="https://greek-zzf.github.io/picture/Java%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB/cover.png">
   
   
   
-  <title>Java 异常体系 - Hexo</title>
+  <title>Java 异常体系 - 我系渣渣丰的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -81,6 +81,21 @@
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 
 
   
@@ -421,7 +436,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Java 异常体系</div>
-      <div>http://example.com/2021/05/27/Java 异常体系/</div>
+      <div>https://greek-zzf.github.io/2021/05/27/Java 异常体系/</div>
     </div>
     <div class="license-meta">
       
