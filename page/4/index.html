@@ -231,6 +231,161 @@
   <div class="row mx-auto index-card">
     
     
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/20/%E3%80%8AMaven%20%E5%AE%9E%E6%88%98%E3%80%8B/" target="_self">
+          《Maven 实战》笔记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/08/20/%E3%80%8AMaven%20%E5%AE%9E%E6%88%98%E3%80%8B/" target="_self">
+        <div>
+          当项目需要被其他项目引用时，使用 mvn clean install 安装到本地仓库，其他项目就可以引用该项目。 我们打包的默认 jar 包不能直接运行的，因为带有 main 方法的信息类不会添加到 mainfest 中（ jar 文件中 META-INF&#x2F;MANIFEST.MF 文件，没有 Main-Class一行）。为了生成可执行的 jar 文件，需要借助 maven-shade-p
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-20 16:40" pubdate>
+              2021-08-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-chain-item">学习笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Maven/">#Maven</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/18/Collection%20%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E9%87%8D%E8%A6%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%8E%9F%E7%90%86/" target="_self">
+          Collection 笔记
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/08/18/Collection%20%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E9%87%8D%E8%A6%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%8E%9F%E7%90%86/" target="_self">
+        <div>
+          判断线程安全类的准则当需要在多线程环境下，使用一些类时，我们首先就需要判断当前类是否是线程安全的，否则出现线程安全问题。 准则一 最直接，方便的准则就是查看类的源代码注释，上面提到的集合类都在注释声明了该类不是线程安全的。查找注释的时候可以直接搜索 Thread或者 synchronize关键字。 准则二 查看有没有使用同步语句：java.util.concurrent.* / synchroni
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-18 19:50" pubdate>
+              2021-08-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="category-chain-item">学习笔记</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Collection/">#Collection</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/08/16/Code-Specification/" target="_self">
+          Code Specification
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/08/16/Code-Specification/" target="_self">
+        <div>
+          使用条件语句if 语句原则一：要使得正常情况执行代码过程清晰，优先考虑代码正常执行情况。 原则二：不要用 “&gt;” 代替 “&gt;&#x3D;” 或用 “&lt;” 代替 “&lt;&#x3D;”。 原则三：正常情况的处理放在 if 后面而不是 else 后面（保证能快速找到代码正常的执行过程）。 原则四：if 子句后面跟随一个有意义的语句，避免空语句。 if-else if-else 语句
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-16 12:34" pubdate>
+              2021-08-16
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/08/11/String/" target="_self">
           <img src="/picture/String/cover.png" srcset="/img/loading.gif" lazyload alt="String">
@@ -696,211 +851,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/web/">#web</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/04/01/HTML%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/" target="_self">
-          <img src="/picture/HTML%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/cover.png" srcset="/img/loading.gif" lazyload alt="HTML 常用标签">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/04/01/HTML%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/" target="_self">
-          HTML 常用标签
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2021/04/01/HTML%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/" target="_self">
-        <div>
-          a 标签属性 href（指定要跳转的链接），取值如下 网址（https://google.com，http://google.com，//google.com） 路径（&#x2F;a&#x2F;b&#x2F;c，a&#x2F;b&#x2F;c&#x2F;，index.html） 伪协议（javascript:代码;，tel:手机号，mailto:邮箱）   target（指定打开链接的窗口），取值
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-01 01:04" pubdate>
-              2021-04-01
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E4%B8%93%E6%A0%8F/" class="category-chain-item">博客专栏</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">#Java</a>
-            
-              <a href="/tags/Web/">#Web</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/28/%E6%96%87%E4%BB%B6%E4%B8%8E%20IO/" target="_self">
-          <img src="/picture/%E6%96%87%E4%BB%B6%E4%B8%8EIO/cover.png" srcset="/img/loading.gif" lazyload alt="文件与 IO">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/28/%E6%96%87%E4%BB%B6%E4%B8%8E%20IO/" target="_self">
-          文件与 IO
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2021/03/28/%E6%96%87%E4%BB%B6%E4%B8%8E%20IO/" target="_self">
-        <div>
-          流1.I&#x2F;O流是什么? 对于陌生的东西，最好通过类比的方法去了解。我对于流的理解：流就是一系列数据。通过生活中常见的现象进行类比，比如：流中全部是水，我们称为“水流”，流中全是电子，我们称为“电流”。那我们可以根据流中的数据类型，来给流命名。再回到计算中，流中是字节的我们叫“字节流”，是字符的叫“字符流”，等等。 对于笔者来说，在Java开发中需要用到获取文件信息，经常需要用到流。那个时
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-28 17:58" pubdate>
-              2021-03-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E4%B8%93%E6%A0%8F/" class="category-chain-item">博客专栏</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/IO/">#IO</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/17/Cookie/" target="_self">
-          <img src="/picture/Cookie/cover.png" srcset="/img/loading.gif" lazyload alt="Cookie">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/17/Cookie/" target="_self">
-          Cookie
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2021/03/17/Cookie/" target="_self">
-        <div>
-          不知道大家是否想过这样一个问题，比如说我们登陆淘宝之后，点击订单，点击购物车，这些都是自己的信息。通过前面的学习，我们也知道 HTTP 协议是无状态的，我们与淘宝的服务器之间，只是通过一串串字节在交流。我们发送请求，就是发给服务器一串字节流，服务器收到后作出响应，也返回一串字节流。当我们点击「购物车」，点击「订单」他怎么知道是「我」在查看购物车信息，而不是张三在查看购物车呢？ 我们想到一种笨拙的解
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-17 16:40" pubdate>
-              2021-03-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E4%B8%93%E6%A0%8F/" class="category-chain-item">博客专栏</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Cookie/">#Cookie</a>
-            
-              <a href="/tags/Web/">#Web</a>
             
           </div>
         
