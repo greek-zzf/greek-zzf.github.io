@@ -18,20 +18,19 @@
   
     <meta name="description" content="CPU 线程，操作系统线程，Java 线程CPU 线程CPU 线程是属于硬件的范畴，他在硬件实现上就支持多线程。每个 CPU 都具有多个核心，并且每个核心都可以处理一个线程。 但核心和线程的数量并不是 1:1 的，取决于 CPU 具体的架构实现。大多数服务器级别的处理器每个核心都支持多个线程，你经常能听到 8 核心 16 线程诸如此类的说法。 CPU 的核心就像人的嘴巴，处理的线程就是人的手。手去">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 线程模型">
-<meta property="og:url" content="https://greek-zzf.github.io/2023/02/14/%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:title" content="我系渣渣丰的博客">
+<meta property="og:url" content="https://greek-zzf.github.io/2023/03/31/%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="CPU 线程，操作系统线程，Java 线程CPU 线程CPU 线程是属于硬件的范畴，他在硬件实现上就支持多线程。每个 CPU 都具有多个核心，并且每个核心都可以处理一个线程。 但核心和线程的数量并不是 1:1 的，取决于 CPU 具体的架构实现。大多数服务器级别的处理器每个核心都支持多个线程，你经常能听到 8 核心 16 线程诸如此类的说法。 CPU 的核心就像人的嘴巴，处理的线程就是人的手。手去">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-14T13:52:00.000Z">
-<meta property="article:modified_time" content="2023-03-07T02:31:44.232Z">
+<meta property="article:published_time" content="2023-03-31T10:07:53.518Z">
+<meta property="article:modified_time" content="2023-03-31T10:07:53.518Z">
 <meta property="article:author" content="Greek">
-<meta property="article:tag" content="线程">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Java 线程模型 - 我系渣渣丰的博客</title>
+  <title>我系渣渣丰的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Java 线程模型</span>
+            <span id="subtitle"></span>
           
         </div>
 
@@ -222,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-14 13:52" pubdate>
-          2023年2月14日 下午
+        <time datetime="2023-03-31 10:07" pubdate>
+          2023年3月31日 上午
         </time>
       </span>
     
@@ -234,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          617 字
+          357 字
         
       </span>
     
@@ -245,7 +244,7 @@
         
         
         
-          6 分钟
+          3 分钟
         
       </span>
     
@@ -283,7 +282,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Java 线程模型</h1>
+            <h1 style="display: none"></h1>
             
             
               <div class="markdown-body">
@@ -293,36 +292,9 @@
 <p>CPU 的核心就像人的嘴巴，处理的线程就是人的手。手去拿食物（任务），嘴巴开始吃拿到的食物，假如你吃的比手拿的快，理论上你可增加手的数量，即支持更多的线程。</p>
 <p>但实际上，这个是有瓶颈的。当嘴巴还没吃完食物，手上已经拿到食物并等待，这个时候手就只能等嘴巴吃完食物。因此，每个核心处理的线程数量并不是越多越好。</p>
 <p>目前每个 CPU 核心处理的最佳线程数量是 2 个，就像人一样，一张嘴和两只手。</p>
-<h3 id="操作系统线程"><a href="#操作系统线程" class="headerlink" title="操作系统线程"></a>操作系统线程</h3><h3 id="Java-线程"><a href="#Java-线程" class="headerlink" title="Java 线程"></a>Java 线程</h3><p>平常理解的线程概念</p>
-<ul>
-<li><input disabled="" type="checkbox"> CPU 线程</li>
-<li><input disabled="" type="checkbox"> 操作系统线程</li>
-<li><input disabled="" type="checkbox"> Java 线程</li>
-<li><input disabled="" type="checkbox"> 上述 3 种线程之间的关系</li>
-<li><input disabled="" type="checkbox"> Java 线程调度<ul>
-<li><input disabled="" type="checkbox"> 线程调度：协同式和抢占式</li>
-<li><input disabled="" type="checkbox"> Java 使用的线程调度方式，以及一点 difference</li>
-<li><input disabled="" type="checkbox"> Java 中的线程优先级概念，不可靠的因素(①与操作系统的调度优先级不一致②优先级可能被系统自行改变)</li>
-</ul>
-</li>
-</ul>
-<p>Java 中的线程详解</p>
-<ul>
-<li><input disabled="" type="checkbox"> 线程的生命周期<ul>
-<li><input disabled="" type="checkbox"> 解释相关的周期</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> 线程的底层模型</li>
-<li><input disabled="" type="checkbox"> ThreadLocal 实现</li>
-<li><input disabled="" type="checkbox"> Java 线程的缺点，与协程的区别。协程的优势在哪？为什么有这些优势？</li>
-</ul>
-<p>参考资料：</p>
-<ul>
-<li>饥人谷视频</li>
-<li>《深入理解 Java 虚拟机》第三版</li>
-<li>《Java 并发编程实战》</li>
-<li>ChatGPT</li>
-<li>V2EX</li>
+<h3 id="操作系统线程"><a href="#操作系统线程" class="headerlink" title="操作系统线程"></a>操作系统线程</h3><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8">维基百科</a></li>
+<li></li>
 </ul>
 
                 
@@ -333,13 +305,6 @@
               <div class="post-metas my-3">
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/%E7%BA%BF%E7%A8%8B/">#线程</a>
-      
-    </div>
-  
 </div>
 
 
@@ -348,8 +313,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java 线程模型</div>
-      <div>https://greek-zzf.github.io/2023/02/14/线程模型/</div>
+      <div></div>
+      <div>https://greek-zzf.github.io/2023/03/31/线程/</div>
     </div>
     <div class="license-meta">
       
@@ -361,7 +326,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月14日</div>
+          <div>2023年3月31日</div>
         </div>
       
       
@@ -393,18 +358,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/05/HTTPS%20%E4%B8%8E%E4%BF%A1%E9%B8%BD/" title="HTTPS 与信鸽">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">HTTPS 与信鸽</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/12/29/2022-%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" title="2022-年终总结">
-                        <span class="hidden-mobile">2022-年终总结</span>
+                      <a href="/2023/03/31/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/" title="MIT 6.824 分布式系统 - Introduction">
+                        <span class="hidden-mobile">MIT 6.824 分布式系统 - Introduction</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
