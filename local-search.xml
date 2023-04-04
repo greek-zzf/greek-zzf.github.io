@@ -5,19 +5,6 @@
   
   <entry>
     <title></title>
-    <link href="/2023/04/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
-    <url>/2023/04/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
-    
-    <content type="html"><![CDATA[<ul><li><input disabled="" type="checkbox"> 主内存与工作内存，介绍与区别</li><li><input disabled="" type="checkbox"> 两个内存之间的交互，操作。以及一些需要遵守的规范</li><li><input disabled="" type="checkbox"> volatile 型变量的特殊规则<ul><li><input disabled="" type="checkbox"> Volatile 变量的可变性描述误区</li><li><input disabled="" type="checkbox"> volatitle 的线程不安全性</li><li><input disabled="" type="checkbox"> 使用的运算场景</li><li><input disabled="" type="checkbox"> 禁止指令重新排序</li><li><input disabled="" type="checkbox"> volatile 与锁的选择</li><li><input disabled="" type="checkbox"> Java 内存模型对 volatile 的定义</li></ul></li><li><input disabled="" type="checkbox"> long 和 double 的特殊规则</li><li><input disabled="" type="checkbox"> 原子性，可见性，有序性</li><li><input disabled="" type="checkbox"> 先行发生原则判断线程安全性</li></ul>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title></title>
     <link href="/2023/04/04/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/"/>
     <url>/2023/04/04/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/</url>
     
@@ -55,6 +42,19 @@
   
   
   <entry>
+    <title></title>
+    <link href="/2023/04/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
+    <url>/2023/04/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+    
+    <content type="html"><![CDATA[<ul><li><input disabled="" type="checkbox"> 主内存与工作内存，介绍与区别</li><li><input disabled="" type="checkbox"> 两个内存之间的交互，操作。以及一些需要遵守的规范</li><li><input disabled="" type="checkbox"> volatile 型变量的特殊规则<ul><li><input disabled="" type="checkbox"> Volatile 变量的可变性描述误区</li><li><input disabled="" type="checkbox"> volatitle 的线程不安全性</li><li><input disabled="" type="checkbox"> 使用的运算场景</li><li><input disabled="" type="checkbox"> 禁止指令重新排序</li><li><input disabled="" type="checkbox"> volatile 与锁的选择</li><li><input disabled="" type="checkbox"> Java 内存模型对 volatile 的定义</li></ul></li><li><input disabled="" type="checkbox"> long 和 double 的特殊规则</li><li><input disabled="" type="checkbox"> 原子性，可见性，有序性</li><li><input disabled="" type="checkbox"> 先行发生原则判断线程安全性</li></ul>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>HTTPS 与信鸽</title>
     <link href="/2023/03/05/HTTPS%20%E4%B8%8E%E4%BF%A1%E9%B8%BD/"/>
     <url>/2023/03/05/HTTPS%20%E4%B8%8E%E4%BF%A1%E9%B8%BD/</url>
@@ -84,7 +84,7 @@
     <link href="/2023/02/14/Java%20%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/"/>
     <url>/2023/02/14/Java%20%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/</url>
     
-    <content type="html"><![CDATA[<h3 id="Java-线程"><a href="#Java-线程" class="headerlink" title="Java 线程"></a>Java 线程</h3><p>Java 虚拟机规范并没有对 Java 线程的实现进行约束，因此 Java 线程的具体实现由 Java 虚拟机决定。Java 在早期的虚拟机上也使用过用户线程实现，但目前的主流 Java 虚拟机线程模型普遍都使用操作系统原生模型实现。HotSpot 就是将一个 Java 线程映射到一个操作系统原生线程，接下来讲解都是基于 HotSpot 虚拟机的线程实现。关于 Java 新的 <code>Project Loom</code>，读者可自行了解。</p><p>不同操作系统的线程概念也不相同，比如 Linux 中线程被当做一个 <code>轻量级进程</code>。每个操作系统线程操作的 API 都不一样，但是 JVM 实现了这一切，为我们屏蔽了这些细节。对于开发者来说，只需要使用 <code>new Thread()</code> 就可以得到一个线程。</p><p>这种直接把线程映射到操作系统的操作，使得线程的管理全权交给操作系统，所以何时冻结或唤醒线程、该给线程分配多少处理器执行时间、该把线程安排给哪个处理器核心去执行等，都取决于操作系统。</p><h2 id="系统线程调度与-Java-线程调度"><a href="#系统线程调度与-Java-线程调度" class="headerlink" title="系统线程调度与 Java 线程调度"></a>系统线程调度与 Java 线程调度</h2><p>首先，需要简单的介绍一下什么是系统调度。线程调度是指系统为线程分配处理器使用权的过程，线程并不是一直占着处理器的，而是交替使用的。要以什么样的策略去交替使用线程，使得每个线程都能够得到有效执行，就是线程调度方式。</p><p>正如上面提到的那样，Java 线程的管理权都交给了操作系统，Java 中的线程调度实际上就是操作系统中的线程调度。因此，这里需要介绍一下操作系统的线程调度方式。</p><p>线程调度的方式有两种：<code>协同式线程调度</code>和<code>抢占式线程调度</code>。</p><p><code>协同式线程调度</code>：线程的执行时间交由线程本身控制，当线程执行完自己的工作，会主动通知系统切换到下一个线程上去。它的实现简单，切换操作对与线程是可知的。但是执行时间不可控，倘若一直占有处理器，那么程序就会一直阻塞。</p><p><code>抢占式线程调度</code>：线程执行时间由系统分配。线程的切换不由线程本身决定，在 Java 中有 <code>Thread::yield()</code> 方法让出执行时间，但无法主动获取执行时间。因此，每个线程的执行时间是可控的，不会因为一个线程导致整个系统阻塞的问题。</p><p>Java 使用的是<code>抢占式线程调度</code>。尽管无法控制线程的执行时间，但有时还是希望对某些线程多一些执行时间，另外的少一些，这时可以使用线程优先级。</p><p>Java 中有 10 个级别的优先级，从 1 ~ 10。两个线程同时处于 <code>Ready</code> 状态，优先级越高的线程越容易被系统选择执行。但使用线程优先级这种方式，并不稳定。由于操作系统也拥有线程优先级，且和 Java 提供的线程优先级并非一一对应，尽管在 Java 中使用不同的优先级，但在操作系统中看来还是同一优先级。</p><p>例如：Java 中给线程 A 设置优先级为 6，给线程 B 设置为 7 ，映射到 Windows 中的优先级是<code>THREAD_PRIORITY_ABOVE_NORMAL</code>，两个线程在系统中都是相同的优先级，调度不会发生改变。</p><p>除此之外，在Windows 中存在「优先级推进器」的功能，当一个线程执行的特别频繁时，系统可能会越级去给它分配时间。因此程序不能完全依赖线程优先级，它并不「靠谱」。</p><h2 id="Java-线程的生命周期"><a href="#Java-线程的生命周期" class="headerlink" title="Java 线程的生命周期"></a>Java 线程的生命周期</h2><p>Java 线程中有 6 总状态，在任意一个时间点，线程只会处于其中一种状态。JDK 源码的 <code>Thread</code> 类中的内部类 <code>State</code>，介绍了这 6 总状态：</p><ul><li>新建（New）：尚未启动的线程。例：刚 New 出来的线程。</li><li>运行（Running）：在 Java 虚拟机中执行的线程，线程处于运行状态。</li><li>阻塞（Blocked）：线程等待监视器锁（monitor lock），所处的状态。</li><li>无限期等待（Waitting）：处于该状态的线程，不会被处理器分配执行时间。只有被其他线程唤醒之后，才会执行。</li><li>限期等待（Timed Waitting）：与无限期不同的是，一定时间内没有被唤醒，他会自动唤醒。</li><li>结束（Terminated）：已终止的线程状态，线程已结束执行。</li></ul><p><strong>阻塞与等待状态的区别</strong></p><p>拿去医院看病举例。医生科室门口挤满了人，但每次只能有一个人就诊，谁先挤进去谁先就诊，后面的人只能等就诊人出来，这时等待就诊的人处于<strong>「阻塞」</strong>状态。医院改变就诊方式，只有叫到号的人才能就诊，没有叫到号的人只能一直等，此时等待就诊的人处于<strong>「等待」</strong>状态。</p><h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><p>Java 使用 Thread 来表示线程，线程相关的操作 Thread 类都有提供对应的 API。但是想要访问每个线程的局部变量，却需要通过 <code>ThreadLocal</code> 。 </p><p>那么为什么线程局部变量要通过 ThreadLocal 来访问？</p><p>直接使用 Thread 中的局部变量好像也没什么问题，可以在线程启动的时候给他的变量赋值，结束时 JVM 会把线程和变量一起销毁。这种方式当然可行，但是却忽略了线程池管理线程的情况。线程池为了复用线程，不会在线程执行结束后立即销毁，而是在需要时被重复利用，直到线程池关闭。正因为如此，线程局部变量会存在上一次的信息，很容易出出现线程安全，内存泄露问题。</p><p>当然，每次使用会线程，进行一个手动清理变量的操作，线程复用就不会有什么问题。但麻烦点就在于清理，手动管理非常麻烦。ThreadLocal 每次使用完也需要进行清理操作，只需要调用 <code>remove</code> 方法即可。</p><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文讲解了 Java 线程，但是作者心中存在很多疑问：CPU 线程、操作系统线程和 Java 线程之间是什么关系？他们之间是如何协作的？协程又是什么，与线程相比解决了什么问题？Python、Kotlin 是假协程？不同协程实现之间存在什么区别？</p><p>对于上面的问题，已经在收集资料开始写了，下一篇博客《线程解惑》正在书上。</p><p>参考资料：</p><ul><li>《深入理解 Java 虚拟机》第三版</li><li>《Java 并发编程实战》</li><li>ChatGPT</li><li>V2EX</li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="Java-线程"><a href="#Java-线程" class="headerlink" title="Java 线程"></a>Java 线程</h3><p>Java 虚拟机规范并没有对 Java 线程的实现进行约束，因此 Java 线程的具体实现由 Java 虚拟机决定。Java 在早期的虚拟机上也使用过用户线程实现，但目前的主流 Java 虚拟机线程模型普遍都使用操作系统原生模型实现。HotSpot 就是将一个 Java 线程映射到一个操作系统原生线程，接下来讲解都是基于 HotSpot 虚拟机的线程实现。关于 Java 新的 <code>Project Loom</code>，读者可自行了解。</p><p>不同操作系统的线程概念也不相同，比如 Linux 中线程被当做一个 <code>轻量级进程</code>。每个操作系统线程操作的 API 都不一样，但是 JVM 实现了这一切，为我们屏蔽了这些细节。对于开发者来说，只需要使用 <code>new Thread()</code> 就可以得到一个线程。</p><p>这种直接把线程映射到操作系统的操作，使得线程的管理全权交给操作系统，所以何时冻结或唤醒线程、该给线程分配多少处理器执行时间、该把线程安排给哪个处理器核心去执行等，都取决于操作系统。</p><h2 id="系统线程调度与-Java-线程调度"><a href="#系统线程调度与-Java-线程调度" class="headerlink" title="系统线程调度与 Java 线程调度"></a>系统线程调度与 Java 线程调度</h2><p>首先，需要简单的介绍一下什么是系统调度。线程调度是指系统为线程分配处理器使用权的过程，线程并不是一直占着处理器的，而是交替使用的。要以什么样的策略去交替使用线程，使得每个线程都能够得到有效执行，就是线程调度方式。</p><p>正如上面提到的那样，Java 线程的管理权都交给了操作系统，Java 中的线程调度实际上就是操作系统中的线程调度。因此，这里需要介绍一下操作系统的线程调度方式。</p><p>线程调度的方式有两种：<code>协同式线程调度</code>和<code>抢占式线程调度</code>。</p><p><code>协同式线程调度</code>：线程的执行时间交由线程本身控制，当线程执行完自己的工作，会主动通知系统切换到下一个线程上去。它的实现简单，切换操作对与线程是可知的。但是执行时间不可控，倘若一直占有处理器，那么程序就会一直阻塞。</p><p><code>抢占式线程调度</code>：线程执行时间由系统分配。线程的切换不由线程本身决定，在 Java 中有 <code>Thread::yield()</code> 方法让出执行时间，但无法主动获取执行时间。因此，每个线程的执行时间是可控的，不会因为一个线程导致整个系统阻塞的问题。</p><p>Java 使用的是<code>抢占式线程调度</code>。尽管无法控制线程的执行时间，但有时还是希望对某些线程多一些执行时间，另外的少一些，这时可以使用线程优先级。</p><p>Java 中有 10 个级别的优先级，从 1 ~ 10。两个线程同时处于 <code>Ready</code> 状态，优先级越高的线程越容易被系统选择执行。但使用线程优先级这种方式，并不稳定。由于操作系统也拥有线程优先级，且和 Java 提供的线程优先级并非一一对应，尽管在 Java 中使用不同的优先级，但在操作系统中看来还是同一优先级。</p><p>例如：Java 中给线程 A 设置优先级为 6，给线程 B 设置为 7 ，映射到 Windows 中的优先级是<code>THREAD_PRIORITY_ABOVE_NORMAL</code>，两个线程在系统中都是相同的优先级，调度不会发生改变。</p><p>除此之外，在Windows 中存在「优先级推进器」的功能，当一个线程执行的特别频繁时，系统可能会越级去给它分配时间。因此程序不能完全依赖线程优先级，它并不「靠谱」。</p><h2 id="Java-线程的生命周期"><a href="#Java-线程的生命周期" class="headerlink" title="Java 线程的生命周期"></a>Java 线程的生命周期</h2><p>Java 线程中有 6 总状态，在任意一个时间点，线程只会处于其中一种状态。JDK 源码的 <code>Thread</code> 类中的内部类 <code>State</code>，介绍了这 6 总状态：</p><ul><li>新建（New）：尚未启动的线程。例：刚 New 出来的线程。</li><li>运行（Running）：在 Java 虚拟机中执行的线程，线程处于运行状态。</li><li>阻塞（Blocked）：线程等待监视器锁（monitor lock），所处的状态。</li><li>无限期等待（Waitting）：处于该状态的线程，不会被处理器分配执行时间。只有被其他线程唤醒之后，才会执行。</li><li>限期等待（Timed Waitting）：与无限期不同的是，一定时间内没有被唤醒，他会自动唤醒。</li><li>结束（Terminated）：已终止的线程状态，线程已结束执行。</li></ul><p><strong>阻塞与等待状态的区别</strong></p><p>拿去医院看病举例。医生科室门口挤满了人，但每次只能有一个人就诊，谁先挤进去谁先就诊，后面的人只能等就诊人出来，这时等待就诊的人处于<strong>「阻塞」</strong>状态。医院改变就诊方式，只有叫到号的人才能就诊，没有叫到号的人只能一直等，此时等待就诊的人处于<strong>「等待」</strong>状态。</p><h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><p>Java 使用 Thread 来表示线程，线程相关的操作 Thread 类都有提供对应的 API。但是想要访问每个线程的局部变量，却需要通过 <code>ThreadLocal</code> 。 </p><p>那么为什么线程局部变量要通过 ThreadLocal 来访问？</p><p>直接使用 Thread 中的局部变量好像也没什么问题，可以在线程启动的时候给他的变量赋值，结束时 JVM 会把线程和变量一起销毁。这种方式当然可行，但是却忽略了线程池管理线程的情况。线程池为了复用线程，不会在线程执行结束后立即销毁，而是在需要时被重复利用，直到线程池关闭。正因为如此，线程局部变量会存在上一次的信息，很容易出出现线程安全，内存泄露问题。</p><p>当然，每次使用会线程，进行一个手动清理变量的操作，线程复用就不会有什么问题。但麻烦点就在于清理，手动管理非常麻烦。ThreadLocal 每次使用完也需要进行清理操作，只需要调用 <code>remove</code> 方法即可。</p><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文讲解了 Java 线程，但是作者心中存在很多疑问：CPU 线程、操作系统线程和 Java 线程之间是什么关系？他们之间是如何协作的？协程又是什么，与线程相比解决了什么问题？Python、Kotlin 是假协程？不同协程实现之间存在什么区别？</p><p>对于上面的问题，已经在收集资料开始写了，下一篇博客《线程解惑》正在路上。</p><p>参考资料：</p><ul><li>《深入理解 Java 虚拟机》第三版</li><li>《Java 并发编程实战》</li><li>ChatGPT</li><li>V2EX</li></ul>]]></content>
     
     
     
