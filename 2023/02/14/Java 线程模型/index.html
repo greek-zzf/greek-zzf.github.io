@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Java%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/cover.png">
 <meta property="article:published_time" content="2023-02-14T13:52:00.000Z">
-<meta property="article:modified_time" content="2023-04-03T07:43:09.834Z">
+<meta property="article:modified_time" content="2023-04-04T04:30:38.270Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java 线程">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          2.3k 字
         
       </span>
     
@@ -247,7 +247,7 @@
         
         
         
-          17 分钟
+          19 分钟
         
       </span>
     
@@ -313,32 +313,14 @@
 </ul>
 <p><strong>阻塞与等待状态的区别</strong></p>
 <p>拿去医院看病举例。医生科室门口挤满了人，但每次只能有一个人就诊，谁先挤进去谁先就诊，后面的人只能等就诊人出来，这时等待就诊的人处于<strong>「阻塞」</strong>状态。医院改变就诊方式，只有叫到号的人才能就诊，没有叫到号的人只能一直等，此时等待就诊的人处于<strong>「等待」</strong>状态。</p>
-<p>平常理解的线程概念</p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> CPU 线程</li>
-<li><input checked="" disabled="" type="checkbox"> 操作系统线程</li>
-<li><input checked="" disabled="" type="checkbox"> Java 线程</li>
-<li><input checked="" disabled="" type="checkbox"> 上述 3 种线程之间的关系</li>
-<li><input checked="" disabled="" type="checkbox"> Java 线程调度<ul>
-<li><input checked="" disabled="" type="checkbox"> 线程调度：协同式和抢占式</li>
-<li><input checked="" disabled="" type="checkbox"> Java 使用的线程调度方式，以及一点 difference</li>
-<li><input checked="" disabled="" type="checkbox"> Java 中的线程优先级概念，不可靠的因素(①与操作系统的调度优先级不一致②优先级可能被系统自行改变)</li>
-</ul>
-</li>
-</ul>
-<p>Java 中的线程详解</p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> 线程的生命周期<ul>
-<li><input checked="" disabled="" type="checkbox"> 解释相关的周期</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> 线程的底层模型</li>
-<li><input disabled="" type="checkbox"> ThreadLocal 实现</li>
-<li><input disabled="" type="checkbox"> Java 线程的缺点，与协程的区别。协程的优势在哪？为什么有这些优势？</li>
-</ul>
+<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><p>Java 使用 Thread 来表示线程，线程相关的操作 Thread 类都有提供对应的 API。但是想要访问每个线程的局部变量，却需要通过 <code>ThreadLocal</code> 。 </p>
+<p>那么为什么线程局部变量要通过 ThreadLocal 来访问？</p>
+<p>直接使用 Thread 中的局部变量好像也没什么问题，可以在线程启动的时候给他的变量赋值，结束时 JVM 会把线程和变量一起销毁。这种方式当然可行，但是却忽略了线程池管理线程的情况。线程池为了复用线程，不会在线程执行结束后立即销毁，而是在需要时被重复利用，直到线程池关闭。正因为如此，线程局部变量会存在上一次的信息，很容易出出现线程安全，内存泄露问题。</p>
+<p>当然，每次使用会线程，进行一个手动清理变量的操作，线程复用就不会有什么问题。但麻烦点就在于清理，手动管理非常麻烦。ThreadLocal 每次使用完也需要进行清理操作，只需要调用 <code>remove</code> 方法即可。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本文讲解了 Java 线程，但是作者心中存在很多疑问：CPU 线程、操作系统线程和 Java 线程之间是什么关系？他们之间是如何协作的？协程又是什么，与线程相比解决了什么问题？Python、Kotlin 是假协程？不同协程实现之间存在什么区别？</p>
+<p>对于上面的问题，已经在收集资料开始写了，下一篇博客《线程解惑》正在书上。</p>
 <p>参考资料：</p>
 <ul>
-<li>饥人谷视频</li>
 <li>《深入理解 Java 虚拟机》第三版</li>
 <li>《Java 并发编程实战》</li>
 <li>ChatGPT</li>
