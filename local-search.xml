@@ -5,8 +5,8 @@
   
   <entry>
     <title></title>
-    <link href="/2023/04/04/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/"/>
-    <url>/2023/04/04/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/</url>
+    <link href="/2023/07/04/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/"/>
+    <url>/2023/07/04/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/</url>
     
     <content type="html"><![CDATA[<h2 id="CPU-线程，操作系统线程，Java-线程"><a href="#CPU-线程，操作系统线程，Java-线程" class="headerlink" title="CPU 线程，操作系统线程，Java 线程"></a>CPU 线程，操作系统线程，Java 线程</h2><h3 id="CPU-线程"><a href="#CPU-线程" class="headerlink" title="CPU 线程"></a>CPU 线程</h3><p>CPU 线程是属于硬件的范畴，他在硬件实现上就支持多线程。每个 CPU 都具有多个核心，并且每个核心都可以处理一个线程。</p><p>但核心和线程的数量并不是 1:1 的，取决于 CPU 具体的架构实现。大多数服务器级别的处理器每个核心都支持多个线程，你经常能听到 8 核心 16 线程诸如此类的说法。</p><p>CPU 的核心就像人的嘴巴，处理的线程就是人的手。手去拿食物（任务），嘴巴开始吃拿到的食物，假如你吃的比手拿的快，理论上你可增加手的数量，即支持更多的线程。</p><p>但实际上，这个是有瓶颈的。当嘴巴还没吃完食物，手上已经拿到食物并等待，这个时候手就只能等嘴巴吃完食物。因此，每个核心处理的线程数量并不是越多越好。</p><p>目前每个 CPU 核心处理的最佳线程数量是 2 个，就像人一样，一张嘴和两只手。</p><h3 id="操作系统线程"><a href="#操作系统线程" class="headerlink" title="操作系统线程"></a>操作系统线程</h3><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul><li><a href="https://zh.wikipedia.org/wiki/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8">维基百科</a></li><li></li></ul>]]></content>
     
@@ -18,8 +18,8 @@
   
   <entry>
     <title>MIT 6.824 分布式系统 - Introduction</title>
-    <link href="/2023/04/04/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/"/>
-    <url>/2023/04/04/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/</url>
+    <link href="/2023/07/04/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/"/>
+    <url>/2023/07/04/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/</url>
     
     <content type="html"><![CDATA[<h2 id="分布式系统基础架构"><a href="#分布式系统基础架构" class="headerlink" title="分布式系统基础架构"></a>分布式系统基础架构</h2><ul><li>存储</li><li>计算</li><li>通信（关于通信的详细内容可观看 6.829 计算机网络）</li></ul><h2 id="实现分布式所需的工具"><a href="#实现分布式所需的工具" class="headerlink" title="实现分布式所需的工具"></a>实现分布式所需的工具</h2><ul><li>RPC (Remote procedure call)</li><li>线程</li><li>并发控制</li></ul><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><ul><li>分布式系统的扩展，带来便利。<ul><li>高性能</li><li>高容错</li></ul></li><li>扩展带来的几个问题<ul><li>容错性（Fault Tolerance）</li><li>可用性 （Availability）</li><li>可恢复（Recoverability）</li></ul></li><li>解决容错的手段<ul><li>避免写入非易失性存储（Non-Volatile Storage）</li><li>使用复制，来增加容错（Replicated）</li></ul></li></ul><h2 id="一致性（Consistency）"><a href="#一致性（Consistency）" class="headerlink" title="一致性（Consistency）"></a>一致性（Consistency）</h2><p>使用一个 key value 例子说明 <code>强一致性</code>(Strong Consistency) 和 <code>弱一致性</code>(Weak Consistency)</p><h2 id="Google-的-MapReduce"><a href="#Google-的-MapReduce" class="headerlink" title="Google 的 MapReduce"></a>Google 的 MapReduce</h2>]]></content>
     
@@ -43,8 +43,8 @@
   
   <entry>
     <title></title>
-    <link href="/2023/04/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
-    <url>/2023/04/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+    <link href="/2023/07/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
+    <url>/2023/07/04/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
     
     <content type="html"><![CDATA[<ul><li><input disabled="" type="checkbox"> 主内存与工作内存，介绍与区别</li><li><input disabled="" type="checkbox"> 两个内存之间的交互，操作。以及一些需要遵守的规范</li><li><input disabled="" type="checkbox"> volatile 型变量的特殊规则<ul><li><input disabled="" type="checkbox"> Volatile 变量的可变性描述误区</li><li><input disabled="" type="checkbox"> volatitle 的线程不安全性</li><li><input disabled="" type="checkbox"> 使用的运算场景</li><li><input disabled="" type="checkbox"> 禁止指令重新排序</li><li><input disabled="" type="checkbox"> volatile 与锁的选择</li><li><input disabled="" type="checkbox"> Java 内存模型对 volatile 的定义</li></ul></li><li><input disabled="" type="checkbox"> long 和 double 的特殊规则</li><li><input disabled="" type="checkbox"> 原子性，可见性，有序性</li><li><input disabled="" type="checkbox"> 先行发生原则判断线程安全性</li></ul>]]></content>
     
