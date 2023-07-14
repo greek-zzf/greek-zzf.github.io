@@ -16,15 +16,15 @@
   <meta name="author" content="Greek">
   <meta name="keywords" content="">
   
-    <meta name="description" content="CPU 线程，操作系统线程，Java 线程CPU 线程CPU 线程是属于硬件的范畴，他在硬件实现上就支持多线程。每个 CPU 都具有多个核心，并且每个核心都可以处理一个线程。 但核心和线程的数量并不是 1:1 的，取决于 CPU 具体的架构实现。大多数服务器级别的处理器每个核心都支持多个线程，你经常能听到 8 核心 16 线程诸如此类的说法。 CPU 的核心就像人的嘴巴，处理的线程就是人的手。手去">
+    <meta name="description" content="主内存与工作内存，介绍与区别  两个内存之间的交互，操作。以及一些需要遵守的规范  volatile 型变量的特殊规则  Volatile 变量的可变性描述误区  volatitle 的线程不安全性  使用的运算场景  禁止指令重新排序  volatile 与锁的选择  Java 内存模型对 volatile 的定义    long 和 double 的特殊规则  原子性，可见性，有序性  先">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我系渣渣丰的博客">
-<meta property="og:url" content="https://greek-zzf.github.io/2023/07/05/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/index.html">
+<meta property="og:url" content="https://greek-zzf.github.io/2023/07/14/Java%20%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
-<meta property="og:description" content="CPU 线程，操作系统线程，Java 线程CPU 线程CPU 线程是属于硬件的范畴，他在硬件实现上就支持多线程。每个 CPU 都具有多个核心，并且每个核心都可以处理一个线程。 但核心和线程的数量并不是 1:1 的，取决于 CPU 具体的架构实现。大多数服务器级别的处理器每个核心都支持多个线程，你经常能听到 8 核心 16 线程诸如此类的说法。 CPU 的核心就像人的嘴巴，处理的线程就是人的手。手去">
+<meta property="og:description" content="主内存与工作内存，介绍与区别  两个内存之间的交互，操作。以及一些需要遵守的规范  volatile 型变量的特殊规则  Volatile 变量的可变性描述误区  volatitle 的线程不安全性  使用的运算场景  禁止指令重新排序  volatile 与锁的选择  Java 内存模型对 volatile 的定义    long 和 double 的特殊规则  原子性，可见性，有序性  先">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-07-05T03:55:07.168Z">
-<meta property="article:modified_time" content="2023-07-05T03:55:07.168Z">
+<meta property="article:published_time" content="2023-07-14T09:29:44.672Z">
+<meta property="article:modified_time" content="2023-07-14T09:29:44.672Z">
 <meta property="article:author" content="Greek">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -221,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-07-05 03:55" pubdate>
-          2023年7月5日 凌晨
+        <time datetime="2023-07-14 09:29" pubdate>
+          2023年7月14日 上午
         </time>
       </span>
     
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          357 字
+          176 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          3 分钟
+          2 分钟
         
       </span>
     
@@ -287,14 +287,21 @@
             
               <div class="markdown-body">
                 
-                <h2 id="CPU-线程，操作系统线程，Java-线程"><a href="#CPU-线程，操作系统线程，Java-线程" class="headerlink" title="CPU 线程，操作系统线程，Java 线程"></a>CPU 线程，操作系统线程，Java 线程</h2><h3 id="CPU-线程"><a href="#CPU-线程" class="headerlink" title="CPU 线程"></a>CPU 线程</h3><p>CPU 线程是属于硬件的范畴，他在硬件实现上就支持多线程。每个 CPU 都具有多个核心，并且每个核心都可以处理一个线程。</p>
-<p>但核心和线程的数量并不是 1:1 的，取决于 CPU 具体的架构实现。大多数服务器级别的处理器每个核心都支持多个线程，你经常能听到 8 核心 16 线程诸如此类的说法。</p>
-<p>CPU 的核心就像人的嘴巴，处理的线程就是人的手。手去拿食物（任务），嘴巴开始吃拿到的食物，假如你吃的比手拿的快，理论上你可增加手的数量，即支持更多的线程。</p>
-<p>但实际上，这个是有瓶颈的。当嘴巴还没吃完食物，手上已经拿到食物并等待，这个时候手就只能等嘴巴吃完食物。因此，每个核心处理的线程数量并不是越多越好。</p>
-<p>目前每个 CPU 核心处理的最佳线程数量是 2 个，就像人一样，一张嘴和两只手。</p>
-<h3 id="操作系统线程"><a href="#操作系统线程" class="headerlink" title="操作系统线程"></a>操作系统线程</h3><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8">维基百科</a></li>
-<li></li>
+                <ul>
+<li><input disabled="" type="checkbox"> 主内存与工作内存，介绍与区别</li>
+<li><input disabled="" type="checkbox"> 两个内存之间的交互，操作。以及一些需要遵守的规范</li>
+<li><input disabled="" type="checkbox"> volatile 型变量的特殊规则<ul>
+<li><input disabled="" type="checkbox"> Volatile 变量的可变性描述误区</li>
+<li><input disabled="" type="checkbox"> volatitle 的线程不安全性</li>
+<li><input disabled="" type="checkbox"> 使用的运算场景</li>
+<li><input disabled="" type="checkbox"> 禁止指令重新排序</li>
+<li><input disabled="" type="checkbox"> volatile 与锁的选择</li>
+<li><input disabled="" type="checkbox"> Java 内存模型对 volatile 的定义</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> long 和 double 的特殊规则</li>
+<li><input disabled="" type="checkbox"> 原子性，可见性，有序性</li>
+<li><input disabled="" type="checkbox"> 先行发生原则判断线程安全性</li>
 </ul>
 
                 
@@ -314,7 +321,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div></div>
-      <div>https://greek-zzf.github.io/2023/07/05/线程解惑/</div>
+      <div>https://greek-zzf.github.io/2023/07/14/Java 内存模型/</div>
     </div>
     <div class="license-meta">
       
@@ -326,7 +333,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年7月5日</div>
+          <div>2023年7月14日</div>
         </div>
       
       
@@ -362,8 +369,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/07/05/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/" title="MIT 6.824 分布式系统 - Introduction">
-                        <span class="hidden-mobile">MIT 6.824 分布式系统 - Introduction</span>
+                      <a href="/2023/07/14/%E7%BA%BF%E7%A8%8B%E8%A7%A3%E6%83%91/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
