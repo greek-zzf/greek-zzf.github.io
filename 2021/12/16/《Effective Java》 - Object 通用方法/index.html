@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Effective%20Java-Object%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95/cover.png">
 <meta property="article:published_time" content="2021-12-16T21:16:00.000Z">
-<meta property="article:modified_time" content="2023-07-14T09:29:44.672Z">
+<meta property="article:modified_time" content="2023-07-31T13:42:27.336Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Effective Java">
@@ -302,9 +302,11 @@
 </blockquote>
 <p>你可能会想到，每次往筛选好的集合中添加数据，都要进行判断，插入的数据在集合是否有重复，这样就写成了一个双重 for 循环</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> List <span class="hljs-title function_">filter</span><span class="hljs-params">(List&lt;User&gt; noDuplicatedUserList, List&lt;User&gt; allUserList)</span> &#123;<br>       <span class="hljs-keyword">for</span> (User user1 : allUserList) &#123;<br>           <span class="hljs-keyword">for</span> (User user2 : noDuplicatedUserList) &#123;<br>               <span class="hljs-keyword">if</span> (user1.getHome.equals(user2.getHome) &amp;&amp; user1.getAge().equals(user2.getAge())) &#123;<br>                   <span class="hljs-keyword">continue</span>;<br>               &#125;<br>               noDuplicatedUserList.add(user1);<br>               <span class="hljs-keyword">break</span>;<br>           &#125;<br>       &#125;<br>    <span class="hljs-keyword">return</span> noDuplicatedUserList;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
 <p>任务当然可以完成，但是你掌握一些 equals 的用法后，你就可以开始玩一些「骚操作」了。</p>
 <p>我们开始覆盖 User 类的 equals 方法，使得这个行为变得更简单，equals 覆盖后代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> List <span class="hljs-title function_">filter</span><span class="hljs-params">(List&lt;User&gt; noDuplicatedUserList, List&lt;User&gt; allUserList)</span> &#123;<br>       <span class="hljs-keyword">for</span> (User user : allUserList) &#123;<br>           <span class="hljs-keyword">if</span>(!noDuplicatedUserList.contains(user))&#123;<br>           	noDuplicatedUserList.add(user);<br>           &#125;;<br>       &#125;<br>    <span class="hljs-keyword">return</span> noDuplicatedUserList;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
 <p>是的，重写完 equals 之后，只需要使用 <code>contains</code>判断两个对象是否相等即可，因为 <code>contains</code>方法内部使用的就是对象的 equals 方法。</p>
 <p>你还可以将代码更简化，让他返回一个去重的 HashSet 即可，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Set <span class="hljs-title function_">filter</span><span class="hljs-params">(List&lt;User&gt; allUserList)</span> &#123;<br>     <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;(allUserList);<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -320,19 +322,24 @@
 <li><p>一致性：如果两个对象相等，在没有改变对象的前提下，他们就始终相等。</p>
 </li>
 <li><p>非空性：所有的对象都不能等于 null，x.equals(null)，因此在一些 equals 方法中都会进行 null 检查，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(o == <span class="hljs-literal">null</span>)&#123;<br>   <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>看到这些规定，你可能头都炸了，我就写个 equals 还要遵守这么多约定，我还不如直接使用第一种方法呢。别急，往下看，最佳实践有人已经帮你总结出来了。</p>
 </li>
 </ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(o == <span class="hljs-literal">null</span>)&#123;<br>   <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>看到这些规定，你可能头都炸了，我就写个 equals 还要遵守这么多约定，我还不如直接使用第一种方法呢。别急，往下看，最佳实践有人已经帮你总结出来了。</p>
 <h3 id="覆盖-equals-最佳实践"><a href="#覆盖-equals-最佳实践" class="headerlink" title="覆盖 equals 最佳实践"></a>覆盖 equals 最佳实践</h3><p>了解 equals 的注意事项后，以下经验就能帮助我们优雅地，高质量地覆盖 equals。拿上面的 User 来举例说明，步骤如下。</p>
-<p><strong>步骤一</strong>：使用 “&#x3D;&#x3D;” 操作检查对象是否相等，如果是，返回 true。</p>
+<p><strong>步骤一</strong>：使用 &#x3D;&#x3D; 操作检查对象是否相等，如果是，返回 true。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(obj == <span class="hljs-built_in">this</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+
 <p><strong>步骤二</strong>：使用 instanceof 操作符检查「参数是否为正确类型」</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(!(obj <span class="hljs-keyword">instanceof</span> User))&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
+
 <p><strong>步骤三</strong>：把参数转化成正确的类型（需要先通过步骤二的检查）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> (User) obj;<br></code></pre></td></tr></table></figure>
+
 <p><strong>步骤四</strong>：比较参数中的字段与该对象的字段，匹配返回 true，不匹配返回 false;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(user.getHome().equals(home) &amp;&amp; user.getAge.equals(age))&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br><span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br></code></pre></td></tr></table></figure>
+
 <p><strong>完整的 equals 方法</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">equals</span><span class="hljs-params">(Object obj)</span>&#123;<br>	<span class="hljs-keyword">if</span>(obj == <span class="hljs-built_in">this</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br><br>	<span class="hljs-keyword">if</span>(!(obj <span class="hljs-keyword">instanceof</span> User))&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>	&#125; <br><br>	<span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> (User) obj;<br>	<span class="hljs-keyword">if</span>(user.getHome().equals(home) &amp;&amp; user.getAge.equals(age))&#123;<br>    	<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125; <br><br></code></pre></td></tr></table></figure>
 
@@ -342,6 +349,7 @@
 <p>你可能觉得 hashCode 不同就不同嘛，但是你也就此失去了使用 HashMap，HashSet 等集合类的权利，强行使用会给你的代码带来未知的 bug，因为这些类都是根据 hashCode 约定来实现的。</p>
 <p>我们可以通过一个例子演示该行为带来的问题，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Map&lt;User, String&gt; m = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>m.put(<span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;江西&quot;</span>,<span class="hljs-string">&quot;18&quot;</span>), <span class="hljs-string">&quot;渣渣辉&quot;</span>);<br></code></pre></td></tr></table></figure>
+
 <p>我们向 HashMap 插入了一条数据，你可能期望 <code>m.get(new User(&quot;江西&quot;，&quot;18&quot;))</code>会返回「渣渣辉」，但很可惜并不是，而是返回 null。</p>
 <p>这是因为，虽然是两个是相同的对象，但是没有覆盖 hashCode 方法，导致存进 map 的对象的 hashcode 和 取值对象 hashcode 不一样，因此就会取不到对应的 value。</p>
 <h3 id="覆盖-hashCode-方法"><a href="#覆盖-hashCode-方法" class="headerlink" title="覆盖 hashCode 方法"></a>覆盖 hashCode 方法</h3><p><strong>计算 hashCode</strong> </p>
@@ -353,15 +361,18 @@
 </ol>
 <p><strong>合并返回 hashCode</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">result = <span class="hljs-number">31</span> * result + c;  <span class="hljs-comment">// 其中 C 为单个字段的 hashCode 值</span><br></code></pre></td></tr></table></figure>
+
 <p>这里估计你又会好奇，为什么是要乘 31。首先 31 是一个奇素数，如果是偶数的话并且乘法导致数据溢出，就会产生信息丢失。31 有个很好的特性，可以使用移位和减法来代替乘法，可以获得更好的性能，如：<code>31 * i == (i &lt;&lt; 5) - i</code>。</p>
 <p>我们把上述实践运用到 User 类中：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hashCode</span><span class="hljs-params">()</span>&#123;<br>	<span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> String.hashCode(home);<br>    result = <span class="hljs-number">31</span> * result + String.hashCode(age);<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>这样写算是比较高效的合理的覆盖，有时我们需要让 hashCode 值尽可能地不会造成冲突，我们可以使用 Guava 包下得 Hashing。如果对性能没有该要求可以使用 Objects 提供的静态 hash 方法 <code>Objects.hash(home, age);</code>。</p>
 <p>如果是一个不可变类，且每次计算 hashCode 的开销比较大，我们可以把 hashCode 值保存到对象内部，这样下次计算 hashCode 时可以直接把保存的 hashCode 返回。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span>&#123;<br>	<span class="hljs-keyword">private</span> <span class="hljs-type">int</span> hashCode;<br>    <br>    <span class="hljs-meta">@Override</span> <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hashCode</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> hashCode;<br>    	<span class="hljs-keyword">if</span>(result == <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-comment">// 执行相应的 hashCode 计算操作</span><br>            hashCode = result; <span class="hljs-comment">// 计算完成记得赋值保存</span><br>            <br>        &#125;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="优雅地覆盖-toString"><a href="#优雅地覆盖-toString" class="headerlink" title="优雅地覆盖 toString"></a>优雅地覆盖 toString</h2><p>我们在开发中，使用打印语句打印对象，或者在 debug 中查看对象的信息，经常能看到如下形式：<code>User@1b456</code> 。上诉这些行为都默认的调用了对象的 toString 方法，如果类本身没有覆盖 toString 的话，则会调用 Object 的 toString 方法，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<br>     <span class="hljs-keyword">return</span> getClass().getName() + <span class="hljs-string">&quot;@&quot;</span> + Integer.toHexString(hashCode());<br> &#125;<br></code></pre></td></tr></table></figure>
+
 <p>从打印的对象信息来看，给我们的开发调试，提供不了任何有用的信息，因此覆盖 toString 旨在提供更多有效的信息，而不是那一串干巴巴的 <code>User@1b456</code>。</p>
 <p>在 toString 方法中应该包含一些与类相关的信息。例如 User 类，可以返回 <code> User=&#123;&quot;江西&quot;, &quot;18&quot;&#125;</code>，这样清晰明了，比 <code>User@1b456</code> 不知好了多少。当 toString 生成的格式没有那么清晰时，就应该考虑在 javadoc 中添加格式说明，让这一过程容易被调用者接收。</p>
 <blockquote>
@@ -408,9 +419,11 @@
 
 <p>在 java 8中，Comparator 接口配置了一组比较器构造方法，使得构造比较器非常简单，并且代码的可读性非常高。还是上面的示例，我们为 User 类编写一个比较器。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Comparator&lt;User&gt; COMPARATOR = <br>    comparingInt(User::getAge)<br>			.thenComparing(User::getName);<br><br><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compareTo</span><span class="hljs-params">(User user)</span>&#123;<br>   <span class="hljs-keyword">return</span> COMPARATOR.compare(<span class="hljs-built_in">this</span>, user);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>上面的代码为 User 类编写了一个比较器，先比较年龄，然后比较名字。定义好比较器后，就直接在 User 的compareTo 方法使用即可。comparingInt 对应比较 int 类型，相似的也有 comparingLong_、和 _comparingDouble等。</p>
 <p><strong>一个错误地实践</strong>，有时我们会把比较结果的正负来判断大小，我们就很容易偷懒写出如下代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">compare</span><span class="hljs-params">(<span class="hljs-type">int</span> value1, <span class="hljs-type">int</span> value2)</span>&#123;<br>	<span class="hljs-keyword">return</span> value1 - value2;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>然后使用它的比较结果，来判断是正还是负，以此来判断 value1 和 value2 的大小关系,但是我们却没有考虑过整数溢出的情况。因为 int 类型最大，最小能表示正负21 亿左右的数字，假如 value1 是 int 类型最小值，value2 是正数，两者相减就会导致整数越界。因此使用官方为我们提供的比较方法 <code>Integer.compare(value1, value2)</code>，更为安全实用。</p>
 
                 

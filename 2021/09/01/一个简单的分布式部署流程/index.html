@@ -16,16 +16,16 @@
   <meta name="author" content="Greek">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用 3 种不同的方式，将项目部署成 3 个实例，每个实例监听不同的端口，由 Nginx 负责将请求转发到对应的实例中，完成请求流程。 Docker 启动 MySQL，Redis首先使用 Docker 启动一个全局的 Redis，MySQL，Nginx，让项目连接上对应的数据库。 获取并启动 MySQL 获取最新的 MySQL 镜像 1docker pull mysql 启动 MySQL 1doc">
+    <meta name="description" content="使用 3 种不同的方式，将项目部署成 3 个实例，每个实例监听不同的端口，由 Nginx 负责将请求转发到对应的实例中，完成请求流程。 Docker 启动 MySQL，Redis首先使用 Docker 启动一个全局的 Redis，MySQL，Nginx，让项目连接上对应的数据库。 获取并启动 MySQL 获取最新的 MySQL 镜像 1docker pull mysql  启动 MySQL 1do">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一个简单的分布式部署流程">
 <meta property="og:url" content="https://greek-zzf.github.io/2021/09/01/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
-<meta property="og:description" content="使用 3 种不同的方式，将项目部署成 3 个实例，每个实例监听不同的端口，由 Nginx 负责将请求转发到对应的实例中，完成请求流程。 Docker 启动 MySQL，Redis首先使用 Docker 启动一个全局的 Redis，MySQL，Nginx，让项目连接上对应的数据库。 获取并启动 MySQL 获取最新的 MySQL 镜像 1docker pull mysql 启动 MySQL 1doc">
+<meta property="og:description" content="使用 3 种不同的方式，将项目部署成 3 个实例，每个实例监听不同的端口，由 Nginx 负责将请求转发到对应的实例中，完成请求流程。 Docker 启动 MySQL，Redis首先使用 Docker 启动一个全局的 Redis，MySQL，Nginx，让项目连接上对应的数据库。 获取并启动 MySQL 获取最新的 MySQL 镜像 1docker pull mysql  启动 MySQL 1do">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/cover.png">
 <meta property="article:published_time" content="2021-09-01T18:07:00.000Z">
-<meta property="article:modified_time" content="2023-07-14T09:29:44.672Z">
+<meta property="article:modified_time" content="2023-07-31T13:42:27.336Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="分布式">
 <meta property="article:tag" content="部署">
@@ -296,36 +296,47 @@
 <p><strong>获取并启动 MySQL</strong></p>
 <p>获取最新的 MySQL 镜像</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker pull mysql<br></code></pre></td></tr></table></figure>
+
 <p>启动 MySQL</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -d -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 mysql<br></code></pre></td></tr></table></figure>
+
 <p><strong>获取并启动 Redis</strong></p>
 <p>获取最新的 Redis 镜像</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker pull redis<br></code></pre></td></tr></table></figure>
+
 <p>启动 Redis</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -p 6379:6379 -d redis<br></code></pre></td></tr></table></figure>
 
 <h2 id="使用-Maven-Exec-插件进行部署"><a href="#使用-Maven-Exec-插件进行部署" class="headerlink" title="使用 Maven Exec 插件进行部署"></a>使用 Maven Exec 插件进行部署</h2><p>在项目的 pom 文件中，引入并配置 exec 插件，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;plugin&gt;<br>    &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;<br>    &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;<br>    &lt;version&gt;<span class="hljs-number">3.0</span><span class="hljs-number">.0</span>&lt;/version&gt;<br>    &lt;configuration&gt;<br>        &lt;executable&gt;java&lt;/executable&gt;<br>        &lt;arguments&gt;<br>            &lt;argument&gt;-classpath&lt;/argument&gt;<br>            &lt;classpath/&gt;<br>            &lt;argument&gt;com.github.hcsp.Application&lt;/argument&gt;<br>        &lt;/arguments&gt;<br>    &lt;/configuration&gt;<br>&lt;/plugin&gt;<br></code></pre></td></tr></table></figure>
+
 <p>改配置信息指定了<strong>可执行程序</strong> java，指定使用 classpath 中的 jar 包，配置了主类（即程序入口），完成以上配置即可使用 <code>mvn exec:exec</code> 运行程序，演示项目运行的端口为 8081。</p>
 <h2 id="使用-java-jar-方式运行部署"><a href="#使用-java-jar-方式运行部署" class="headerlink" title="使用 java -jar 方式运行部署"></a>使用 java -jar 方式运行部署</h2><p>使用 maven 命令对项目进行打包</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mvn package<br></code></pre></td></tr></table></figure>
+
 <p>得到一个可执行的 jar 包：xxx.jar，接着使用命令执行该 jar，并指定端口为 8082</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -Dserver.port=8082  -jar xxx.jar<br></code></pre></td></tr></table></figure>
 
 <h2 id="使用-Docker-部署项目"><a href="#使用-Docker-部署项目" class="headerlink" title="使用 Docker 部署项目"></a>使用 Docker 部署项目</h2><p>在当前项目文件中编写 Dockerfile</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">FROM java:openjdk-8u111-alpine<br><br>RUN mkdir /app<br><br>WORKDIR /app<br><br>COPY target/spring-aop-redis-mysql-0.0.1.jar /app<br><br>EXPOSE 8080<br><br>CMD [&quot;java&quot;,&quot;-jar&quot;, &quot;spring-aop-redis-mysql-0.0.1.jar&quot;]<br></code></pre></td></tr></table></figure>
+
 <p>根据编写好的 Dockerfile 生成一个 Docker 镜像文件，在当前目录运行如下命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker build .<br></code></pre></td></tr></table></figure>
+
 <p>构建好镜像之后运行该镜像文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -v /C/Users/Administrator/Desktop/application.properties:/app/config/application.properties -p 8083:8081 镜像id<br></code></pre></td></tr></table></figure>
+
 <p>由于项目默认使用的 Redis 和 MySQL 连接都是 localhost，因此在 Docker 中运行该项目会访问不了数据库，因此，我们在本地重写了 <code>application.properties</code> 文件，并把该配置文件映射到 Docker 内部，使得 Docker 内的项目可以读取并使用该配置文件（配置文件有优先级关系，详情<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/html/boot-features-external-config.html">点击</a>）。</p>
 <h2 id="使用并配置-Nginx，完成分布式部署"><a href="#使用并配置-Nginx，完成分布式部署" class="headerlink" title="使用并配置 Nginx，完成分布式部署"></a>使用并配置 Nginx，完成分布式部署</h2><p>获取最新的 Nginx</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker pull nginx<br></code></pre></td></tr></table></figure>
+
 <p>在启动 Nginx 之前需要对它进行配置</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json">events <span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span><br>http <span class="hljs-punctuation">&#123;</span><br>    upstream backend <span class="hljs-punctuation">&#123;</span><br>        server <span class="hljs-number">192.168</span><span class="hljs-number">.110</span><span class="hljs-number">.112</span><span class="hljs-punctuation">:</span><span class="hljs-number">8081</span>;<br>        server <span class="hljs-number">192.168</span><span class="hljs-number">.110</span><span class="hljs-number">.112</span><span class="hljs-punctuation">:</span><span class="hljs-number">8082</span>;<br>        server <span class="hljs-number">192.168</span><span class="hljs-number">.110</span><span class="hljs-number">.112</span><span class="hljs-punctuation">:</span><span class="hljs-number">8083</span>;<br>    <span class="hljs-punctuation">&#125;</span><br>    <br>    server <span class="hljs-punctuation">&#123;</span><br>    		listen <span class="hljs-number">80</span>;<br>        location / <span class="hljs-punctuation">&#123;</span><br>            proxy_pass http<span class="hljs-punctuation">:</span><span class="hljs-comment">//backend;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
 <p>上面配置的意思是：Nginx 监听 80 端口，并对所有 80 端口的请求转发给 <code>backend</code>，<code>backend</code> 里面又配置了三个服务，这三个服务就是上面用三种方式开启的。由于没有配置具体的转发规则，因此 Nginx 会使用默认的负载均衡机制轮询，即请求在三个服务之间均匀分布。详细的负载均衡机制点击<a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/">这里</a>。</p>
 <p>由于 Nginx 是 Docker 启动的，因此需要把本地编写的配置文件映射到 Docker 容器内部，使用 <code>-v</code> 参数。最后 Nginx 的启动命令如下，其中 <code>--restart=always</code> 表示 Nginx 遇到错误会自动重启。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run --restart=always -v /C/Users/Administrator/Desktop/nginx.conf:/etc/nginx/nginx.conf -p 80:80 -d nginx<br></code></pre></td></tr></table></figure>
+
 <p>启动完成后，本机上所有的 80 端口请求都会交给 Nginx 去处理，Nginx 把请求转发到对应的服务上，服务完成请求解析，执行相应过程，返回结果，流程结束。</p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>使用了 3 种方式部署 Java 项目，但还是推荐使用 Docker 方式。使用 Docker 编写好一个 Dockerfile，然后构建一个 Docker 镜像，要运行多个服务，使用该镜像启动多个容器即可，非常方便。</p>
 <p>Docker 是未来的趋势，学习并使用 Docker 很有必要。最近打算使用 Docker 打造一个 Java 开发环境，理想的结果是本机使用 IDEA，其他所有的环境都在一个 Docker 镜像中，只需要让本机的代码和 Docker 内部的代码保持同步即可。</p>

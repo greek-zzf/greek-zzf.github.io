@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/cover.png">
 <meta property="article:published_time" content="2022-12-19T22:51:00.000Z">
-<meta property="article:modified_time" content="2023-07-14T09:29:44.672Z">
+<meta property="article:modified_time" content="2023-07-31T13:42:27.332Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="博客">
 <meta property="article:tag" content="Hexo">
@@ -293,23 +293,17 @@
                 
                 <p>这是一个简单的 Hexo 博客搭建教程，无需自己购买服务器，也能搭建属于自己的博客。</p>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li><p>Gitee 账号或者 GitHub 账号。Gitee 账号和 GitHub 账号都很容易申请，考虑到博客的访问速度，更推荐使用 Gitee。然后新建一个公开的空仓库，仓库的命名需要和你的账号名保持一致。在 Gitee 中访问个人的主页，浏览器上的地址会变成 <code>gitee.com/xxx</code>，这个 <code>xxx</code>  就是你的账号名。同理，进入 GitHub 的个人主页，地址栏 <code>github.com/xxx</code>。</p>
-</li>
-<li><p>Git。电脑需要安装 Git，使用 <code>git --version</code> 确保 Git 是安装成功的。</p>
-</li>
-<li><p>Node 环境。Node 环境安装也很简单，百度关键词 <code>nodejs</code> 进入官网下载，安装了过程无脑下一步即可。安装完成后，控制台使用 <code>node -v</code>命令，打印出 node 的版本信息即为成功。例如我的电脑打印的 node 版本信息 <code>v19.1.0</code>。</p>
-</li>
-<li><p>安装 Hexo。Node 环境准备好之后，使用命令 <code>npm install -g hexo-cli</code> 安装 Hexo，等待控制台输出完成即可，使用 <code>hexo -v</code> 验证是否安装成功。Hexo 官方文档有详细的安装方法，可以<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85">参考</a>。</p>
-</li>
-<li><p>至此，所有准备工作已完成。</p>
-</li>
+<li>Gitee 账号或者 GitHub 账号。Gitee 账号和 GitHub 账号都很容易申请，考虑到博客的访问速度，更推荐使用 Gitee。然后新建一个公开的空仓库，仓库的命名需要和你的账号名保持一致。在 Gitee 中访问个人的主页，浏览器上的地址会变成 <code>gitee.com/xxx</code>，这个 <code>xxx</code>  就是你的账号名。同理，进入 GitHub 的个人主页，地址栏 <code>github.com/xxx</code>。</li>
+<li>Git。电脑需要安装 Git，使用 <code>git --version</code> 确保 Git 是安装成功的。</li>
+<li>Node 环境。Node 环境安装也很简单，百度关键词 <code>nodejs</code> 进入官网下载，安装了过程无脑下一步即可。安装完成后，控制台使用 <code>node -v</code>命令，打印出 node 的版本信息即为成功。例如我的电脑打印的 node 版本信息 <code>v19.1.0</code>。</li>
+<li>安装 Hexo。Node 环境准备好之后，使用命令 <code>npm install -g hexo-cli</code> 安装 Hexo，等待控制台输出完成即可，使用 <code>hexo -v</code> 验证是否安装成功。Hexo 官方文档有详细的安装方法，可以<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/#%E5%AE%89%E8%A3%85">参考</a>。</li>
+<li>至此，所有准备工作已完成。</li>
 </ol>
 <h2 id="快速搭建"><a href="#快速搭建" class="headerlink" title="快速搭建"></a>快速搭建</h2><p> 首先，使用 hexo 命令创建一个文件夹，文件夹的名称和路径自己指定。为了规避一些潜在的问题，名称和路径最好是英文的。此处创建一个 <code>blog</code> 文件夹。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo init blog<br></code></pre></td></tr></table></figure>
 
 <p>等待一会，然后进入到 blog 文件夹。需要注意的是， 文件夹有个 <code>.gitignore</code> 文件，需要将 <code>public/</code> 这行删除，后续步骤会使用到。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">.DS_Store<br>Thumbs.db<br>db.json<br>*.log<br>node_modules/<br>public/  # 删除这行<br>.deploy*/<br>_multiconfig.yml<br></code></pre></td></tr></table></figure>
-
 
 <p>安装所需依赖。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install <br></code></pre></td></tr></table></figure>
