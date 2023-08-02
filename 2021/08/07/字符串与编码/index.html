@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="我们都知道，在网络通信和存储的都是字节流，都是一大串的 0 和 1。不知道大家有没想过，存储既然是 0 和 1，为什么我们看到得都是一个个字符，汉子，英文？是不是计算机在背后偷偷的把字节转化成我们人类能看懂的语言？答案是肯定的。 字符集相关概念既然计算机帮我们把字节转成人类的语言，那么肯定存在着一种映射关系「字节 –&gt; 人类语言的映射」，我们把这种关系称为字符集。把字节转化成人类看懂的字符，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://greek-zzf.github.io/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/cover.png">
+<meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/cover.png">
 <meta property="article:published_time" content="2021-08-07T17:10:00.000Z">
-<meta property="article:modified_time" content="2023-08-01T08:46:06.242Z">
+<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="字符串">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://greek-zzf.github.io/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/cover.png">
+<meta name="twitter:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/cover.png">
   
   
   
@@ -297,7 +297,7 @@
 <p>假如我们把阿拉伯数字看作字节，把不同语言的翻译看做编解码方式。因此，1，2，3 翻译成汉字就成了一，二，三；翻译成英文就成了 one，two，three。假如，本应该使用中文编码的字节，却使用了英文编码，这就会让没有学过英语的人看不懂，不懂 one，two，three 是什么，对于他们来说这就是<strong>乱码</strong>。</p>
 <h2 id="字符集-Unicode"><a href="#字符集-Unicode" class="headerlink" title="字符集 Unicode"></a>字符集 Unicode</h2><p>在字符集群魔乱舞时代，有人站了出来。他把所有的地区性编码方案废弃，重新搞了一个<strong>包括了地球上所有文化、所有字母和符号的编码 Unicode</strong>。其中 uni 是英文前缀，表示「单一，一个」，因此 Unicode 的字面意思也很好理解，百度百科上翻译成「统一码，也叫万国码、单一码」。</p>
 <p>Unicode 的设计非常的简单：<strong>从一个数字映射到一个字符</strong>。图中简单地演示了 unicode 的映射关系，实际上的对应关系并非如此。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/../picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/7fb15bf0-053f-43e0-97cf-d914e64d4df8.png" srcset="/img/loading.gif" lazyload alt="image.png"></h2><p>图中所示，把左边的数字编号称作<strong>码点</strong>（code point）。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/7fb15bf0-053f-43e0-97cf-d914e64d4df8.png" srcset="/img/loading.gif" lazyload alt="image.png"></h2><p>图中所示，把左边的数字编号称作<strong>码点</strong>（code point）。</p>
 <h3 id="Unicode-数据类型"><a href="#Unicode-数据类型" class="headerlink" title="Unicode 数据类型"></a>Unicode 数据类型</h3><p>现在换位思考下，如果让你来设计 Unicode 码表，你会用什么数据类型来存储上面的数字编号呢？</p>
 <p>现在来对比下这些数据类型关系</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">byte</span> --&gt; <span class="hljs-number">0</span>~<span class="hljs-number">255</span> --&gt; <span class="hljs-number">256</span><br>    <br><span class="hljs-type">short</span> --&gt; <span class="hljs-number">2</span> bytes --&gt; <span class="hljs-number">65536</span><br>    <br><span class="hljs-type">int</span> --&gt; <span class="hljs-number">4</span> bytes --&gt; 约 <span class="hljs-number">42</span> 亿<br></code></pre></td></tr></table></figure>
@@ -305,7 +305,7 @@
 <p>很显然 byte 不合适，256个数，存中文都不够。short 存中文可能勉强够用，但是这还要包含其他国家的文字啊，加起来肯定不够用。int 42 亿个，足够全世界的文字使用， 因此选用 int 类型，实际上 Unicode 也是这么做的。</p>
 <h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p>上面提到为了包含全世界所有的文字，Unicode 使用了 int 类型。int 4个字节，对于编号在前面的字符，就会造成空间浪费。例如编号为 1 的字符，把编号转换成字节就变成 “00000000  00000000  00000000 00000001”，我们会发现前三个字节都是 0，这样造成了空间浪费。本来一个字节就能表示的编号，硬是多占用了3个字节，编号靠后的还好，靠前的大多都浪费流量，浪费空间。</p>
 <p>如图我们把前四位编码成 4 个字节，编码后的前三个字节都是 0。更何况Unicode 兼容了 ASCII 码表，前128 位都是常用的一些字符，本来字母 “a” 只需要占用一个字节，经过 Unicode 编码后需要占用 4 个字节，不利于传输和存储。</p>
-<p><img src="/../picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/59ab9ba5-2ffa-416c-b1e8-2eef2d58c538.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/59ab9ba5-2ffa-416c-b1e8-2eef2d58c538.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <h2 id="常见的两种编码方案：UTF-8，UTF-16"><a href="#常见的两种编码方案：UTF-8，UTF-16" class="headerlink" title="常见的两种编码方案：UTF-8，UTF-16"></a>常见的两种编码方案：UTF-8，UTF-16</h2><p>正是因为 Unicode 对于靠前的码位太占空间了，所以就有了 UTF-8，UTF-16 等编码方案，用来解决空间占用问题。其实我们也很容易想到一种解决方案：把常用的字符用一个字节存储，不常用的用多个字节存储，这样就避免了 Unicode 缺陷</p>
 <h3 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h3><p>UTF-16 根据码位所处的范围进行不同编码。</p>
 <p><strong>U+0000 至 U+D7FF 以及从 U+E000 至 U+FFFF 的码位</strong></p>
@@ -338,7 +338,7 @@
 <p><strong>测试 2</strong>：一份用 UTF-8 编码的全汉字文本，更改编码方式为 UTF-16，和 GBK，存储占用会发生什么变化？答案是都会减少占用，GBK 对中文是两个字节编码，UTF-16 对大多数中文也是两个字节编码，而 UTF-8 对中文是 3 个字节编码，因此占用会减少。</p>
 <h2 id="一些小感悟"><a href="#一些小感悟" class="headerlink" title="一些小感悟"></a>一些小感悟</h2><p>写这篇博客的时候，遇到很多问题，本来只是想写 UTF-8 和 Unicode 的，越往下写的时候发现还有很多东西没有掌握，因此一边消化（幸运的是消化难度还能接收），一边写了这篇博客，终于是把字符，乱码相关的搞明白了。</p>
 <p>当我感叹 UTF-8 编解码算法的时候，搜了下发明者<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%82%AF%C2%B7%E6%B1%A4%E6%99%AE%E9%80%8A"> Ken Thompson</a>，这么多优秀的作品都与他有莫大的关联，Unix，正则，UTF-8，以及现在火热的 Go 语言，还获得图灵奖，我也只能顶礼膜拜。了解的越多，发现了计算机领域基本上所有伟大的东西，都是那么一小撮人发明的。如图是 Ken Thompson 相关的简介，想具体了解可以去维基百科搜索。</p>
-<p><img src="/../picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/61ce26eb-3169-4168-bb62-c1a1929f4bcb.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/61ce26eb-3169-4168-bb62-c1a1929f4bcb.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 
                 
               </div>

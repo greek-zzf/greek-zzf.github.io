@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/cover.png">
 <meta property="article:published_time" content="2021-12-30T08:35:00.000Z">
-<meta property="article:modified_time" content="2023-08-01T08:46:06.242Z">
+<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="布隆过滤器">
 <meta name="twitter:card" content="summary_large_image">
@@ -302,27 +302,27 @@
 <p>简介引用自维基百科，里面有两个概念「二进制向量」，「映射函数」。</p>
 <p><strong>二进制向量</strong>就是一堆 bit(位) 的集合，bit 我们都知道就是只能表示 0 和 1。其实我们常使用的 int 有 32 位，因此他也可以看做一个二进制向量。</p>
 <p>下面是一个简单的示例，每一个空格就代表一个 bit，下面的数字表示它的索引：</p>
-<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/54a416e0-66c1-4893-aade-ede8e001bd04.png" srcset="/img/loading.gif" lazyload alt="1.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/54a416e0-66c1-4893-aade-ede8e001bd04.png" srcset="/img/loading.gif" lazyload alt="1.png"></p>
 <p><strong>映射函数</strong>我们其实很并不陌生。使用过 HashMap 就应该知道，对 key 使用 hashCode 方法，计算哈希值，这个 hashCode 方法就是一个映射函数，一个 key 只能对应一个哈希值。</p>
 <p>布隆过滤器对一个 key 使用多个映射函数，得到多个值。</p>
 <p>哈希函数映射</p>
-<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/63b9a80b-0cd5-48ea-ac54-a93256a7caf7.png" srcset="/img/loading.gif" lazyload alt="hash.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/63b9a80b-0cd5-48ea-ac54-a93256a7caf7.png" srcset="/img/loading.gif" lazyload alt="hash.png"></p>
 <p>布隆过滤器中映射函数</p>
-<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/51445b83-d4a0-497f-8ebb-5f0fb9ddcc76.png" srcset="/img/loading.gif" lazyload alt="bloomfilter.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/51445b83-d4a0-497f-8ebb-5f0fb9ddcc76.png" srcset="/img/loading.gif" lazyload alt="bloomfilter.png"></p>
 <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>了解一些基本概念之后，布隆过滤器的原理就很明了了。</p>
 <p>布隆过滤器对于要保存的值使用一系列随机的映射函数，得到二进制向量下标，然后把对应的 bit 置为 1，就是这么简单。</p>
 <p>例如，字符串 “zzh”，经过三个随机的映射函数，对应的下标为 2，7，11 因此对应的 bit 为 1。</p>
-<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/ccf230bf-6de4-49ab-8238-c9387cad586d.png" srcset="/img/loading.gif" lazyload alt="insert.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/ccf230bf-6de4-49ab-8238-c9387cad586d.png" srcset="/img/loading.gif" lazyload alt="insert.png"></p>
 <p>我们可以对要插入到的字符串应用同样的哈希函数，然后看二进制向量里对应的bit 是否全为 1 来判断一个元素是否在集合里。</p>
 <p>如果是，则该元素<strong>可能</strong>在里面，注意是可能。 因为这些位置有可能是由其他元素或者其他元素的组合所引起的，这也就导致了布隆过滤器的误识别率。</p>
 <p>如果不是，则表示该元素一定不在集合中。</p>
 <h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>我更习惯在介绍一个功能的时候，先把他的缺点说出来，知道缺点的话，后续就可以大胆的应用。</p>
 <h3 id="误识别率"><a href="#误识别率" class="headerlink" title="误识别率"></a>误识别率</h3><p>插入字符串 “zzh” 得到下标 2、7、11</p>
-<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/8b034b8d-b422-4dfc-a270-10c65db5d255.png" srcset="/img/loading.gif" lazyload alt="insert.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/8b034b8d-b422-4dfc-a270-10c65db5d255.png" srcset="/img/loading.gif" lazyload alt="insert.png"></p>
 <p>插入字符串 “greek” 得到下标 5、8、9</p>
-<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/4bc4c95c-abee-4c20-9d5e-cf66a4b02cd5.png" srcset="/img/loading.gif" lazyload alt="insert_greek.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/4bc4c95c-abee-4c20-9d5e-cf66a4b02cd5.png" srcset="/img/loading.gif" lazyload alt="insert_greek.png"></p>
 <p>插入字符串 “gem” 得到下标 2、5、8</p>
-<p><img src="/../picture/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/66253d9d-d8ac-4783-9ba3-a3f954bfb9fa.png" srcset="/img/loading.gif" lazyload alt="insert_gem.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%25E5%25B8%2583%25E9%259A%2586%25E8%25BF%2587%25E6%25BB%25A4%25E5%2599%25A8/66253d9d-d8ac-4783-9ba3-a3f954bfb9fa.png" srcset="/img/loading.gif" lazyload alt="insert_gem.png"></p>
 <p>可以看到 “gem” 得到的下标对应的 bit 都已经为 1，但是该字符串并不在集合中，这就是布隆过滤器的误识别率。</p>
 <h3 id="删除困难"><a href="#删除困难" class="headerlink" title="删除困难"></a>删除困难</h3><p>删除困难的原因和误识别率是如出一辙。例如我们只想把 “gem” 字符串删除，于是把下标为 2、5、8 的 bit 都置为 0，这样的话 “greek” 和 “zzh” 部分数据就被删除了。无法保证删除的下标影响到其他元素，这就是布隆过滤器删除困难的原因。</p>
 <p>我们也很容易想到把位数组变成整数数组，每插入一个元素相应的计数器加 1，这样删除元素时将计数器减掉就可以了。但是这样根本不可行，因为连一个元素是否在集合中都无法百分百保证，又何来的把这个元素删除呢？就好比你想能为开源世界大牛，现在却连 GitHub 都无法保证访问一样。</p>
