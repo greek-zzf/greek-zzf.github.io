@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Docker%E5%9F%BA%E7%A1%80/cover.png">
 <meta property="article:published_time" content="2021-12-08T10:55:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.464Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.510Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary_large_image">
@@ -338,16 +338,16 @@
 <p>Dockerfile 文件创建好之后，我们就需要把它构建成一个镜像文件。只需要使用如下命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker build &lt;dockerfile 所在目录&gt;<br></code></pre></td></tr></table></figure>
 <p>等待 Docker 帮你构建完成，接下来你就可以同其他镜像一样使用自己的镜像。</p>
-<h2 id="发布自己的镜像"><a href="#发布自己的镜像" class="headerlink" title="发布自己的镜像"></a>发布自己的镜像</h2><p>可以通过上面的步骤，自己编写了一个 Dockerfile，并且使用该文件构建一个镜像。如图：<br><img src="/../picture/Docker%E5%9F%BA%E7%A1%80/cb2c1d1e-f3d5-4401-a041-d0af4089e3a5.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h2 id="发布自己的镜像"><a href="#发布自己的镜像" class="headerlink" title="发布自己的镜像"></a>发布自己的镜像</h2><p>可以通过上面的步骤，自己编写了一个 Dockerfile，并且使用该文件构建一个镜像。如图：<br><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Docker%E5%9F%BA%E7%A1%80/cb2c1d1e-f3d5-4401-a041-d0af4089e3a5.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>由于新构建的镜像是没有名字的，为了方便后续使用我们可以给它取个名字。我们可以使用如下命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker tag cf6ef720090d zzf:1.0.0<br></code></pre></td></tr></table></figure>
 
-<p>再次查看我们的镜像<br><img src="/../picture/Docker%E5%9F%BA%E7%A1%80/a07b120e-37c5-4ddf-84ad-444a6622e869.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<p>可以看到 <code>REPOSITORY</code> 那一栏名字变成了 <code>zzf</code>，<code>TAG</code>栏也变成了 <code>1.0.0</code>。需要特别声明的是，<code>REPOSITORY</code>那一栏的名称，定义了镜像的 push 和 pull 地址，由于我们命令为 <code>zzf</code>，并没有给镜像设置地址，因此当我们 push 的时候，docker 会使用默认的 docker 官方仓库的地址，如图：<br><img src="/../picture/Docker%E5%9F%BA%E7%A1%80/c7b36c39-9367-4528-ab5e-0088e06224c2.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>再次查看我们的镜像<br><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Docker%E5%9F%BA%E7%A1%80/a07b120e-37c5-4ddf-84ad-444a6622e869.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>可以看到 <code>REPOSITORY</code> 那一栏名字变成了 <code>zzf</code>，<code>TAG</code>栏也变成了 <code>1.0.0</code>。需要特别声明的是，<code>REPOSITORY</code>那一栏的名称，定义了镜像的 push 和 pull 地址，由于我们命令为 <code>zzf</code>，并没有给镜像设置地址，因此当我们 push 的时候，docker 会使用默认的 docker 官方仓库的地址，如图：<br><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Docker%E5%9F%BA%E7%A1%80/c7b36c39-9367-4528-ab5e-0088e06224c2.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>为了发布到自己的 docker 仓库中去，我们需要注册一个 Docker 账号。然后把我们的镜像名称改成如下:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker tag cf6ef720090d wszzh/zzf:latest<br></code></pre></td></tr></table></figure>
 
-<p>只需要在镜像名前加上 docker 用户名加 <code>/</code>，即可。这样使用 docker push 命令就能推送到我们的仓库，如图：<br><img src="/../picture/Docker%E5%9F%BA%E7%A1%80/0011501c-d73f-4819-b9a1-2409b4de1e51.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>这样就推送成功，我们可以登录自己的 Docker 账户查看该镜像。需要使用的时候只需要使用如下命令即可拉取我们自己的镜像，如果有多个版本，则需要在镜像地址后面加冒号跟上对应的版本号即可。</p>
+<p>只需要在镜像名前加上 docker 用户名加 <code>/</code>，即可。这样使用 docker push 命令就能推送到我们的仓库，如图：<br><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Docker%E5%9F%BA%E7%A1%80/0011501c-d73f-4819-b9a1-2409b4de1e51.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>这样就推送成功，我们可以登录自己的 Docker 账户查看该镜像。需要使用的时候只需要使用如下命令即可拉取我们自己的镜像，如果有多个版本，则需要在镜像地址后面加冒号跟上对应的版本号即可。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker pull wszzh/zzf<br></code></pre></td></tr></table></figure>
 
                 

@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/cover.png">
 <meta property="article:published_time" content="2022-04-30T16:09:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.510Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Jenkins">
 <meta name="twitter:card" content="summary_large_image">
@@ -354,42 +354,42 @@
 <h3 id="创建测试打包任务"><a href="#创建测试打包任务" class="headerlink" title="创建测试打包任务"></a>创建测试打包任务</h3><ol>
 <li>填写创建的 Job 信息</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/24e982a6-9b83-4233-99f0-15c083663bb5.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/24e982a6-9b83-4233-99f0-15c083663bb5.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <ol start="2">
 <li>选择 Git 作为代码管理工具，配置对应的仓库地址。如果是私密仓库，需要填写对应的账号密码。这里使用了 ssh 方式，并提前配置好了私钥信息。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/0c9f33b3-b50e-45dd-b984-8fdd5c4a1ea9.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/0c9f33b3-b50e-45dd-b984-8fdd5c4a1ea9.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <ol start="3">
 <li>选择一个构建方式，这里我们选择 SCM，填写一个每 10 分钟轮询一次的 corn 表达式。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/415593ca-72bb-4786-a3c5-14271c5d15ac.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/415593ca-72bb-4786-a3c5-14271c5d15ac.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <ol start="4">
 <li>构建的时候选择 <code>Execute shell</code> 并在文本框中填写要执行的脚本信息，这里我们填写 <code>mvn clean package</code>，该命令会执行清理、测试、打包操作，在 target 目录下生成 jar 包。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3fea80cf-d62d-4d27-a028-4bae6b70c59a.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3fea80cf-d62d-4d27-a028-4bae6b70c59a.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <ol start="5">
 <li>保存任务，回到页面。等待 10 分钟或者手动点击立即构建，即可开始构建。 控制台最终打印了文件夹下所有项目版本信息。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b452178d-9bdd-4873-98f7-663fd62ef8bf.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b452178d-9bdd-4873-98f7-663fd62ef8bf.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <h3 id="创建部署任务"><a href="#创建部署任务" class="headerlink" title="创建部署任务"></a>创建部署任务</h3><ol>
 <li>创建 deploy 任务，在页面中填写描述，并勾选 <code>This project is parameterized</code>，选择 String 参数，这里定义一个变量 version。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f0e1221-1b21-4ac1-a991-19753f4085ca.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f0e1221-1b21-4ac1-a991-19753f4085ca.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <ol start="2">
 <li>由于部署任务和打包任务是分开，此处无需在使用 Git 去拉取代码，也无需定义构建触发器，直接手动构建即可。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/8489f466-cf27-4f07-b07a-304f8b42769b.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/8489f466-cf27-4f07-b07a-304f8b42769b.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <ol start="3">
 <li>build 环节还是去执行一个 shell，这里我们配置一个 java 程序启动命令 <code>java -Dserver.port=5000 -jar  /c/Users/Administrator/Desktop/jenkins/$&#123;version&#125;.jar</code>指定 5000 端口，并且根据输入的版本号，去执行对应的 jar 包。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f823c65-51d5-4936-b226-d635fc86e3c3.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/5f823c65-51d5-4936-b226-d635fc86e3c3.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <ol start="4">
 <li>根据上个任务构建的输出，我们执行部署任务的构建。Jenkins 会弹出提示，此时输入对应的项目版本号，点击开始构建，等待构建完成项目就启动成功了。</li>
 </ol>
-<p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b651a7f8-0267-42c9-861b-4ea128b5f596.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b651a7f8-0267-42c9-861b-4ea128b5f596.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <h2 id="使用-Jenkinsfile-创建-Job"><a href="#使用-Jenkinsfile-创建-Job" class="headerlink" title="使用 Jenkinsfile 创建 Job"></a>使用 Jenkinsfile 创建 Job</h2><p>图形化页面创建一个 Job 很方便，但是当 Jenkins 需要为多个项目创建 Job 时，一个一个手动创建就会很繁琐，并且 Job 信息也没办法进行版本管理。</p>
 <p>Jenkinsfile 就是来解决这个问题的，他将 Job 的配置信息用脚本语言来表示，这样只需要维护这个脚本即可。Jenkinsfile 就像是一份说明书，指导 Jenkins 的工作，让他自动帮我们完成配置。编写 Jenkinsfile 的脚本语言是 Groovy，推荐学习。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>整个流程如图：<br><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/70124ec6-6334-457c-9f47-4341127d490c.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>整个流程如图：<br><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/70124ec6-6334-457c-9f47-4341127d490c.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p><strong>创建流程</strong>：</p>
 <ul>
 <li><p>为项目编写 Dockerfile。</p>
@@ -408,9 +408,9 @@
 <p>该脚本定义了轮询任务，在 docker 中使用 java 环境运行 <code>mvn clean package</code>打包，并把它暂存。之后使用一个 docker build 构建镜像并推送到 docker 私服。由于私服地址和 Jenkins 都在同一个服务器，因此直接使用内网 ip。</p>
 <h3 id="在-deploy-分支创建-Jenkinsfile-并编写部署脚本"><a href="#在-deploy-分支创建-Jenkinsfile-并编写部署脚本" class="headerlink" title="在 deploy 分支创建 Jenkinsfile  并编写部署脚本"></a>在 deploy 分支创建 Jenkinsfile  并编写部署脚本</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs groovy"><span class="hljs-keyword">def</span> responseJson = <span class="hljs-keyword">new</span> URL(<span class="hljs-string">&quot;http://172.29.145.109:5000/v2/oh-my-jenkins/tags/list&quot;</span>)<br>        .getText(<span class="hljs-attr">requestProperties:</span> [<span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&quot;application/json&quot;</span>]);<br><br>println(responseJson)<br><br>Map response = <span class="hljs-keyword">new</span> groovy.json.JsonSlurperClassic().parseText(responseJson) <span class="hljs-keyword">as</span> Map;<br><br><span class="hljs-keyword">def</span> versionsStr = response.tags.join(<span class="hljs-string">&#x27;\n&#x27;</span>);<br><br>pipeline &#123;<br>     agent any<br><br>     stages &#123;<br>        stage(<span class="hljs-string">&#x27;Test&#x27;</span>) &#123;<br>            input &#123;<br>                message <span class="hljs-string">&quot;Choose a version&quot;</span><br>                ok <span class="hljs-string">&quot;Deploy&quot;</span><br>                parameters &#123;<br>                    choice(<span class="hljs-attr">choices:</span> versionsStr, <span class="hljs-attr">description:</span> <span class="hljs-string">&#x27;version&#x27;</span>, <span class="hljs-attr">name:</span> <span class="hljs-string">&#x27;version&#x27;</span>)<br>                &#125;<br>            &#125;<br>            steps &#123;<br>                sh <span class="hljs-string">&quot;ssh root@172.29.145.109 &#x27;docker rm -f oh-my-jenkins&#x27; || true&quot;</span><br>                sh <span class="hljs-string">&quot;ssh root@172.29.145.109 &#x27;docker run --name oh-my-jenkins -p 8081:8080 -d 172.29.145.109:5000/oh-my-jenkins:$&#123;version&#125;&#x27;&quot;</span><br>            &#125;<br>        &#125;<br>     &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>该脚本获取 Docker 私服的<code>oh-my-jenkins</code>镜像，部署我们选择的版本。</p>
-<h3 id="在-Jenkins-创建多分支流水线任务"><a href="#在-Jenkins-创建多分支流水线任务" class="headerlink" title="在 Jenkins 创建多分支流水线任务"></a>在 Jenkins 创建多分支流水线任务</h3><p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b439354a-e1a4-47f4-9bf4-06975e7d8c98.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<p>然后只需要配置仓库地址就好了，由于 GitHub 抽风，所以使用 Gitee 仓库地址。<br><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/4047e5a2-911f-4a91-9380-55c45988a209.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>创建完流水线任务，他会自动扫描仓库上的所有分支，并读取 Jenkinsfile 文件，执行命令。</p>
-<h3 id="选择版本部署"><a href="#选择版本部署" class="headerlink" title="选择版本部署"></a>选择版本部署</h3><p><img src="/../picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3368c931-7653-4f8a-bc9e-df43d04ee7fc.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>当流水线分支创建完成之后，deploy 分支会等待我们选择版本，选择需要部署的版本，deploy 即可完成部署。</p>
+<h3 id="在-Jenkins-创建多分支流水线任务"><a href="#在-Jenkins-创建多分支流水线任务" class="headerlink" title="在 Jenkins 创建多分支流水线任务"></a>在 Jenkins 创建多分支流水线任务</h3><p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/b439354a-e1a4-47f4-9bf4-06975e7d8c98.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>然后只需要配置仓库地址就好了，由于 GitHub 抽风，所以使用 Gitee 仓库地址。<br><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/4047e5a2-911f-4a91-9380-55c45988a209.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>创建完流水线任务，他会自动扫描仓库上的所有分支，并读取 Jenkinsfile 文件，执行命令。</p>
+<h3 id="选择版本部署"><a href="#选择版本部署" class="headerlink" title="选择版本部署"></a>选择版本部署</h3><p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/3368c931-7653-4f8a-bc9e-df43d04ee7fc.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>当流水线分支创建完成之后，deploy 分支会等待我们选择版本，选择需要部署的版本，deploy 即可完成部署。</p>
 
                 
               </div>

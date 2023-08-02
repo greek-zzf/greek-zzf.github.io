@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Java%E5%8C%85%E7%AE%A1%E7%90%86/cover.png">
 <meta property="article:published_time" content="2021-08-26T17:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.510Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Maven">
@@ -324,7 +324,7 @@
 <p><strong>maven 解决传递性依赖</strong></p>
 <p>当我们引入相关的包时，maven 会帮我们下载这个包，<strong>并且把他的传递性依赖的包都下载下来。</strong>因此，在 maven 中我们不需要去管理包的传递性依赖问题，maven 都会帮我们处理好。 </p>
 <p><strong>maven 解决传递性依赖带来的包冲突问题</strong></p>
-<p>假设你的项目有以下依赖。A 依赖 C，C 依赖 D 的0.2版本；B 依赖 D 的 0.1版本。<br> <img src="/../picture/Java%E5%8C%85%E7%AE%A1%E7%90%86/90d36004-cdb8-47f4-9707-1c5d3ef77706.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>假设你的项目有以下依赖。A 依赖 C，C 依赖 D 的0.2版本；B 依赖 D 的 0.1版本。<br> <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java%E5%8C%85%E7%AE%A1%E7%90%86/90d36004-cdb8-47f4-9707-1c5d3ef77706.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>如果按照图上所示，把所有的包都下载，势必会造成前面的 Classpath hell 问题，因为两个包 D 同名了。首先，maven 会根据包的 groupId 和 artifactId 来判断是否为同一个。存在相同的包 maven 就会帮我们自动解决。</p>
 <p>maven 解决的原则就是：离项目最近的胜出，如果一样近，则靠前声明的胜出。回到图中，D-0.2 离项目的距离是3，而 D-0.1 离项目的距离是2，因此 D-0.2就会被 maven 剔除，classpath 路径中只存在 D-0.1。maven 解决冲突的做法，在大部分情况下是可行的，但也有不行的时候。假设项目中使用了 D-0.2 中的 API，由于 D-0.1 是旧版，没有相同的 API，maven 根据原则，帮我们把 D-0.2 剔除了，这个时候项目启动就会报错了。</p>
 <p><strong>手动解决包冲突</strong></p>

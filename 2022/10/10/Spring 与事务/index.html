@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Spring%E4%B8%8E%E4%BA%8B%E5%8A%A1/cover.png">
 <meta property="article:published_time" content="2022-10-10T15:59:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.510Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="事务">
@@ -357,7 +357,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserController</span>&#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> UserService userService;<br>    <br>    <span class="hljs-meta">@PostMapping(&quot;/register&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addUser</span><span class="hljs-params">()</span>&#123;<br>		userService.registerUser();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><code>/register</code> 请求的流程如下：</p>
-<p><img src="/../picture/Spring%E4%B8%8E%E4%BA%8B%E5%8A%A1/01acb810-c014-487d-9a72-7a6111fd0920.png" srcset="/img/loading.gif" lazyload alt="aop.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Spring%E4%B8%8E%E4%BA%8B%E5%8A%A1/01acb810-c014-487d-9a72-7a6111fd0920.png" srcset="/img/loading.gif" lazyload alt="aop.png"></p>
 <p>可以看到，<code>Controller</code>  实际上是调用 <code>UserServiceProxy</code> 的 <code>registerUser</code> 方法，然后在代理方法中操控事务，并调用真正的 <code>UserService</code> 的 <code>registerUser</code>。</p>
 <p>或许你还有个疑问：注入的是 <code>UserService</code> ，为什么调用的却是它的代理类？</p>
 <p>这就涉及 Spring  的依赖注入原理，详细可以自行搜索。实际上在 <code>UserController</code> 中注入的是 <code>UserServiceProxy</code> ，而非看到的 <code>UserService</code>。</p>
@@ -373,12 +373,12 @@
 <li><code>UserService</code> 的 <code>a</code> 方法执行过程中，发现要调用 <code>b</code> 方法，因此调用了自己的 <code>b</code> 方法。</li>
 </ol>
 <p>可以看到，<code>a</code> 调用 <code>b</code> 的时候，并没有先经过代理类，而是直接在 <code>UserService</code> 中执行了，所以 <code>b</code> 的事务不会生效。</p>
-<p><img src="/../picture/Spring%E4%B8%8E%E4%BA%8B%E5%8A%A1/9559d6ef-b67e-49b3-b2a3-6ed40d97aa6d.png" srcset="/img/loading.gif" lazyload alt="question_1.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Spring%E4%B8%8E%E4%BA%8B%E5%8A%A1/9559d6ef-b67e-49b3-b2a3-6ed40d97aa6d.png" srcset="/img/loading.gif" lazyload alt="question_1.png"></p>
 <h4 id="为什么注入自己就能解决相互调用问题？"><a href="#为什么注入自己就能解决相互调用问题？" class="headerlink" title="为什么注入自己就能解决相互调用问题？"></a>为什么注入自己就能解决相互调用问题？</h4><p>同样是上面的代码，只需要在 <code>UserService</code> 中注入自己，<code>b</code> 的事务就生效了。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span>&#123;<br>    <br>    <span class="hljs-meta">@Autowird</span><br>    UserService userService;<br>    <br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">a</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-comment">// do something</span><br>        userService.b();<br>    &#125;<br>    <br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">b</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-comment">// do something</span><br>    &#125;<br>&#125;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">test</span>()&#123;<br>    userService.a();<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>还记得上面说的依赖注入吗，这里注入自己，实际上注入的是 <code>UserService</code> 的代理类。因此在执行 <code>userService.b()</code> 这段代码时，会调用代理类的 <code>b</code> 方法，所以 <code>b</code> 的事务生效。</p>
-<p><img src="/../picture/Spring%E4%B8%8E%E4%BA%8B%E5%8A%A1/4f01d7cf-3c53-4e24-ae76-69b835d7d61b.png" srcset="/img/loading.gif" lazyload alt="question_2.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Spring%E4%B8%8E%E4%BA%8B%E5%8A%A1/4f01d7cf-3c53-4e24-ae76-69b835d7d61b.png" srcset="/img/loading.gif" lazyload alt="question_2.png"></p>
 
                 
               </div>

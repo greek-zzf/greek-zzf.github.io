@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/Java%E4%B8%AD%E7%9A%84GC/cover.png">
 <meta property="article:published_time" content="2022-07-14T11:54:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.510Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="JVM">
@@ -310,7 +310,7 @@
 <p>在「 找垃圾」这块，也有两种方式：引用计数和可达性分析。虽然有两种方式，但主流的 Java 虚拟机里面都没有选用引用计数。</p>
 <h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>在对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加一；当引用失效时，计数器值就减一；任何时刻计数器为零的对象就是不可能再被使用的。</p>
 <p>如图所示，小圆圈代表对象，箭头代表引用关系，数字代表对象被引用的次数。可以看到蓝色的对象都是处于「 活跃」状态的，而灰色的对象要么没有被引用，要么引用它的对象没有被引用，这些对象就是程序需要回收的垃圾。</p>
-<p><img src="/../picture/Java%E4%B8%AD%E7%9A%84GC/2069ac04-c401-4330-bb40-6fda0dea5fcb.png" srcset="/img/loading.gif" lazyload alt="GC-in-Java-01.PNG"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java%E4%B8%AD%E7%9A%84GC/2069ac04-c401-4330-bb40-6fda0dea5fcb.png" srcset="/img/loading.gif" lazyload alt="GC-in-Java-01.PNG"></p>
 <p>这一切看似完美无缺，实则存在一个巨大问题：对象间的循环引用。</p>
 <p>仔细看上面这张图，红色的对象相互循环引用，程序并没有使用到，理应当作垃圾处理。但是，在引用计数方法看来这是个「 活跃」的对象，因此并不会进行处理。</p>
 <p>在一些文章上有谈论到解决该问题的方法，例如：循环引用的对象使用 <code>弱引用</code>，使用单独的算法等，详情可以自行搜索。</p>
@@ -318,7 +318,7 @@
 <p>这个算法的基本思路就是通过一系列称为 “GC Roots” 的根对象作为起始节点集，从这些节点开始，根据引用关系向下搜索，搜索过程所走过的路径称为“引用链”（Reference Chain），如果某个对象到 GC Roots 间没有任何引用链相连，即通过 GC Roots 访问不到该对象时，则证明此对象是垃圾。</p>
 <p>用比较生活化的例子来解释：家是内存，家庭成员是 GC Roots，物品是对象，家庭大扫除就是可达性分析。家庭大扫除的结果就是把家庭成员都用不到的东西归为垃圾，并把它清除掉。</p>
 <p>如图所示：灰色的对象就是 GC Roots 访问不到的对象，这些对象就是垃圾。图中也可以看到对象循环引用的问题的，在这里也已经不复存在，都会被当做垃圾。</p>
-<p><img src="/../picture/Java%E4%B8%AD%E7%9A%84GC/09db1a69-e11e-4a4b-9bdd-43946cb355a5.png" srcset="/img/loading.gif" lazyload alt="GC-in-Java-02.PNG"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java%E4%B8%AD%E7%9A%84GC/09db1a69-e11e-4a4b-9bdd-43946cb355a5.png" srcset="/img/loading.gif" lazyload alt="GC-in-Java-02.PNG"></p>
 <p>大扫除的例子，我们知道「 家庭成员」是 GC Roots，在 Java 技术体系中常见的 GC Roots 包括以下几种：</p>
 <ul>
 <li>线程</li>
@@ -350,13 +350,13 @@
 </ul>
 <p>这4种引用强度依次逐渐减弱。</p>
 <h2 id="垃圾自我救赎"><a href="#垃圾自我救赎" class="headerlink" title="垃圾自我救赎"></a>垃圾自我救赎</h2><p>使用可达性分析找到「未被引用」的对象并不会立即将内存释放，而是给这些对象进行<code>标记</code> ，当对象被<strong>标记两次</strong>后才会进行回收。</p>
-<p><img src="/../picture/Java%E4%B8%AD%E7%9A%84GC/8939c679-8d1a-4d66-8bd4-910e8e25d6bd.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java%E4%B8%AD%E7%9A%84GC/8939c679-8d1a-4d66-8bd4-910e8e25d6bd.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>当对象第一次标记之后，随后会进行一次筛选，筛选的依据是：<strong>对象是否有必要执行 finalize() 方法？</strong></p>
 <p>假如对象没有覆盖 finalize() 方法，或者 finalize() 方法已经被虚拟机调用过，那么虚拟机将这两种情况都视为<strong>「没有必要执行」</strong>。</p>
 <p>对象被判定为「没有必要执行」，则直接进行回收。否则，会把对象放入到一个名为 <code>F-Queue</code> 的队列中，并在稍后由一条由虚拟机自动建立的、低调度优先级的 Finalizer 线程去执行它们的 finalize() 方法。流程如下：</p>
-<p><img src="/../picture/Java%E4%B8%AD%E7%9A%84GC/f74a1943-9e8f-440b-b097-b3eb7995cd64.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java%E4%B8%AD%E7%9A%84GC/f74a1943-9e8f-440b-b097-b3eb7995cd64.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>对象的 finalize() 方法执行，GC 对 <code>F-Queue</code> 中的对象进行第二次标记。如果 finalize() 方法执行之后，对象重新回到了 GC Roots 的引用链上，则把它移出队列。否则，被 GC 回收。</p>
-<p><img src="/../picture/Java%E4%B8%AD%E7%9A%84GC/41e3ebdc-ac30-40a3-9783-9bdd08b958f7.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java%E4%B8%AD%E7%9A%84GC/41e3ebdc-ac30-40a3-9783-9bdd08b958f7.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>这个时候你可能就有问题了：那我在对象的 finalize() 方法中，编写代码使得当前对象重新回到 GC Roots 引用链上，这个对象岂不是永远不会被 GC 回收？</p>
 <p>答案是会被回收。可以看到「没有必要执行」的条件中有一条是： <strong>finalize() 方法已经被虚拟机调用过</strong>。因此对象虽然能回到引用链上，但是下一次 GC 它一定会被回收。<strong>总结就是：一个对象只能被救赎一次。</strong></p>
 <p>其实关于  finalize() 方法，很多人也不了解，只需要知道它会于 GC 过程产生联系即可。在 《Effective Java》第三版 <a target="_blank" rel="noopener" href="https://github.com/clxering/Effective-Java-3rd-edition-Chinese-English-bilingual/blob/dev/Chapter-2/Chapter-2-Item-8-Avoid-finalizers-and-cleaners.md">Item 8</a> ，以及《深入理解 Java 虚拟机》第三版中，作者都不建议在代码中使用 finalize，甚至让我们忘记这个 API。</p>

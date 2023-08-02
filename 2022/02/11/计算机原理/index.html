@@ -23,12 +23,12 @@
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="CPU 执行过程（简述）CPU 的本质就是一个执行指令的工人。 上面的概述引发了几个问题，什么是指令？指令从哪里来？CPU 如何执行和加载这些指令？ 指令，顾名思义指示和命令。这个命令和指示的对象是 CPU，CPU 可以明白它的意图，并执行。 现代 CPU 识别的指令都是由字节码组成，即一长串的 0 和 1。 还记得远古计算机是如何编写和执行指令的吗？没错，是一条条穿孔的纸带，带孔为 1，无孔为">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://greek-zzf.github.io/picture/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/image.png">
+<meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/image.png">
 <meta property="article:published_time" content="2022-02-11T16:46:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.514Z">
 <meta property="article:author" content="Greek">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://greek-zzf.github.io/picture/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/image.png">
+<meta name="twitter:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/image.png">
   
   
   
@@ -295,7 +295,7 @@
 <p>现代 CPU 识别的指令都是由<code>字节码</code>组成，即一长串的 0 和 1。</p>
 <p>还记得远古计算机是如何编写和执行指令的吗？没错，是一条条穿孔的纸带，带孔为 1，无孔为 0。那个时候就是用这种<code>朴素</code>的方式来组成一条条指令。但是现在已经被晶体管代替了。</p>
 <p>CPU 从内存中读取指令，并执行指令内容。指令执行的中间结果会保存到相应的寄存器中。</p>
-<p><img src="/../picture/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/image.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/image.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p>Tips:  像这种指令和数据存储在一起的结构称作 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%86%AF%C2%B7%E8%AF%BA%E4%BC%8A%E6%9B%BC%E7%BB%93%E6%9E%84"><strong>冯·诺伊曼结构</strong></a></p>
 <h2 id="程序装载与执行"><a href="#程序装载与执行" class="headerlink" title="程序装载与执行"></a>程序装载与执行</h2><p>CPU 能够执行指令，但一般都是给一组指令交给 CPU  去执行。该组指令中可以构成简单的逻辑跳转，例如：C 指令执行成功，则跳转到 F 指令执行，否则跳转到 D 指令。</p>
 <p>程序就是一组指令和数据的集合，在 Windows 中就是我们常见的 exe 文件。</p>

@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="什么是 Stream 流流就相当于工厂的流水线工作，传送带上是一件件产品，而传送带周围是一些工人。有的负责把挑出次品，把它放到其他另一条流水线中重新加工，有的负责根据产品颜色进行收集，等等。如下图所示。 三个员工对传送带上的产品进行操作，老王负责收集把黄色产品挑出，老周负责把产品按先后排序，而老赵负责把残次品挑拣出来，拆开零件放到新的床送带中，继续加工。传送带的终点就是篮子，产品都流向篮子里面。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://greek-zzf.github.io/picture/Stream/cover.png">
+<meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Stream/cover.png">
 <meta property="article:published_time" content="2022-01-03T21:06:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.510Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Stream">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://greek-zzf.github.io/picture/Stream/cover.png">
+<meta name="twitter:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Stream/cover.png">
   
   
   
@@ -291,7 +291,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="什么是-Stream-流"><a href="#什么是-Stream-流" class="headerlink" title="什么是 Stream 流"></a>什么是 Stream 流</h2><p>流就相当于工厂的流水线工作，传送带上是一件件产品，而传送带周围是一些工人。有的负责把挑出次品，把它放到其他另一条流水线中重新加工，有的负责根据产品颜色进行收集，等等。如下图所示。<br><img src="/../picture/Stream/446cbca4-82a6-49e7-8ceb-1ceadcbcc8a9.png" srcset="/img/loading.gif" lazyload alt="image-20210424211146663.png"></p>
+                <h2 id="什么是-Stream-流"><a href="#什么是-Stream-流" class="headerlink" title="什么是 Stream 流"></a>什么是 Stream 流</h2><p>流就相当于工厂的流水线工作，传送带上是一件件产品，而传送带周围是一些工人。有的负责把挑出次品，把它放到其他另一条流水线中重新加工，有的负责根据产品颜色进行收集，等等。如下图所示。<br><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Stream/446cbca4-82a6-49e7-8ceb-1ceadcbcc8a9.png" srcset="/img/loading.gif" lazyload alt="image-20210424211146663.png"></p>
 <p>三个员工对传送带上的产品进行操作，老王负责收集把黄色产品挑出，老周负责把产品按先后排序，而老赵负责把残次品挑拣出来，拆开零件放到新的床送带中，继续加工。传送带的终点就是篮子，产品都流向篮子里面。</p>
 <p>流的操作就是如此。在没有流之前，我们要自己从一堆产品中找到残次品很难。但是我们有了流之后，我们有了流水线，有了工人，我们就可以让工人帮我们收集，让他们来处理，我们只是充当老板的角色，下达命令即可。在 Java 的流 (Stream) 中，我们只需要使用一些命令，剩下的交给程序本身去执行。这样做既减少了代码量，又能高效完成我们的需求，真是两全其美。</p>
 <p>在上面的过程中，我们把老王和老周，以及老赵操作叫做<strong>中间操作</strong>。因为他们并没有把产品收集起来，他们只是把其他不合格的产品过滤挑出，产品最终都是到篮子里面。但是你装产品不一定是用篮子，你也可以使用箱子，等其他容器。我们把使用这些<code>容器</code>装产品的操作称作<strong>终结操作</strong>。在 java 中，<strong>中间操作就是返回为 Stream 的操作，终结操作就是返回非Stream 的操作。</strong>下面会详细讲解。</p>

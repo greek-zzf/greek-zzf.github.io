@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="什么是 CollectionCollection 是 Java 世界中最重要的类库，是这个类库的顶级接口。它的实现有 Set，List。而 Set 的实现又有 HashSet，TreeSet……。List 的实现有 ArrayList，LinkedList ……。也就是说我们日常使用的集合类都基本是 Collection 接口的实现。 Collction 常用方法C：new ArrayList()">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://greek-zzf.github.io/picture/Collection/cover.png">
+<meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/imagehttps://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Collection/cover.png">
 <meta property="article:published_time" content="2021-03-15T15:29:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.464Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.510Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Collection">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://greek-zzf.github.io/picture/Collection/cover.png">
+<meta name="twitter:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/imagehttps://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Collection/cover.png">
   
   
   
@@ -315,10 +315,10 @@
 <p>因此，综上所诉。对于查询需求较多的，我们可以使用 <code>ArrayList</code> 的实现，对于增删需求较多的，就使用 <code>LinkedList</code></p>
 <h2 id="ArrayList-的扩容机制"><a href="#ArrayList-的扩容机制" class="headerlink" title="ArrayList 的扩容机制"></a>ArrayList 的扩容机制</h2><p>我们经常往 ArrayList 中添加元素，在们看来 ArrayList 好像是一个无限容量的空间一样，可以一直往里面丢东西。实际上是 ArrayList 的扩容机制在搞鬼，每当容量不足的时候，他就会在背后帮我们自动扩容，而我们是感知不到这个过程的，扩容机制给我们造成了无限容量的假象。</p>
 <p>我们直接查看 ArrayList 的 add 方法源代码，如下。</p>
-<p><img src="/../picture/Collection/7f8d3ac4-c857-44f1-8059-0f25f5d926df.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以发现在添加元素前，使用了 ensureCapacityInternal 方法，来确保可以添加。我们可以在 ensureCapacityInternal 的实现方法中找到 grow 方法，这个方法就是 ArrayList 扩容的秘密。</p>
-<p><img src="/../picture/Collection/5b73daa1-eb23-4706-b5a4-67b333140334.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以看到代码中的 newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1)，表示的扩容后，新容量等于旧容量加上旧容量右移一位。右移可以理解为除以 n^2，此处就是旧容量除以1的2次方，相加之后新容量就是旧容量的1.5倍。<strong>ArrayList 扩容机制简述就是：创建一个更大的空间，空间容量为原来容量的1.5倍，然后把所有元素拷贝过去，完成扩容。</strong></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Collection/7f8d3ac4-c857-44f1-8059-0f25f5d926df.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以发现在添加元素前，使用了 ensureCapacityInternal 方法，来确保可以添加。我们可以在 ensureCapacityInternal 的实现方法中找到 grow 方法，这个方法就是 ArrayList 扩容的秘密。</p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Collection/5b73daa1-eb23-4706-b5a4-67b333140334.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>可以看到代码中的 newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1)，表示的扩容后，新容量等于旧容量加上旧容量右移一位。右移可以理解为除以 n^2，此处就是旧容量除以1的2次方，相加之后新容量就是旧容量的1.5倍。<strong>ArrayList 扩容机制简述就是：创建一个更大的空间，空间容量为原来容量的1.5倍，然后把所有元素拷贝过去，完成扩容。</strong></p>
 <p>说到这里还有个问题没有解决，既然 ArrayList 容量是有限的，那么<strong>我们直接 new 一个 ArrayList 的初始容量是多少呢？</strong>其实源代码已经给出答案了。</p>
-<p><img src="/../picture/Collection/dd0e6e82-2b84-4a18-a78d-b61ffa2ad050.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>构造方法注释中标明，初始化容量是10。但我用 debug 调试的时候，发现初始容量并不是我们 new 的时候就创建好了，而是当我们往里面添加第一个元素时，触发了 ArrayList 的扩容机制，扩容成一个容量是10的新空间，再把我们要添加的元素放进新空间中。这属于懒加载机制，当我们需要添加元素时，才真正开辟空间。</p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Collection/dd0e6e82-2b84-4a18-a78d-b61ffa2ad050.png" srcset="/img/loading.gif" lazyload alt="image.png"><br>构造方法注释中标明，初始化容量是10。但我用 debug 调试的时候，发现初始容量并不是我们 new 的时候就创建好了，而是当我们往里面添加第一个元素时，触发了 ArrayList 的扩容机制，扩容成一个容量是10的新空间，再把我们要添加的元素放进新空间中。这属于懒加载机制，当我们需要添加元素时，才真正开辟空间。</p>
 <h1 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h1><p>Set 是<strong>无序且元素不可重复</strong>的集合。在 java 世界中，判断两个元素是否相同使用 <code>equals</code>  方法。</p>
 <h2 id="简单的-Set-实现"><a href="#简单的-Set-实现" class="headerlink" title="简单的 Set 实现"></a>简单的 Set 实现</h2><p>我们可以顺着 List 的特性，以及 Collection 的 Contains() 方法来简单实现一个 Set。因为 Set 不包含重复元素，而且 Contains 方法就是判断元素是否重复。因此，只要往 List 中添加元素时，进行 Contains 判断，元素不重复就往 List 中添加，这样就能得到一个不包含重复元素的 List，也就是一个手写的简单 Set 实现。</p>
 <h2 id="Java-世界的高效-Set-实现-HashSet"><a href="#Java-世界的高效-Set-实现-HashSet" class="headerlink" title="Java 世界的高效 Set 实现 HashSet"></a>Java 世界的高效 Set 实现 HashSet</h2><p>虽然我们手写的 Set 也能用，但是相比 Java 中其它的 Set 实现，性能差距不知差了多少。Java 世界中最高效的 Set 实现当属于 <code>HashSet</code> 。</p>

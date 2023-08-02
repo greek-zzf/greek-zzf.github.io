@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://greek-zzf.github.io/picture/%E6%96%87%E4%BB%B6%E4%B8%8EIO/cover.png">
 <meta property="article:published_time" content="2021-03-28T17:58:00.000Z">
-<meta property="article:modified_time" content="2023-08-02T10:59:16.468Z">
+<meta property="article:modified_time" content="2023-08-02T11:09:16.514Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="IO">
 <meta name="twitter:card" content="summary_large_image">
@@ -315,8 +315,8 @@
 <li>根据流的角色划分：节点流和处理流。节点流：<strong>可以从一个特定的数据源(称作节点)读写数据</strong>，如：内存，硬盘，文件等。处理流：<strong>可以理解为，根据实际需求在节点流的基础上进行的二次开发和封装。</strong><br>       <strong>例子1</strong>：说明处理流和节点流的关系：想象一个场景，计算机每一次读写的时候都访问硬盘，如果访问次数很频繁的话，性能表现就不佳，而且硬盘的寿命也会减少。所以为了满足这种场景，就设计了缓存流，一次读取较多数据到缓存中，以后的每一次读取都从缓存中访问，直到缓存中的数据读取完毕。用一个生活的例子解释缓存流，吃饭的时候我们不用碗装饭(缓存流)的话，每吃一口都要去电饭锅里面铲，有了碗(缓存流)之后，我们可以把饭装进碗里，吃完了碗里的，我们再去电饭锅里铲。这样就大大减少了去电饭锅里装饭的次数，提高了效率。<br>                  <strong>例子2</strong>：因为我们的流的操作最小单位是字节或者字符，为了方便Java程序员使用对象，我们就需要在原来节点流的基础上进行二次开发和封装。比如我们读取一个本地的文本文件，需要一个字节流，又由于流里面是字节，而我们希望方便程序员使用对象来保存这些数据，就在该流的基础上进行开发(具体如何实现，本人暂时也不清楚)，原来的字节流就变成了一个对象流，流里面的内容不在是字节，而是对象，这样就方便了程序员对于该信息的获取。</li>
 </ul>
 <p>以下是关于字节流和字符流，以及节点流和处理流的详细分类图</p>
-<p><img src="/../picture/%E6%96%87%E4%BB%B6%E4%B8%8EIO/983978b9-ae5d-4ea0-ac1b-6f502f183a77.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/../picture/%E6%96%87%E4%BB%B6%E4%B8%8EIO/22c1ab11-4426-47fc-92d4-aae5b175bba3.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E6%96%87%E4%BB%B6%E4%B8%8EIO/983978b9-ae5d-4ea0-ac1b-6f502f183a77.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E6%96%87%E4%BB%B6%E4%B8%8EIO/22c1ab11-4426-47fc-92d4-aae5b175bba3.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>3.关于字符流和字节流的选择</strong></p>
 <p>之前在学校做课设的时候，每次做到文件关于文件读取的时候，关于选择字节流还是字符流的选择都是含糊不清，每次都是去网上找代码，这部分知识不是很清楚。现在重新把知识捡起来好好梳理一遍。首先不管是文件读写还是网络发送接收，信息的最小存储的单位是字节。由此可能读者又会问了，既然最小存储单元是字节，那么有了字节流为什么还要字符流呢?</p>
 <p>**解答:**在编程领域中，由于语言的不同，中文等一些其他语言一个字就需要两个字节表示，即一个字符，所以如果不使用字符流的话，就会出现乱码等问题。在日常使用中遇到图片，音频等媒体文件采用字节流比较好，而涉及到字符操作的使用字符流比较好。</p>
