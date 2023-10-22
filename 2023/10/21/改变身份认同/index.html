@@ -16,24 +16,24 @@
   <meta name="author" content="Greek">
   <meta name="keywords" content="">
   
-    <meta name="description" content="接口中允许添加私有方法java 8 中添加了 default 方法，但这些方法之间却无法优雅的复用代码。例如：methodA 和 methodB 都需要调用 biFunction 方法，于是只能将 biFunction 方法声明成 default。 123456789101112131415public interface Java8Interface &amp;#123;    default void">
+    <meta name="description" content="工作三年的感悟不知不觉，已经出来工作三年了。三年来我也有过很多思考，像：技术能有什么大的突破、优秀的程序员都在干嘛、我以后的生活会更好吗？我以后怎么找到远程工作等等。 我发现自己的精力都是在思考：作为程序员的我是如何规划自己的未来的。别人常说有职业规划是好事情，但在我身上我却发现这种规划成了束缚自我的枷锁，我更少的关注生活，更少的社交，更少的有突破舒适圈的行为。 一直到最后我惊奇的发现，我好像什么">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 9 语言特性">
-<meta property="og:url" content="https://greek-zzf.github.io/2022/11/22/java9%20history/index.html">
+<meta property="og:title" content="改变身份认同">
+<meta property="og:url" content="https://greek-zzf.github.io/2023/10/21/%E6%94%B9%E5%8F%98%E8%BA%AB%E4%BB%BD%E8%AE%A4%E5%90%8C/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
-<meta property="og:description" content="接口中允许添加私有方法java 8 中添加了 default 方法，但这些方法之间却无法优雅的复用代码。例如：methodA 和 methodB 都需要调用 biFunction 方法，于是只能将 biFunction 方法声明成 default。 123456789101112131415public interface Java8Interface &amp;#123;    default void">
+<meta property="og:description" content="工作三年的感悟不知不觉，已经出来工作三年了。三年来我也有过很多思考，像：技术能有什么大的突破、优秀的程序员都在干嘛、我以后的生活会更好吗？我以后怎么找到远程工作等等。 我发现自己的精力都是在思考：作为程序员的我是如何规划自己的未来的。别人常说有职业规划是好事情，但在我身上我却发现这种规划成了束缚自我的枷锁，我更少的关注生活，更少的社交，更少的有突破舒适圈的行为。 一直到最后我惊奇的发现，我好像什么">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java9%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/cover.png">
-<meta property="article:published_time" content="2022-11-22T16:55:00.000Z">
+<meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202310211711017.jpeg">
+<meta property="article:published_time" content="2023-10-21T17:08:00.000Z">
 <meta property="article:modified_time" content="2023-10-22T11:11:04.135Z">
 <meta property="article:author" content="Greek">
-<meta property="article:tag" content="Java9">
+<meta property="article:tag" content="提升">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java9%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/cover.png">
+<meta name="twitter:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202310211711017.jpeg">
   
   
   
-  <title>Java 9 语言特性 - 我系渣渣丰的博客</title>
+  <title>改变身份认同 - 我系渣渣丰的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Java 9 语言特性</span>
+            <span id="subtitle">改变身份认同</span>
           
         </div>
 
@@ -224,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-22 16:55" pubdate>
-          2022年11月22日 下午
+        <time datetime="2023-10-21 17:08" pubdate>
+          2023年10月21日 下午
         </time>
       </span>
     
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.1k 字
+          2.4k 字
         
       </span>
     
@@ -247,7 +247,7 @@
         
         
         
-          18 分钟
+          21 分钟
         
       </span>
     
@@ -285,46 +285,47 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Java 9 语言特性</h1>
+            <h1 style="display: none">改变身份认同</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="接口中允许添加私有方法"><a href="#接口中允许添加私有方法" class="headerlink" title="接口中允许添加私有方法"></a>接口中允许添加私有方法</h2><p>java 8 中添加了 <code>default</code> 方法，但这些方法之间却无法优雅的复用代码。例如：<code>methodA</code> 和 <code>methodB</code> 都需要调用 <code>biFunction</code> 方法，于是只能将 <code>biFunction</code> 方法声明成 <code>default</code>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Java8Interface</span> &#123;<br>    <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodA</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> &#123;<br>        <span class="hljs-comment">// do something</span><br>        biFunction(a, b);<br>    &#125;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodB</span><span class="hljs-params">(String a, String b)</span> &#123;<br>        <span class="hljs-comment">// do something</span><br>        biFunction(a, b);<br>    &#125;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">biFunction</span><span class="hljs-params">(Object a, Object b)</span> &#123;<br>        <span class="hljs-comment">// do something</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>声明一个新的 <code>default</code> 方法当然可行，但却不符合接口的原则。将不必要的方法，暴露出去会给调用者带来困扰。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Java9Interface</span> &#123;<br>    <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodA</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> &#123;<br>        <span class="hljs-comment">// do something</span><br>        biFunction(a, b);<br>    &#125;<br><br>    <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">methodB</span><span class="hljs-params">(String a, String b)</span> &#123;<br>        <span class="hljs-comment">// do something</span><br>        biFunction(a, b);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">biFunction</span><span class="hljs-params">(Object a, Object b)</span> &#123;<br>        <span class="hljs-comment">// do something</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>允许私有方法后，只需把原来的 <code>default</code> 改成 <code>private</code> 即可。</p>
-<h2 id="try-with-resource-优化"><a href="#try-with-resource-优化" class="headerlink" title="try-with-resource 优化"></a>try-with-resource 优化</h2><p>Java 7 之前关闭资源需要写如下代码: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...);<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-keyword">return</span> br.readLine();<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    <span class="hljs-keyword">if</span> (br != <span class="hljs-literal">null</span>) &#123;<br>        br.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>Java 7 之后引入了 <code>try-with-resource</code> ，简化了 <code>finally</code> 块的代码，现在只需这样: </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> (<span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...)) &#123;<br>    <span class="hljs-keyword">return</span> br.readLine();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>但是需要使用的资源一多，代码就会变成这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">try</span> (<span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...);<br>    <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...);<br>    <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br3</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...)) &#123;<br>    <span class="hljs-keyword">return</span> br1.readLine() + br2.readLine() + br3.readLine();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>Java 9 之后：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...);<br><span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...);<br><span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br3</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...);<br><span class="hljs-keyword">try</span> (br1; br2; br3) &#123;<br>    <span class="hljs-keyword">return</span> br1.readLine() + br2.readLine() + br3.readLine();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>注意</strong>：变量声明在 <code>try</code> 外面，很容易误导用户在 <code>try</code> 语句结束后，仍调用资源，这会导致运行时产生错误。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(...);<br><span class="hljs-keyword">try</span> (br1) &#123;<br>    System.out.println(br1.readLine());<br>&#125;<br>br1.readLine(); <span class="hljs-comment">// 此时资源已关闭，调用会报错</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="不再是有效标识符"><a href="#不再是有效标识符" class="headerlink" title="_ 不再是有效标识符"></a><code>_</code> 不再是有效标识符</h2><p>Java 9 之前可以将 <code>_</code> 下划线设置为变量，虽然编译器会警告，但运行不会报错。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">_</span> <span class="hljs-operator">=</span> <span class="hljs-number">123</span>;<br>System.out.println(_);<br></code></pre></td></tr></table></figure>
-
-<p>Java 9 之后，代码会编译失败，会得到如下提示: </p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">java: 从发行版 9 开始, &#x27;_&#x27; 为关键字, 不能用作标识符<br></code></pre></td></tr></table></figure>
-
-<h2 id="菱形符号"><a href="#菱形符号" class="headerlink" title="菱形符号"></a>菱形符号</h2><p>Java 7 引入了菱形符号 <code>&lt;&gt;</code>，让编译推断构造器参数类型。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// java 7 之前</span><br>List&lt;String&gt; names = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;String&gt;();<br><br><span class="hljs-comment">// java 7 之后</span><br>List&lt;String&gt; names = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
-
-<p>自动参数类型推断，简化了代码。但是匿名内部类的参数推断，却不支持。</p>
-<p>这段代码在 Java 7 中，编译器会报错。Java 9 支持匿名内部类的类型推断，代码能正确执行。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;T&gt; Result&lt;T&gt; <span class="hljs-title function_">create</span><span class="hljs-params">(T content)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Result</span>&lt;&gt;(content) &#123;<br>      <span class="hljs-comment">// 实现方法</span><br>    &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+                <h2 id="工作三年的感悟"><a href="#工作三年的感悟" class="headerlink" title="工作三年的感悟"></a>工作三年的感悟</h2><p>不知不觉，已经出来工作三年了。三年来我也有过很多思考，像：技术能有什么大的突破、优秀的程序员都在干嘛、我以后的生活会更好吗？我以后怎么找到远程工作等等。</p>
+<p>我发现自己的精力都是在思考：作为程序员的我是如何规划自己的未来的。别人常说有职业规划是好事情，但在我身上我却发现这种规划成了束缚自我的枷锁，我更少的关注生活，更少的社交，更少的有突破舒适圈的行为。</p>
+<p>一直到最后我惊奇的发现，我好像什么事情都没有做成，还让自己陷入了内耗深渊。</p>
+<p>最近一两个月来，为了不让自己过多内耗，不让自己受原生家庭自卑的影响，阅读和收藏了一些经典的心里学书籍《不再害羞》《被讨厌的勇气》《当下的力量》，看过油管和 B 站大大小小数百个让你变得更好的自己的视频，所有的点最后都会指向「勇气」。</p>
+<p>「勇气」？当我看《被讨厌的勇气》最后几章的时，作者就提到了勇气，当时就在想可能又是一部理论书籍，因为道理我都懂但真要付诸实践还是算了。这些道理像麻醉剂一样，麻痹着我，我以为只要理解了这些就会变得更好。</p>
+<p>直到一个月前，我开始走出去，我才找到了我的生活。丰富的生活占据着我的精力，平日里莫名紧绷的神经在那一次得到了释放，出来后第一次感受到生活的美好。</p>
+<p>在 10 月 5 号参加的[[Spaces&#x2F;Resources&#x2F;博客&#x2F;生活类&#x2F;财富流 - 个人觉察|财富流]]游戏让我有了更多的感悟和思考。一个思考的点就是「身份认同」，我了解完之后发现了这个东西其实一直在影响着我，只是我一直没有察觉到。</p>
+<h2 id="什么是身份认同"><a href="#什么是身份认同" class="headerlink" title="什么是身份认同"></a>什么是身份认同</h2><p>维基百科中是这样定义：</p>
+<blockquote>
+<p><strong>身份认同</strong>（英语：self-identity），又称为<strong>自我认同</strong>，是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BF%83%E7%90%86%E5%AD%A6" title="心理学">心理学</a>和<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%A4%BE%E4%BC%9A%E5%AD%A6" title="社会学">社会学</a>的一个概念，指一个人对于自我特性的表现，以及与某一群体之间所共有观念（国籍或者文化）的表现。身份认同的类型大致可分为：拒绝、漂流、搜寻、保卫和坚定。身份与鉴定不同，身份是自我的标签，而鉴定是指一个分类的过程。身份是在心理学上构成一个人（自我身份）或群体（特定的社会类别或社会群体）的特质，信念，个性，相貌和&#x2F;或表达。身份认同会因历史、文化和政治而改变。对身份进行分类可以是正面的或具有破坏性的</p>
+</blockquote>
+<p>我们每个人都有很多身份，像「儿子」「程序员」「司机」「老板」等等，把自己置身一个场景中，你就会开始诠释这个身份。</p>
+<p>例如：当你在工作中，你会是一个程序员，你就会做你认为程序员该做的事情，学技术，改bug 等等。在家庭中，你是一个儿子，你就会做儿子这个身份该做的事情。</p>
+<p>发现了吗？身份认同在影响着你的行为，甚至让你产成行为依赖，你会慢慢开始理解不了别人做的身份以外的尝试，慢慢你会发展成讥讽，嫉妒等心里。</p>
+<p>所以此时此刻，你需要好好想一想，身份认同给你带来了什么？好的一面是什么？坏的一面又是什么？</p>
+<h2 id="身份认同会给你带来什么"><a href="#身份认同会给你带来什么" class="headerlink" title="身份认同会给你带来什么"></a>身份认同会给你带来什么</h2><p>身份认同在我身上的体现就是，我强烈的认同自己程序员的身份。</p>
+<p>我发现，我做任何事情都喜欢用「程序员」的思维去思考问题，用程序员思维思考没有问题，相反，还能帮我挖掘事情的底层逻辑。</p>
+<p>但是，我发现自己好像只会用「程序员思维」去思考问题，所以看任何事情只有一个角度，这还不是要命的。更要命的是，我没有意识到自己一直以来只使用一种方式来思考，仿佛全世界只剩下这种思考方式。我还曾固执的以为程序员思维是高于其他思维方式的，因此也会拒绝或者是不屑使用其他方式思考，最终一直被「程序员」这个身份裹挟着前进。</p>
+<p>当然，身份认同不是一件坏事，他能让我们有认同感并在该身份下做自我诠释。问题在于不断的在特定身份做自我诠释，你会熟悉这个身份并且越来越依赖这个身份，若你没有独立思考的能力的话，你只会越陷越深。当你不再拥有这个身份时，你会发现自己失去了前进的动力，不知所措。</p>
+<p>因此我们需要身份认同，但也不能太依赖他，需要经常脱离已有的身份，尝试一些新的身份，扮演一些新的角色，这些会带给你很新的思考。世界不能只有一种声音，同样也不能只有一种思考。</p>
+<p>身份认同让我诠释了「程序员」这个职业，帮助我在现在的工作中能够游刃有余。</p>
+<p>但相反的，强烈的认同让我觉得程序员就应该缺少社交、就应该不爱说话、就应该不擅长与人打交道、就应该不太擅长表达和演讲。「就应该」3 个字是多么可怕，让我理所当然的认为自己所做的事情是对的，却毫无察觉到，我已经离「拥有优秀品质的人」这个目标越来越远了。</p>
+<h2 id="如何去改变自己的身份认同"><a href="#如何去改变自己的身份认同" class="headerlink" title="如何去改变自己的身份认同"></a>如何去改变自己的身份认同</h2><p>在做改变之前，你必须得先意识到自己的身份认同，以及想要做改变的决心。身份认同可能会让你产生强烈的依赖，会成为你逃避或害怕改变的枷锁，当你需要跳脱当前身份时，你往往会退缩，然后给自己找借口安慰自己，更进一步强化自己不愿改变身份的意愿。最终自己囚禁在自己编织的茧房里面，越缠越紧。</p>
+<p>我一直都是以「程序员」这个身份自居，甚至会有点引以为傲，对其他行业的事情不太关心，甚至有的时候会有一些鄙视。我也不太清楚自己为什么会有这种行为，我好像很认同自己程序员的身份，后来发现强烈的身份认同是导致我自傲的原因，我决定要改变这种情况。</p>
+<p>说到改变，无一例外都是不舒服甚至是痛苦的过程。理论其实大家都知道，只是真要付诸行动，会发现怯懦无比。因此寻求改变也不能急于求成，需要通过完成一个一个的小挑战，突破一次又一次突破舒适圈，等你积累到战胜困难的自信，在向下一个更大的困难去发起挑战，此时改变已在你的身上悄无声息的发生了。</p>
+<p>小的挑战可以是很多日常的行为，例如：</p>
+<ul>
+<li>经常换早餐店吃早餐</li>
+<li>与陌生人打一个招呼</li>
+<li>换一种穿搭风格</li>
+<li>一个人去图书馆看书</li>
+</ul>
+<p>以上这些都是一些有一点难度，需要打破你原有的舒适圈，但是又不会让你想要放弃。当你积少成多，你也就有了脱离当前身份的勇气，走出去最大的收获在于「走出去」，So just do it。</p>
+<h2 id="身份认同带来的思考"><a href="#身份认同带来的思考" class="headerlink" title="身份认同带来的思考"></a>身份认同带来的思考</h2><p>安于现状和不断地做重复的事情，就是在编织自己的茧房。世界是多元的，人也应该是丰富的。</p>
+<p>我希望程序员的你，万一不幸被裁，你会像多啦 A 梦一样，从口袋里拿出一个新的赚钱的技能，来应对这个多变的社会。</p>
+<h2 id="Related"><a href="#Related" class="headerlink" title="Related"></a>Related</h2><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-cn/%E8%BA%AB%E4%BB%BD%E8%AE%A4%E5%90%8C#:~:text=%E8%BA%AB%E4%BB%BD%E8%AE%A4%E5%90%8C%EF%BC%88%E8%8B%B1%E8%AF%AD%EF%BC%9Aself%2D,%E6%8C%87%E4%B8%80%E4%B8%AA%E5%88%86%E7%B1%BB%E7%9A%84%E8%BF%87%E7%A8%8B%E3%80%82">身份认同 - 维基百科，自由的百科全书</a></p>
 
                 
               </div>
@@ -343,7 +344,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E4%B8%93%E6%A0%8F/" class="category-chain-item">博客专栏</a>
+  <a href="/categories/%E7%94%9F%E6%B4%BB%E7%B1%BB-blog/" class="category-chain-item">生活类 blog</a>
   
   
 
@@ -358,7 +359,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Java9/">#Java9</a>
+        <a href="/tags/%E6%8F%90%E5%8D%87/">#提升</a>
       
     </div>
   
@@ -370,8 +371,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java 9 语言特性</div>
-      <div>https://greek-zzf.github.io/2022/11/22/java9 history/</div>
+      <div>改变身份认同</div>
+      <div>https://greek-zzf.github.io/2023/10/21/改变身份认同/</div>
     </div>
     <div class="license-meta">
       
@@ -383,7 +384,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月22日</div>
+          <div>2023年10月21日</div>
         </div>
       
       
@@ -415,18 +416,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/12/13/Linux%20%E6%9C%8D%E5%8A%A1%E5%8C%96%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" title="Linux 服务化的几种方式">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux 服务化的几种方式</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/11/09/Git%20Bisect%20%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" title="Git Bisect 快速上手">
-                        <span class="hidden-mobile">Git Bisect 快速上手</span>
+                      <a href="/2023/10/07/%E8%B4%A2%E5%AF%8C%E6%B5%81%20-%20%E4%B8%AA%E4%BA%BA%E8%A7%89%E5%AF%9F/" title="财富流 - 个人觉察">
+                        <span class="hidden-mobile">财富流 - 个人觉察</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
