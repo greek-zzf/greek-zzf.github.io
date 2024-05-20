@@ -19,13 +19,13 @@
     <meta name="description" content="使用 3 种不同的方式，将项目部署成 3 个实例，每个实例监听不同的端口，由 Nginx 负责将请求转发到对应的实例中，完成请求流程。 Docker 启动 MySQL，Redis首先使用 Docker 启动一个全局的 Redis，MySQL，Nginx，让项目连接上对应的数据库。 获取并启动 MySQL 获取最新的 MySQL 镜像 1docker pull mysql  启动 MySQL 1do">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一个简单的分布式部署流程">
-<meta property="og:url" content="https://greek-zzf.github.io/2021/09/01/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:url" content="http://wszzf.top/2021/09/01/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="使用 3 种不同的方式，将项目部署成 3 个实例，每个实例监听不同的端口，由 Nginx 负责将请求转发到对应的实例中，完成请求流程。 Docker 启动 MySQL，Redis首先使用 Docker 启动一个全局的 Redis，MySQL，Nginx，让项目连接上对应的数据库。 获取并启动 MySQL 获取最新的 MySQL 镜像 1docker pull mysql  启动 MySQL 1do">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B/cover.png">
 <meta property="article:published_time" content="2021-09-01T18:07:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.868Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.572Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="分布式">
 <meta property="article:tag" content="部署">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -389,7 +389,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>一个简单的分布式部署流程</div>
-      <div>https://greek-zzf.github.io/2021/09/01/一个简单的分布式部署流程/</div>
+      <div>http://wszzf.top/2021/09/01/一个简单的分布式部署流程/</div>
     </div>
     <div class="license-meta">
       

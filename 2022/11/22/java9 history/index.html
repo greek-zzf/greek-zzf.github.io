@@ -19,13 +19,13 @@
     <meta name="description" content="接口中允许添加私有方法java 8 中添加了 default 方法，但这些方法之间却无法优雅的复用代码。例如：methodA 和 methodB 都需要调用 biFunction 方法，于是只能将 biFunction 方法声明成 default。 123456789101112131415public interface Java8Interface &amp;#123;    default void">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 9 语言特性">
-<meta property="og:url" content="https://greek-zzf.github.io/2022/11/22/java9%20history/index.html">
+<meta property="og:url" content="http://wszzf.top/2022/11/22/java9%20history/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="接口中允许添加私有方法java 8 中添加了 default 方法，但这些方法之间却无法优雅的复用代码。例如：methodA 和 methodB 都需要调用 biFunction 方法，于是只能将 biFunction 方法声明成 default。 123456789101112131415public interface Java8Interface &amp;#123;    default void">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Java9%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/cover.png">
 <meta property="article:published_time" content="2022-11-22T16:55:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.868Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.568Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java9">
 <meta name="twitter:card" content="summary_large_image">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -371,7 +371,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Java 9 语言特性</div>
-      <div>https://greek-zzf.github.io/2022/11/22/java9 history/</div>
+      <div>http://wszzf.top/2022/11/22/java9 history/</div>
     </div>
     <div class="license-meta">
       

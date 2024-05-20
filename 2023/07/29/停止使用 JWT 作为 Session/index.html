@@ -19,13 +19,13 @@
     <meta name="description" content="翻译自国外的文章  停止使用 JWT 作为 Session最近，我看到越来越多的人推荐使用 JWT（JSON Web Tokens）来管理 web 程序中用户的 session。这是一个非常糟糕的主意，我将在这篇文章中解释原因。 为了防止一些歧义，我首先定义一些术语： [[Web 中的 Session#Client-Side Session |无状态]] JWT：一个包含 session dat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="停止使用 JWT 作为 Session">
-<meta property="og:url" content="https://greek-zzf.github.io/2023/07/29/%E5%81%9C%E6%AD%A2%E4%BD%BF%E7%94%A8%20JWT%20%E4%BD%9C%E4%B8%BA%20Session/index.html">
+<meta property="og:url" content="http://wszzf.top/2023/07/29/%E5%81%9C%E6%AD%A2%E4%BD%BF%E7%94%A8%20JWT%20%E4%BD%9C%E4%B8%BA%20Session/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="翻译自国外的文章  停止使用 JWT 作为 Session最近，我看到越来越多的人推荐使用 JWT（JSON Web Tokens）来管理 web 程序中用户的 session。这是一个非常糟糕的主意，我将在这篇文章中解释原因。 为了防止一些歧义，我首先定义一些术语： [[Web 中的 Session#Client-Side Session |无状态]] JWT：一个包含 session dat">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%81%9C%E6%AD%A2%E4%BD%BF%E7%94%A8JWT%E4%BD%9C%E4%B8%BASession/cover.png">
 <meta property="article:published_time" content="2023-07-29T18:00:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.868Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.572Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="翻译">
 <meta property="article:tag" content="Session">
@@ -73,7 +73,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -425,7 +425,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>停止使用 JWT 作为 Session</div>
-      <div>https://greek-zzf.github.io/2023/07/29/停止使用 JWT 作为 Session/</div>
+      <div>http://wszzf.top/2023/07/29/停止使用 JWT 作为 Session/</div>
     </div>
     <div class="license-meta">
       

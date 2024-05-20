@@ -19,13 +19,13 @@
     <meta name="description" content="假设你刚接手一个项目，这时线上出现了一个 bug，因为对业务不熟悉加上老板施压，导致 bug 定位过程异常艰难，开始焦头烂额。 聪明的你转念一想：既然无法准确定位 bug，那不如先找到是哪个提交引入的 bug，这样再去定位 bug 就简单很多了。 于是你确认了bug 存在的 commit 区间，使用二分查找来找 bug commit ，假设 bug 存在的 commit 区间是（3 ~ 10），你">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git Bisect 快速上手">
-<meta property="og:url" content="https://greek-zzf.github.io/2022/11/09/Git%20Bisect%20%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/index.html">
+<meta property="og:url" content="http://wszzf.top/2022/11/09/Git%20Bisect%20%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="假设你刚接手一个项目，这时线上出现了一个 bug，因为对业务不熟悉加上老板施压，导致 bug 定位过程异常艰难，开始焦头烂额。 聪明的你转念一想：既然无法准确定位 bug，那不如先找到是哪个提交引入的 bug，这样再去定位 bug 就简单很多了。 于是你确认了bug 存在的 commit 区间，使用二分查找来找 bug commit ，假设 bug 存在的 commit 区间是（3 ~ 10），你">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/GitBisect%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/cover.png">
 <meta property="article:published_time" content="2022-11-09T22:07:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.864Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.568Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -389,7 +389,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Git Bisect 快速上手</div>
-      <div>https://greek-zzf.github.io/2022/11/09/Git Bisect 快速上手/</div>
+      <div>http://wszzf.top/2022/11/09/Git Bisect 快速上手/</div>
     </div>
     <div class="license-meta">
       

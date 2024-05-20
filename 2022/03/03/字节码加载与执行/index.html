@@ -19,13 +19,13 @@
     <meta name="description" content="字节码字节码是高级语言和 JVM 通信的桥梁，高级语言只做一件事：把代码编译成字节码。因此，完全可以编写一套自己的编程语言，定义他的语法规则，然后将实现一个编译器，将代码转为字节码即可。 来看看 Java 中的字节码长什么样子，源代码如下： 12345678910package com.greek.shop;import org.junit.jupiter.api.Test;class ShopA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字节码加载与执行">
-<meta property="og:url" content="https://greek-zzf.github.io/2022/03/03/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/index.html">
+<meta property="og:url" content="http://wszzf.top/2022/03/03/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="字节码字节码是高级语言和 JVM 通信的桥梁，高级语言只做一件事：把代码编译成字节码。因此，完全可以编写一套自己的编程语言，定义他的语法规则，然后将实现一个编译器，将代码转为字节码即可。 来看看 Java 中的字节码长什么样子，源代码如下： 12345678910package com.greek.shop;import org.junit.jupiter.api.Test;class ShopA">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%AD%97%E8%8A%82%E7%A0%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E6%89%A7%E8%A1%8C/cover.png">
 <meta property="article:published_time" content="2022-03-03T17:48:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.868Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.572Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="字节码">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -388,7 +388,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>字节码加载与执行</div>
-      <div>https://greek-zzf.github.io/2022/03/03/字节码加载与执行/</div>
+      <div>http://wszzf.top/2022/03/03/字节码加载与执行/</div>
     </div>
     <div class="license-meta">
       

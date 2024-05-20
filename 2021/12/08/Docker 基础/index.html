@@ -19,13 +19,13 @@
     <meta name="description" content="软件的依赖，开发环境不确定性，导致部署软件项目是一件令人头疼的事。 虚拟机解决了这个问题，但是太吃内存，很耗资源。 Docker 使用了一个轻量的虚拟机。 优点  保证开发、测试、交付、部署的环境完全一致 保证资源的隔离 启动临时的、用完即丢弃的环境，例如测试 迅速（秒级）扩容  Docker 基本概念docker 可以类比装系统，换系统操作。有了这个前置知识，对于 docker 的一系列知识会更">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 基础">
-<meta property="og:url" content="https://greek-zzf.github.io/2021/12/08/Docker%20%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:url" content="http://wszzf.top/2021/12/08/Docker%20%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="软件的依赖，开发环境不确定性，导致部署软件项目是一件令人头疼的事。 虚拟机解决了这个问题，但是太吃内存，很耗资源。 Docker 使用了一个轻量的虚拟机。 优点  保证开发、测试、交付、部署的环境完全一致 保证资源的隔离 启动临时的、用完即丢弃的环境，例如测试 迅速（秒级）扩容  Docker 基本概念docker 可以类比装系统，换系统操作。有了这个前置知识，对于 docker 的一系列知识会更">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Docker%E5%9F%BA%E7%A1%80/cover.png">
 <meta property="article:published_time" content="2021-12-08T10:55:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.864Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.568Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary_large_image">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -395,7 +395,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Docker 基础</div>
-      <div>https://greek-zzf.github.io/2021/12/08/Docker 基础/</div>
+      <div>http://wszzf.top/2021/12/08/Docker 基础/</div>
     </div>
     <div class="license-meta">
       

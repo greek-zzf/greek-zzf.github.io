@@ -19,13 +19,13 @@
     <meta name="description" content="记录一次 maven 包冲突解决过程，项目地址链接。 查看错误方法首先要将项目克隆到本地，然后运行，找到出错的位置，以及出错的信息。 如图所示，错误的位置在 MainTest.java 文件第六行，错误信息 NoSuchMethod ，表示没有找到这个方法。根据位置提示，一层一层往下找，发现原来是 A.java 这个类中调用的 getJsonpFunction 方法找不到  查看包冲突通过使用 m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maven 包冲突解决过程">
-<meta property="og:url" content="https://greek-zzf.github.io/2021/03/03/Maven%20%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:url" content="http://wszzf.top/2021/03/03/Maven%20%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="记录一次 maven 包冲突解决过程，项目地址链接。 查看错误方法首先要将项目克隆到本地，然后运行，找到出错的位置，以及出错的信息。 如图所示，错误的位置在 MainTest.java 文件第六行，错误信息 NoSuchMethod ，表示没有找到这个方法。根据位置提示，一层一层往下找，发现原来是 A.java 这个类中调用的 getJsonpFunction 方法找不到  查看包冲突通过使用 m">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/Maven%E5%8C%85%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/cover.png">
 <meta property="article:published_time" content="2021-03-03T15:41:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.868Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.568Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Maven">
 <meta name="twitter:card" content="summary_large_image">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -347,7 +347,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Maven 包冲突解决过程</div>
-      <div>https://greek-zzf.github.io/2021/03/03/Maven 包冲突解决过程/</div>
+      <div>http://wszzf.top/2021/03/03/Maven 包冲突解决过程/</div>
     </div>
     <div class="license-meta">
       

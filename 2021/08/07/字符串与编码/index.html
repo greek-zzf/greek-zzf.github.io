@@ -19,13 +19,13 @@
     <meta name="description" content="我们都知道，在网络通信和存储的都是字节流，都是一大串的 0 和 1。不知道大家有没想过，存储既然是 0 和 1，为什么我们看到得都是一个个字符，汉子，英文？是不是计算机在背后偷偷的把字节转化成我们人类能看懂的语言？答案是肯定的。 字符集相关概念既然计算机帮我们把字节转成人类的语言，那么肯定存在着一种映射关系「字节 –&gt; 人类语言的映射」，我们把这种关系称为字符集。把字节转化成人类看懂的字符，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符串与编码">
-<meta property="og:url" content="https://greek-zzf.github.io/2021/08/07/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:url" content="http://wszzf.top/2021/08/07/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/index.html">
 <meta property="og:site_name" content="我系渣渣丰的博客">
 <meta property="og:description" content="我们都知道，在网络通信和存储的都是字节流，都是一大串的 0 和 1。不知道大家有没想过，存储既然是 0 和 1，为什么我们看到得都是一个个字符，汉子，英文？是不是计算机在背后偷偷的把字节转化成我们人类能看懂的语言？答案是肯定的。 字符集相关概念既然计算机帮我们把字节转成人类的语言，那么肯定存在着一种映射关系「字节 –&gt; 人类语言的映射」，我们把这种关系称为字符集。把字节转化成人类看懂的字符，">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/picture/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E7%BC%96%E7%A0%81/cover.png">
 <meta property="article:published_time" content="2021-08-07T17:10:00.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:56:42.868Z">
+<meta property="article:modified_time" content="2024-05-20T09:41:29.572Z">
 <meta property="article:author" content="Greek">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="字符串">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"greek-zzf.github.io","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -387,7 +387,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>字符串与编码</div>
-      <div>https://greek-zzf.github.io/2021/08/07/字符串与编码/</div>
+      <div>http://wszzf.top/2021/08/07/字符串与编码/</div>
     </div>
     <div class="license-meta">
       
