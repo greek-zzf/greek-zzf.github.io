@@ -1,1000 +1,1301 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
-  <link rel="icon" href="/img/logo.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Greek">
-  <meta name="keywords" content="">
-  
-    <meta property="og:type" content="website">
-<meta property="og:title" content="我系渣渣丰的博客">
-<meta property="og:url" content="http://wszzf.top/index.html">
-<meta property="og:site_name" content="我系渣渣丰的博客">
-<meta property="og:locale" content="zh_CN">
-<meta property="article:author" content="Greek">
-<meta name="twitter:card" content="summary_large_image">
-  
-  
-  
-  <title>我系渣渣丰的博客</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
-  
-
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"wszzf.top","root":"/","version":"1.9.3","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+<!doctype html>
+<html lang="zh-CN"><head><script data-od-sandbox-shim="">(function(){
+  function makeStore(){
+    var data = {};
+    var api = {
+      getItem: function(k){ return Object.prototype.hasOwnProperty.call(data, k) ? data[k] : null; },
+      setItem: function(k, v){ data[k] = String(v); },
+      removeItem: function(k){ delete data[k]; },
+      clear: function(){ data = {}; },
+      key: function(i){ return Object.keys(data)[i] || null; }
+    };
+    Object.defineProperty(api, 'length', { get: function(){ return Object.keys(data).length; } });
+    return api;
+  }
+  function tryShim(name){
+    var works = false;
+    try { works = !!window[name] && typeof window[name].getItem === 'function'; void window[name].length; }
+    catch (_) { works = false; }
+    if (works) return;
+    try { Object.defineProperty(window, name, { configurable: true, value: makeStore() }); }
+    catch (_) { try { window[name] = makeStore(); } catch (__) {} }
+  }
+  tryShim('localStorage');
+  tryShim('sessionStorage');
+  document.addEventListener('click', (e) => {
+    if (!e.target || !(e.target instanceof Element)) return;
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    if (href === null) return;
+    var isAnchor = href.startsWith('#') || href === '';
+    if (isAnchor) {
+      e.preventDefault();
+      if (href === '' || href === '#') {
+        window.scrollTo({ top: 0 });
+        history.replaceState(null, '', ' ');
+      } else {
+        var targetId = href.slice(1);
+        var target = targetId ? document.getElementById(targetId) : null;
+        if (target) {
+          target.scrollIntoView();
+          location.hash === href && history.replaceState(null, '', ' ');
+          location.hash = href;
+        }
+      }
+    } else if (link.getAttribute('target') === '_blank') {
+      e.preventDefault();
+      let safe = false;
+      try {
+        var url = new URL(href, location.href);
+        safe =
+          url.protocol === 'http:' ||
+          url.protocol === 'https:' ||
+          url.protocol === 'mailto:';
+      } catch (_) {}
+      safe && window.open(href, '_blank', 'noopener,noreferrer');
     }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
+  });
+})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Felix · 全职 AI 独立开发者</title>
+  <style>
+    :root {
+      /* ─── Surface (3 levels — #Gap 2) ─────────────────────────────────
+       * Per craft/color.md: never pure black, never pure white. Default
+       * uses #FAFAFA for bg and #FFFFFF for surface — the cream-to-white
+       * contrast gives cards lift without a shadow. `--surface-warm` is a
+       * schema slot for brands that need a tertiary tier (kami's warm-sand
+       * button bg); default has no third tier and aliases it to surface. */
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --surface-warm: var(--surface);   /* alias — default has no warm tier */
 
-  
+      /* ─── Foreground ramp (4 levels — #Gap 1) ───────────────────────
+       * Default differentiates only two text levels (primary + muted).
+       * `--fg-2` and `--meta` are schema slots for brands with richer
+       * ramps (kami uses near-black / dark-warm / olive / stone). They
+       * alias here so components targeting the full ramp resolve. */
+      --fg: #111111;
+      --fg-2: var(--fg);                /* alias — default has no secondary tier */
+      --muted: #6b6b6b;
+      --meta: var(--muted);             /* alias — default has no metadata tier */
 
-  
+      /* ─── Border (2 levels — #Gap 3) ────────────────────────────────
+       * Default has one border weight; `--border-soft` is a schema slot
+       * for brands with row-separator vs card-edge differentiation. */
+      --border: #e5e5e5;
+      --border-soft: var(--border);     /* alias — default has no soft tier */
 
-  
+      /* ─── Accent ──────────────────────────────────────────────────────
+       * Cobalt — primary CTAs, links, ONE hero element per screen.
+       * Hard cap of 2 visible uses per screen is enforced by lint
+       * (`accent-overuse` P1 fires at >6 inline occurrences). */
+      --accent: #2f6feb;
+      --accent-on: #ffffff; /* fg when accent is the bg (e.g. button label) */
 
-  
+      /* ─── Accent states (#Gap 4) ────────────────────────────────────
+       * Hover and active variants for any element using --accent as bg.
+       * Default's mid-luminance cobalt admits a black-mix formula
+       * cleanly; that's a brand-specific binding, NOT a schema rule.
+       * kami binds --accent-hover to var(--accent) (no color shift,
+       * hover via elevation) because ink-blue is too dark for further
+       * darkening to read; other brands with light accents must
+       * hand-pick.
+       *
+       * Schema rule: every brand provides --accent-hover and
+       * --accent-active. The binding strategy (formula / identity /
+       * hand-picked) is brand-decided.
+       *
+       * Why these two are tokens (and other tints stay inline):
+       *   - cross-component (button, chip, tab, dropdown all need them)
+       *   - cross-mode reversal (dark-mode hover should mix white, not
+       *     black — token re-binding is one line per mode)
+       *   - cross-brand customization (formula breaks on light accents)
+       *   - lint-enforceable contract (every brand must provide these)
+       * Other inline `color-mix(...)` calls in components don't yet hit
+       * any of the above — promote them to tokens when a second use
+       * appears. */
+      --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+      --accent-active: color-mix(in oklab, var(--accent), black 14%);
 
-  
+      /* ─── Semantic ────────────────────────────────────────────────────
+       * Reserved for state, not decoration. Keep total semantic-color
+       * pixels under 5% of the surface. */
+      --success: #17a34a;
+      --warn: #eab308;
+      --danger: #dc2626;
 
-  
+      /* ─── Typography ──────────────────────────────────────────────────
+       * Chinese-first stack: serif display for personal-editorial weight,
+       * system CJK sans for body/UI, and tabular mono for labels. */
+      --font-display: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "Iowan Old Style", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+      --font-mono: "SFMono-Regular", ui-monospace, "JetBrains Mono", Menlo, monospace;
 
-  
+      /* Type scale (px) — direct copy of DESIGN.md §Typography Rules */
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 20px;
+      --text-xl: 24px;
+      --text-2xl: 32px;
+      --text-3xl: 48px;
+      --text-4xl: 64px;
 
+      --leading-body: 1.62;
+      --leading-tight: 1.16;
+      --tracking-display: 0em;
 
+      /* ─── Spacing ─────────────────────────────────────────────────────
+       * 4px base unit. Section rhythm (80/48/32) lives below as named
+       * tokens because DESIGN.md §Layout Principles treats them as
+       * breakpoint-specific decisions, not generic spacing. */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --space-20: 80px;
 
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
+      --section-y-desktop: 80px;
+      --section-y-tablet: 48px;
+      --section-y-phone: 32px;
 
+      /* ─── Radius ──────────────────────────────────────────────────────
+       * Two intents: small (button/input) and medium (card/modal).
+       * `--radius-pill` reserved for chips/avatars; do not use it on
+       * cards or buttons. */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 9999px;
 
+      /* ─── Elevation (3 levels — #Gap 5) ─────────────────────────────
+       * Default uses two levels (flat + raised blur shadow) per its own
+       * DESIGN.md §Depth & Elevation. The schema gains `--elev-ring` as
+       * a first-class level so brands using ring shadows as primary
+       * elevation (kami, paper, editorial) don't need to rebind
+       * --elev-raised away from blur. Default declares all three; ring
+       * is available for hairline edges where a 1px border would shift
+       * layout. No fourth level — that's neumorphism territory. */
+      --elev-flat: none;
+      --elev-ring: 0 0 0 1px var(--border);
+      --elev-raised: 0 2px 8px color-mix(in oklab, var(--fg), transparent 92%);
+
+      /* ─── Focus ring ──────────────────────────────────────────────────
+       * Single source of truth for keyboard-focus indicators. Every
+       * `:focus-visible` rule on buttons, inputs, links, and tabs must
+       * use this token — uniform behavior is itself a brand signal, and
+       * craft/accessibility-baseline.md treats focus visibility as a
+       * non-negotiable. Implemented as a `box-shadow` so it layers
+       * outside the element without affecting layout. */
+      --focus-ring: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 70%);
+
+      /* ─── Motion ──────────────────────────────────────────────────────
+       * Two durations + one easing curve, per anti-ai-slop's "short,
+       * purposeful transitions (150–250ms) with stable easing". Add a
+       * third duration only when a real interaction needs it; do not
+       * invent `--motion-slow` speculatively. */
+      --motion-fast: 150ms;            /* hover, focus, micro-states */
+      --motion-base: 200ms;            /* general state changes */
+      --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+      /* ─── Layout ──────────────────────────────────────────────────────
+       * Container width and per-breakpoint gutter. Skill-side responsive
+       * code reads these to decide grid columns. */
+      --container-max: 1200px;
+      --container-gutter-desktop: 24px;
+      --container-gutter-tablet: 16px;
+      --container-gutter-phone: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-body);
+      font-kerning: normal;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent); }
+    button { font: inherit; cursor: pointer; }
+    p { margin: 0; text-wrap: pretty; }
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-family: var(--font-display);
+      line-height: var(--leading-tight);
+      text-wrap: balance;
+    }
+    h1 {
+      max-width: 12ch;
+      font-size: clamp(var(--text-3xl), 6vw, var(--text-4xl));
+      font-weight: 500;
+      letter-spacing: var(--tracking-display);
+    }
+    h2 {
+      font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+      font-weight: 500;
+      letter-spacing: var(--tracking-display);
+    }
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+    [hidden] { display: none !important; }
+
+    .container {
+      width: min(100% - (var(--container-gutter-desktop) * 2), var(--container-max));
+      margin-inline: auto;
+    }
+    .section {
+      padding-block: var(--section-y-desktop);
+    }
+    .section + .section {
+      border-top: 1px solid var(--border);
+    }
+    .stack { display: flex; flex-direction: column; }
+    .stack > * + * { margin-top: var(--space-5); }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-5);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-8);
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+    .grid-2-1 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+      gap: var(--space-12);
+      align-items: start;
+    }
+    .grid-1-2 {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    .lead {
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: var(--text-lg);
+      line-height: var(--leading-body);
+    }
+    .eyebrow {
+      margin: 0 0 var(--space-4);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .meta,
+    .num {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .body-muted { color: var(--muted); }
+    .body-sm { font-size: var(--text-sm); color: var(--muted); }
+
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in oklab, var(--bg), transparent 8%);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .topnav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      gap: var(--space-5);
+    }
+    .topnav .logo {
+      color: var(--fg);
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 600;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+    .topnav nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+    .topnav nav a {
+      color: var(--muted);
+      font-size: var(--text-sm);
+      transition: color var(--motion-fast) var(--ease-standard);
+    }
+    .pagefoot {
+      border-top: 1px solid var(--border);
+      padding-block: var(--space-8);
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .pagefoot .row-between { flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      gap: var(--space-2);
+      padding: 10px 16px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--fg);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      line-height: 1;
+      transition:
+        background var(--motion-fast) var(--ease-standard),
+        border-color var(--motion-fast) var(--ease-standard),
+        color var(--motion-fast) var(--ease-standard),
+        transform var(--motion-fast) var(--ease-standard);
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible,
+    a:focus-visible,
+    .filter-btn:focus-visible {
+      outline: 0;
+      box-shadow: var(--focus-ring);
+    }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-on);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: var(--accent-on);
+    }
+    .btn-secondary {
+      border-color: var(--border);
+      background: var(--surface);
+    }
+    .btn-secondary:hover { border-color: var(--fg); color: var(--fg); }
+    .btn-ghost {
+      min-height: auto;
+      padding: 0;
+      border: 0;
+      color: var(--muted);
+    }
+    .btn-ghost:hover { color: var(--accent); transform: none; }
+    .btn-arrow::after { content: "->"; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+    }
+    .card-flat {
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    .card-rule {
+      padding-block: var(--space-5) 0;
+      border-top: 1px solid var(--border);
+      background: transparent;
+      border-radius: 0;
+    }
+    .pill,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: var(--radius-pill);
+      font-size: var(--text-xs);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .pill {
+      gap: var(--space-2);
+      padding: 6px 10px;
+      background: color-mix(in oklab, var(--accent), transparent 90%);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .tag {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: var(--surface);
+    }
+
+    .hero {
+      padding-block: clamp(var(--section-y-phone), 9vw, 112px);
+    }
+    .hero-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      gap: var(--space-12);
+      align-items: center;
+    }
+    .hero h1 { margin-bottom: var(--space-5); }
+    .hero .lead { margin-bottom: var(--space-6); }
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    .hero-note {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-2);
+      max-width: 620px;
+    }
+    .hero-note span {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .profile-panel {
+      display: grid;
+      gap: var(--space-5);
+      min-height: 520px;
+      padding: var(--space-6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      box-shadow: var(--elev-ring);
+    }
+    .profile-panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-5);
+    }
+    .avatar-block {
+      display: grid;
+      place-items: center;
+      width: 84px;
+      height: 84px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg);
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      letter-spacing: var(--tracking-display);
+    }
+    .build-card {
+      display: grid;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+    }
+    .build-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: var(--space-4);
+      padding-block: var(--space-3);
+      border-top: 1px solid var(--border-soft);
+    }
+    .build-row:first-of-type { border-top: 0; padding-top: 0; }
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background: var(--success);
+      vertical-align: middle;
+      margin-right: var(--space-2);
+    }
+    .feature .feature-mark {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      margin-bottom: var(--space-4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--fg);
+      background: var(--surface);
+    }
+    .feature .feature-mark svg {
+      width: 18px;
+      height: 18px;
+    }
+    .feature h3 { margin-bottom: var(--space-2); }
+    .feature p {
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .product-card {
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-5);
+      transition:
+        border-color var(--motion-fast) var(--ease-standard),
+        transform var(--motion-fast) var(--ease-standard);
+    }
+    .product-card:hover {
+      border-color: var(--fg);
+      transform: translateY(-2px);
+    }
+    .product-image-link {
+      display: block;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+    }
+    .product-image-link:hover { color: inherit; }
+    .product-image-link img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      transition: transform var(--motion-base) var(--ease-standard);
+    }
+    .product-image-link:hover img { transform: scale(1.02); }
+    .product-card h3 { margin-bottom: var(--space-3); }
+    .product-card p {
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-5);
+    }
+    .filter-btn {
+      min-height: 36px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: var(--text-sm);
+      transition:
+        background var(--motion-fast) var(--ease-standard),
+        border-color var(--motion-fast) var(--ease-standard),
+        color var(--motion-fast) var(--ease-standard);
+    }
+    .filter-btn[aria-pressed="true"] {
+      border-color: var(--fg);
+      color: var(--fg);
+    }
+    .log-row {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 112px;
+      gap: var(--space-6);
+      align-items: baseline;
+      padding-block: var(--space-5);
+      border-top: 1px solid var(--border);
+    }
+    .log-row h3 { font-size: var(--text-lg); }
+    .log-row p {
+      margin-top: var(--space-1);
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .pull { text-align: right; }
+    .timeline {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: var(--space-6);
+      padding-block: var(--space-5);
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-item p {
+      margin-top: var(--space-2);
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+    .contact-card {
+      min-height: 136px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    .contact-card strong {
+      display: block;
+      margin-bottom: var(--space-2);
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 600;
+    }
+    .contact-card .body-sm { overflow-wrap: anywhere; }
+    .toast {
+      position: fixed;
+      right: var(--space-6);
+      bottom: var(--space-6);
+      z-index: 20;
+      max-width: min(320px, calc(100vw - var(--space-12)));
+      padding: var(--space-4) var(--space-5);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--fg);
+      box-shadow: var(--elev-raised);
+      font-size: var(--text-sm);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(var(--space-2));
+      transition:
+        opacity var(--motion-base) var(--ease-standard),
+        transform var(--motion-base) var(--ease-standard);
+    }
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1023px) {
+      .container {
+        width: min(100% - (var(--container-gutter-tablet) * 2), var(--container-max));
+      }
+      .section { padding-block: var(--section-y-tablet); }
+      .hero-split,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .grid-2-1,
+      .grid-1-2 {
+        grid-template-columns: 1fr;
+      }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .profile-panel { min-height: auto; }
+      .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .container {
+        width: min(100% - (var(--container-gutter-phone) * 2), var(--container-max));
+      }
+      .section { padding-block: var(--section-y-phone); }
+      .topnav nav { display: none; }
+      .topnav .btn { display: none; }
+      h1 {
+        max-width: 10ch;
+        font-size: var(--text-3xl);
+      }
+      .lead { font-size: var(--text-base); }
+      .hero-note { grid-template-columns: 1fr 1fr; }
+      .profile-panel { padding: var(--space-5); }
+      .profile-panel-head {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
+      .build-row,
+      .log-row,
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: var(--space-2);
+      }
+      .pull { text-align: left; }
+      .product-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+<style data-od-tweaks-bridge-style="">
+[data-od-tweaks-hidden] .tw-panel {
+  transform: translateX(calc(100% + 32px)) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.tw-restore { display: none !important; }
+</style><script data-od-tweaks-bridge="">(function(){
+  // Synchronously hide BEFORE the artifact body parses so the panel never
+  // flashes on initial paint. The host removes the attribute via postMessage
+  // once it knows the desired state.
+  document.documentElement.setAttribute('data-od-tweaks-hidden', '');
+
+  var suppressEcho = false;
+  var observer = null;
+
+  function panelEl(){ return document.querySelector('.tw-panel'); }
+
+  function applyClassesToPanel(visible){
+    var panel = panelEl();
+    if (panel) panel.classList.toggle('tw-hidden', !visible);
+  }
+
+  function setPanelVisible(visible){
+    suppressEcho = true;
+    document.documentElement.toggleAttribute('data-od-tweaks-hidden', !visible);
+    applyClassesToPanel(visible);
+    // Clear flag after the MutationObserver has had a chance to fire for this
+    // change so we don't echo our own host-driven toggles back to the host.
+    Promise.resolve().then(function(){ suppressEcho = false; });
+  }
+
+  function postState(){
+    var panel = panelEl();
+    if (!panel) return;
+    try {
+      parent.postMessage({
+        type: 'od:tweaks-panel-state',
+        visible: !panel.classList.contains('tw-hidden'),
+      }, '*');
+    } catch (e) {}
+  }
+
+  function postAvailability(){
+    try {
+      parent.postMessage({
+        type: 'od:tweaks-available',
+        available: !!panelEl(),
+      }, '*');
+    } catch (e) {}
+  }
+
+  function attachObserver(){
+    var panel = panelEl();
+    if (!panel || observer) return;
+    observer = new MutationObserver(function(){
+      if (suppressEcho) return;
+      postState();
+    });
+    observer.observe(panel, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  function onReady(){
+    // Capture the panel authored visibility BEFORE we apply the host hidden
+    // attribute. The bridge sets data-od-tweaks-hidden synchronously in head
+    // (before the body parses), so on entry to onReady the attribute is
+    // always present even though the artifact may have authored the panel
+    // as default-visible. Reading the panel class first is the only place
+    // we can still observe the author intent. Then drive the attribute,
+    // classes, and posted state from that captured value so a default
+    // visible tw-panel reports visible:true and the toolbar toggle starts
+    // ON. Issue surfaced in PR #1643 review.
+    var panel = panelEl();
+    var initialVisible = !!panel && !panel.classList.contains('tw-hidden');
+    document.documentElement.toggleAttribute('data-od-tweaks-hidden', !initialVisible);
+    applyClassesToPanel(initialVisible);
+    attachObserver();
+    postAvailability();
+    // Post the captured initial visibility so the toolbar toggle reflects
+    // the default state on mount. Without this the toggle reads OFF while
+    // a default-visible tw-panel artifact clearly shows its panel and the
+    // user would have to click toggle-on then toggle-off to actually hide.
+    postState();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onReady);
+  } else {
+    onReady();
+  }
+
+  window.addEventListener('message', function(ev){
+    if (!ev.data || ev.data.type !== 'od:tweaks-panel-visible') return;
+    setPanelVisible(!!ev.data.visible);
+  });
+})();</script></head>
 <body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>我系渣渣丰</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
+  <header class="topnav" data-od-id="topnav">
+    <div class="container topnav-inner" data-od-id="path-0-0">
+      <a class="logo" href="#top" aria-label="回到页面顶部" data-od-id="path-0-0-0">Felix</a>
+      <nav aria-label="主导航" data-od-id="path-0-0-1">
+        <a href="#projects" data-od-id="path-0-0-1-0">项目</a>
+        <a href="#writing" data-od-id="path-0-0-1-1">内容</a>
+        <a href="#story" data-od-id="path-0-0-1-2">经历</a>
+        <a href="#contact" data-od-id="path-0-0-1-3">联系</a>
+      </nav>
+      <a class="btn btn-primary" href="#contact" data-od-id="path-0-0-2">联系合作</a>
     </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle"></span>
-          
-        </div>
-
-        
-      </div>
-
-      
-    </div>
-  </div>
-</div>
-
-</div>
-
   </header>
 
-  <main>
-    
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/10/11/%E8%A7%89%E5%AF%9F%E6%9C%AC%E8%BA%AB%E5%B0%B1%E6%98%AF%E7%AD%94%E6%A1%88/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202410111639787.png" srcset="/img/loading.gif" lazyload alt="觉察本身就是答案">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/10/11/%E8%A7%89%E5%AF%9F%E6%9C%AC%E8%BA%AB%E5%B0%B1%E6%98%AF%E7%AD%94%E6%A1%88/" target="_self">
-          觉察本身就是答案
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2024/10/11/%E8%A7%89%E5%AF%9F%E6%9C%AC%E8%BA%AB%E5%B0%B1%E6%98%AF%E7%AD%94%E6%A1%88/" target="_self">
+  <main id="content" data-od-id="path-1">
+    <section class="section hero" id="top" data-od-id="hero">
+      <div class="container hero-split" data-od-id="path-1-0-0">
         <div>
-          看完产品沉思录 - 第 8 期的「松节油：觉察本身就是答案」的部分，有一些感慨。尤其是看到少楠的这个切身例子，与我的重合度得有 80%，下面直接引用原文描述。  自己很爱出门溜达，妻却喜欢待在家里；有时候想出门散散步，但念及平时经常工作到很晚，鲜少陪伴，内心愧疚，所以渐渐地也就不怎么提这件事，但每逢阳光正好却只能宅在家里时，内心总觉得有些不悦。 但一次争吵后，两人静心来谈，她很惊讶于我会有这种「愧
+          <p class="eyebrow">Full-time AI indie builder</p>
+          <h1 data-od-id="path-1-0-0-0-1">全职 AI 独立开发者，做面向海外市场的产品。</h1>
+          <p class="lead">研究 SEO、增长与 AI 工作流，把产品从想法做成可验证的公开实验。</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#projects" data-od-id="path-1-0-0-0-3-0">查看代表项目</a>
+            <button class="btn btn-secondary" type="button" data-copy-bio="" data-od-id="path-1-0-0-0-3-1">复制一句话介绍</button>
+          </div>
+          <div class="hero-note" aria-label="身份标签">
+            <span>AI 产品</span>
+            <span>出海增长</span>
+            <span>SEO 研究</span>
+            <span>公开构建</span>
+          </div>
         </div>
-      </a>
 
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-10-11 16:38" pubdate>
-              2024-10-11
-            </time>
+        <aside class="profile-panel" aria-label="个人品牌摘要" data-od-id="path-1-0-0-1">
+          <div class="profile-panel-head" data-od-id="path-1-0-0-1-0">
+            <div>
+              <p class="meta"><span class="status-dot"></span>NOW BUILDING IN PUBLIC</p>
+              <h2 style="margin-top: 12px;" data-od-id="path-1-0-0-1-0-0-1">边做边学，把每次实验沉淀成内容和产品资产。</h2>
+            </div>
+            <div class="avatar-block" aria-label="Felix initials">F</div>
           </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" class="category-chain-item">个人成长</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%A7%89%E5%AF%9F/">#觉察</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/09/25/%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202409251829710.svg" srcset="/img/loading.gif" lazyload alt="什么是数字花园">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/09/25/%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD/" target="_self">
-          什么是数字花园
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2024/09/25/%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD/" target="_self">
-        <div>
-          知识在脑海中是类似网状结构组成的，想一想日常思考问题，通常是由一个点，发散到与它关联的多个点。  例如：想到动物，脑海中便会浮现具体「鸡」「鸭」「鱼」等。它们都与「动物」存在连接，这个整体构成了脑海中关于「动物」的知识体系。 数字花园，就是我们的大脑。大脑中的知识体系，对应的就是笔记和笔记之间的连接🔗，所以数字花园也称作「第二大脑」🧠。 看一下 👀 我们的大脑是如何学习新知识的。现在学习了一
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-09-25 18:27" pubdate>
-              2024-09-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E4%B8%93%E6%A0%8F/" class="category-chain-item">博客专栏</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD/">#数字花园</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/09/21/%E5%85%B3%E4%BA%8E%E5%86%B3%E7%AD%96%E7%9A%84%E6%80%9D%E8%80%83/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202409211740035.jpg" srcset="/img/loading.gif" lazyload alt="关于决策的思考">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/09/21/%E5%85%B3%E4%BA%8E%E5%86%B3%E7%AD%96%E7%9A%84%E6%80%9D%E8%80%83/" target="_self">
-          关于决策的思考
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2024/09/21/%E5%85%B3%E4%BA%8E%E5%86%B3%E7%AD%96%E7%9A%84%E6%80%9D%E8%80%83/" target="_self">
-        <div>
-          决策的感悟看完产品沉思录 - 第7期的「松节油：雕塑与积木」的部分，有一些感慨。   决策系统不稳定有什么问题呢？其实就是一个简单的数学问题：  任何决策都是概率，所以大多数时候都不是 100% 因为不是 100% ，所以决策次数越多，成功概率就越低（90% vs 90% × 90%） 就算有几个好的决策，有一两个不靠谱的决策就完了（比如：90% × 1% ×90%） 最好的方式，就是少做决策，并
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-09-21 17:30" pubdate>
-              2024-09-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/" class="category-chain-item">个人成长</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%86%B3%E7%AD%96/">#决策</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2024/08/25/%E3%80%8A%E5%A7%A5%E5%A7%A5%E7%9A%84%E5%A4%96%E5%AD%99%E3%80%8B/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202408251929099.webp" srcset="/img/loading.gif" lazyload alt="🎬《姥姥的外孙》">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/08/25/%E3%80%8A%E5%A7%A5%E5%A7%A5%E7%9A%84%E5%A4%96%E5%AD%99%E3%80%8B/" target="_self">
-          🎬《姥姥的外孙》
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2024/08/25/%E3%80%8A%E5%A7%A5%E5%A7%A5%E7%9A%84%E5%A4%96%E5%AD%99%E3%80%8B/" target="_self">
-        <div>
-          上周看了一部非常好看的🤩泰国电影《姥姥的外孙》，这应该是我近几年看过最好的电影🎬。电影中关于爱的表达，有许多「隐蔽」的细节，让我这个电影爱好者十分着迷🥰。 帅哥外孙帅哥外孙，外孙着实有点帅，我一男的看了都…… 咳咳，来～ 来说说我观察到的细节。  外孙的生物钟。电影中：外孙离开姥姥，回家住的第一个晚上，半夜自动醒来，时间是在 4 点 40 多分。之前的剧情中知道，外孙要帮姥姥卖粥，并且姥姥卖
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-08-25 19:25" pubdate>
-              2024-08-25
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%8D%9A%E5%AE%A2%E4%B8%93%E6%A0%8F/" class="category-chain-item">博客专栏</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%94%B5%E5%BD%B1/">#电影</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/12/29/2023%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93%E5%8F%8A%E4%B8%AA%E4%BA%BA%E5%A4%8D%E7%9B%98/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202312291853206.jpg" srcset="/img/loading.gif" lazyload alt="2023 年终总结及个人复盘">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/12/29/2023%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93%E5%8F%8A%E4%B8%AA%E4%BA%BA%E5%A4%8D%E7%9B%98/" target="_self">
-          2023 年终总结及个人复盘
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/12/29/2023%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93%E5%8F%8A%E4%B8%AA%E4%BA%BA%E5%A4%8D%E7%9B%98/" target="_self">
-        <div>
-          不知不觉工作已经 3 年了，想要好好总结复盘一下今年的一些情况。今年的生活特别有记忆点，不再像过去的时间一样枯燥单调麻木，今年是一个全新的体验。 身体的一些小状况 1~ 4 月年初刚到公司换了部门。 1 ~ 4 月如果过去的两年别无二致，机械麻木的工作，蜗居在自己的安乐窝中 ，享受着奶头乐。但不变的，依然关注着 IT 前沿的技术信息，以及未来的一些发展，开始了解 AI，学习使用 ChatGPT，并
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-12-29 18:30" pubdate>
-              2023-12-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" class="category-chain-item">年终总结</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/">#年终总结</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/11/15/%E4%BB%8E%E7%8E%B0%E5%9C%A8%E5%BC%80%E5%A7%8B/" target="_self">
-          需要马上执行的事情
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/15/%E4%BB%8E%E7%8E%B0%E5%9C%A8%E5%BC%80%E5%A7%8B/" target="_self">
-        <div>
-          做一个富有责任感的男人。
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-11-15 10:00" pubdate>
-              2023-11-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%94%9F%E6%B4%BB%E7%B1%BB-blog/" class="category-chain-item">生活类 blog</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%8F%90%E5%8D%87/">#提升</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/10/29/1028/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202310291426218.JPG" srcset="/img/loading.gif" lazyload alt="1028">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/10/29/1028/" target="_self">
-          1028
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/10/29/1028/" target="_self">
-        <div>
-          我只记得那晚的月亮，从朦朦胧胧中抽离出来，成为那晚最亮的光。
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-10-29 18:00" pubdate>
-              2023-10-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%94%9F%E6%B4%BB%E7%B1%BB-blog/" class="category-chain-item">生活类 blog</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%94%9F%E6%B4%BB/">#生活</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/10/21/%E6%94%B9%E5%8F%98%E8%BA%AB%E4%BB%BD%E8%AE%A4%E5%90%8C/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202310211711017.jpeg" srcset="/img/loading.gif" lazyload alt="改变身份认同">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/10/21/%E6%94%B9%E5%8F%98%E8%BA%AB%E4%BB%BD%E8%AE%A4%E5%90%8C/" target="_self">
-          改变身份认同
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/10/21/%E6%94%B9%E5%8F%98%E8%BA%AB%E4%BB%BD%E8%AE%A4%E5%90%8C/" target="_self">
-        <div>
-          工作三年的感悟不知不觉，已经出来工作三年了。三年来我也有过很多思考，像：技术能有什么大的突破、优秀的程序员都在干嘛、我以后的生活会更好吗？我以后怎么找到远程工作等等。 我发现自己的精力都是在思考：作为程序员的我是如何规划自己的未来的。别人常说有职业规划是好事情，但在我身上我却发现这种规划成了束缚自我的枷锁，我更少的关注生活，更少的社交，更少的有突破舒适圈的行为。 一直到最后我惊奇的发现，我好像什么
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-10-21 17:08" pubdate>
-              2023-10-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%94%9F%E6%B4%BB%E7%B1%BB-blog/" class="category-chain-item">生活类 blog</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%8F%90%E5%8D%87/">#提升</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2023/10/07/%E8%B4%A2%E5%AF%8C%E6%B5%81%20-%20%E4%B8%AA%E4%BA%BA%E8%A7%89%E5%AF%9F/" target="_self">
-          <img src="https://zzfpicture.oss-cn-shenzhen.aliyuncs.com/image/202310071632989.png" srcset="/img/loading.gif" lazyload alt="财富流 - 个人觉察">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/10/07/%E8%B4%A2%E5%AF%8C%E6%B5%81%20-%20%E4%B8%AA%E4%BA%BA%E8%A7%89%E5%AF%9F/" target="_self">
-          财富流 - 个人觉察
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt " href="/2023/10/07/%E8%B4%A2%E5%AF%8C%E6%B5%81%20-%20%E4%B8%AA%E4%BA%BA%E8%A7%89%E5%AF%9F/" target="_self">
-        <div>
-          我没有想到一款「游戏」能让我有非常不一样的体验。 接触之前我像大多数人一样，初听这个名字会以为这仅仅是一个教你如何积累财富的「骗局」。 我为什么会认为是「骗局」？因为我觉的这是成功人士，为了教你成功，创建的一款游戏仅此而已。我认为每个人的成功都不可复制的，所以他们给出成功经验更像是一种安慰穷人的做法，让你以为你可以成功。 正式因为持有这样的「偏见」，我一开始才会有一些抵触甚至是讨厌。但迫于朋友的邀
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-10-07 18:00" pubdate>
-              2023-10-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E7%94%9F%E6%B4%BB%E7%B1%BB-blog/" class="category-chain-item">生活类 blog</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%8F%90%E5%8D%87/">#提升</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/09/15/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/" target="_self">
-          MIT 6.824 分布式系统 - Introduction
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/15/6.824%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F-Introduction/" target="_self">
-        <div>
-          分布式系统基础架构 存储 计算 通信（关于通信的详细内容可观看 6.829 计算机网络）  实现分布式所需的工具 RPC (Remote procedure call) 线程 并发控制  描述 分布式系统的扩展，带来便利。 高性能 高容错   扩展带来的几个问题 容错性（Fault Tolerance） 可用性 （Availability） 可恢复（Recoverability）   解决容错的手
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-09-15 18:00" pubdate>
-              2023-09-15
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/6-824/" class="category-chain-item">6.824</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%EF%BC%8C6-824/">#分布式，6.824</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-              </div>
+          <div class="build-card" data-od-id="path-1-0-0-1-1">
+            <div class="build-row">
+              <span class="meta">PRODUCT</span>
+              <p>做面向海外用户的轻量产品，优先验证需求、流量和分发。</p>
+            </div>
+            <div class="build-row">
+              <span class="meta">GROWTH</span>
+              <p>围绕 Google SEO、AI 搜索和内容分发，搭建可复用增长流程。</p>
+            </div>
+            <div class="build-row">
+              <span class="meta">WORKFLOW</span>
+              <p>用 AI 辅助调研、开发、写作和发布，公开记录真实过程。</p>
             </div>
           </div>
+          <div class="row" style="flex-wrap: wrap;" data-od-id="path-1-0-0-1-2">
+            <span class="tag">独立开发者</span>
+            <span class="tag">出海产品</span>
+            <span class="tag">SEO / Growth</span>
+            <span class="tag">AI Workflow</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="focus" data-od-id="focus">
+      <div class="container stack" style="gap: 48px;" data-od-id="path-1-1-0">
+        <div style="max-width: 42ch;">
+          <p class="eyebrow">What I work on</p>
+          <h2 data-od-id="path-1-1-0-0-1">不是泛泛地谈 AI，而是把它放进真实产品、流量和交付里。</h2>
+        </div>
+        <div class="grid-3">
+          <div class="feature card-flat">
+            <div class="feature-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h10M4 17h16"></path></svg>
+            </div>
+            <h3 data-od-id="path-1-1-0-1-0-1">出海产品实验</h3>
+            <p>从小需求切入，快速搭建可上线版本，用真实搜索和用户反馈决定下一步。</p>
+          </div>
+          <div class="feature card-flat">
+            <div class="feature-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 4 4"></path><path d="M8 11h6"></path></svg>
+            </div>
+            <h3 data-od-id="path-1-1-0-1-1-1">SEO 与增长研究</h3>
+            <p>关注关键词、页面结构、内容供给和分发路径，目标是让产品获得稳定入口。</p>
+          </div>
+          <div class="feature card-flat">
+            <div class="feature-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v18M5 8h14M7 16h10"></path></svg>
+            </div>
+            <h3 data-od-id="path-1-1-0-1-2-1">AI 工作流</h3>
+            <p>把调研、开发、设计、写作、发布拆成可复用流程，提高独立开发的交付密度。</p>
+          </div>
         </div>
       </div>
-    
+    </section>
 
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+    <section class="section" id="projects" data-od-id="projects">
+      <div class="container" data-od-id="path-1-2-0">
+        <div class="row-between" style="align-items: end; margin-bottom: 32px; flex-wrap: wrap;">
+          <div style="max-width: 44ch;">
+            <p class="eyebrow">Representative work</p>
+            <h2 data-od-id="path-1-2-0-0-0-1">已经上线的产品，覆盖证件照工具、音乐游戏、AI 工作流资料站和字体生成器。</h2>
+          </div>
+          <span class="meta" data-od-id="path-1-2-0-0-1">4 LIVE PRODUCTS</span>
         </div>
-        <div class="list-group" id="local-search-result"></div>
+        <div class="product-grid">
+          <article class="card product-card" data-od-id="path-1-2-0-1-0">
+            <a class="product-image-link" href="https://passportsizephoto.net/" target="_blank" rel="noopener noreferrer" aria-label="访问 Passport Size Photo">
+              <img src="https://passportsizephoto.net/preview.png" alt="Passport Size Photo product preview" loading="lazy">
+            </a>
+            <div>
+              <p class="meta">PASSPORTSIZEPHOTO.NET</p>
+              <h3 data-od-id="path-1-2-0-1-0-0-1">Passport Size Photo</h3>
+              <p>在线制作合规证件照，支持裁剪、换背景和 4×6 打印版下载。</p>
+            </div>
+          </article>
+          <article class="card product-card" data-od-id="path-1-2-0-1-1">
+            <a class="product-image-link" href="https://songless.pro/" target="_blank" rel="noopener noreferrer" aria-label="访问 Songless">
+              <img src="https://songless.pro/preview.webp" alt="Songless product preview" loading="lazy">
+            </a>
+            <div>
+              <p class="meta">SONGLESS.PRO</p>
+              <h3 data-od-id="path-1-2-0-1-1-0-1">Songless</h3>
+              <p>基于短音频片段的猜歌游戏，按歌手、年代和风格扩展日常挑战。</p>
+            </div>
+          </article>
+          <article class="card product-card" data-od-id="path-1-2-0-1-2">
+            <a class="product-image-link" href="https://longxiabot.club/" target="_blank" rel="noopener noreferrer" aria-label="访问龙虾俱乐部">
+              <img src="https://longxiabot.club/preview.png" alt="龙虾俱乐部 product preview" loading="lazy">
+            </a>
+            <div>
+              <p class="meta">LONGXIABOT.CLUB</p>
+              <h3 data-od-id="path-1-2-0-1-2-0-1">龙虾俱乐部</h3>
+              <p>面向中文用户的 OpenClaw 上手站，整理安装、模型配置、Skills 和生态更新。</p>
+            </div>
+          </article>
+          <article class="card product-card" data-od-id="path-1-2-0-1-3">
+            <a class="product-image-link" href="https://bubbleletters.app/" target="_blank" rel="noopener noreferrer" aria-label="访问 Bubble Letters">
+              <img src="https://bubbleletters.app/preview.webp" alt="Bubble Letters product preview" loading="lazy">
+            </a>
+            <div>
+              <p class="meta">BUBBLELETTERS.APP</p>
+              <h3 data-od-id="path-1-2-0-1-3-0-1">Bubble Letters</h3>
+              <p>免费生成可打印泡泡字，支持 PNG、SVG 和 PDF 下载，用于课堂、手工和海报。</p>
+            </div>
+          </article>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-    
+    <section class="section" id="writing" data-od-id="writing">
+      <div class="container" data-od-id="path-1-3-0">
+        <div class="grid-1-2">
+          <div>
+            <p class="eyebrow">Writing and notes</p>
+            <h2 data-od-id="path-1-3-0-0-0-1">内容是产品的一部分，也是公开构建的记录。</h2>
+            <p class="body-muted" style="margin-top: 16px;">下面先按主题组织，等你补充真实文章链接后，可以直接变成文章索引。</p>
+            <div class="filter-row" role="group" aria-label="内容主题筛选">
+              <button class="filter-btn" type="button" data-filter="all" aria-pressed="true" data-od-id="path-1-3-0-0-0-3-0">全部</button>
+              <button class="filter-btn" type="button" data-filter="seo" aria-pressed="false" data-od-id="path-1-3-0-0-0-3-1">SEO</button>
+              <button class="filter-btn" type="button" data-filter="ai" aria-pressed="false" data-od-id="path-1-3-0-0-0-3-2">AI 工作流</button>
+              <button class="filter-btn" type="button" data-filter="build" aria-pressed="false" data-od-id="path-1-3-0-0-0-3-3">公开构建</button>
+            </div>
+          </div>
+          <div>
+            <article class="log-row" data-category="seo" data-od-id="path-1-3-0-0-1-0">
+              <span class="meta">SEO</span>
+              <div>
+                <h3 data-od-id="path-1-3-0-0-1-0-1-0">一个新站从 0 开始拿到搜索入口，需要先做什么</h3>
+                <p>关键词、页面结构、索引和内容供给的实践笔记。</p>
+              </div>
+              <span class="pull meta">待补链接</span>
+            </article>
+            <article class="log-row" data-category="ai" data-od-id="path-1-3-0-0-1-1">
+              <span class="meta">AI</span>
+              <div>
+                <h3 data-od-id="path-1-3-0-0-1-1-1-0">独立开发者如何把 AI 放进日常工作流</h3>
+                <p>从调研到发布的流程拆解，重点是减少重复劳动。</p>
+              </div>
+              <span class="pull meta">待补链接</span>
+            </article>
+            <article class="log-row" data-category="build" data-od-id="path-1-3-0-0-1-2">
+              <span class="meta">BUILD</span>
+              <div>
+                <h3 data-od-id="path-1-3-0-0-1-2-1-0">边做边学：一次产品实验应该怎样公开记录</h3>
+                <p>记录假设、动作、结果和复盘，让内容成为下一次实验的资产。</p>
+              </div>
+              <span class="pull meta">待补链接</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    
+    <section class="section" id="story" data-od-id="story">
+      <div class="container grid-2-1" data-od-id="path-1-4-0">
+        <div>
+          <p class="eyebrow">Personal timeline</p>
+          <h2 data-od-id="path-1-4-0-0-1">个人经历用少量节点讲清楚：为什么做、正在做什么、接下来要沉淀什么。</h2>
+        </div>
+        <div class="timeline" aria-label="个人经历">
+          <article class="timeline-item" data-od-id="path-1-4-0-1-0">
+            <span class="meta">现在</span>
+            <div>
+              <h3 data-od-id="path-1-4-0-1-0-1-0">全职 AI 独立开发</h3>
+              <p>把时间投入到产品实验、AI 工作流和内容增长，不再只做旁观式研究。</p>
+            </div>
+          </article>
+          <article class="timeline-item" data-od-id="path-1-4-0-1-1">
+            <span class="meta">近期</span>
+            <div>
+              <h3 data-od-id="path-1-4-0-1-1-1-0">聚焦出海产品</h3>
+              <p>面向海外用户做小而可验证的产品，优先看自然流量、真实需求和可复制流程。</p>
+            </div>
+          </article>
+          <article class="timeline-item" data-od-id="path-1-4-0-1-2">
+            <span class="meta">长期</span>
+            <div>
+              <h3 data-od-id="path-1-4-0-1-2-1-0">公开构建与复盘</h3>
+              <p>把做产品的过程写出来，持续沉淀 SEO、增长和 AI 协作方法。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact" data-od-id="contact">
+      <div class="container" style="text-align: center; max-width: 760px;" data-od-id="path-1-5-0">
+        <p class="eyebrow">Contact</p>
+        <h2 data-od-id="path-1-5-0-1">如果你也在做出海产品、SEO 增长或 AI 工作流，可以从这里开始联系。</h2>
+        <p class="lead" style="margin: 16px auto 0;">可以通过邮箱、GitHub、博客或内容平台找到我。合作、交流和反馈都欢迎直接联系。</p>
+        <div class="contact-grid" aria-label="联系方式">
+          <a class="card contact-card" href="mailto:zhaofengzhou9@gmail.com">
+            <div>
+              <strong>邮箱</strong>
+              <p class="body-sm">zhaofengzhou9@gmail.com</p>
+            </div>
+            <span class="meta">Email</span>
+          </a>
+          <a class="card contact-card" href="https://github.com/greek-zzf" target="_blank" rel="noopener noreferrer">
+            <div>
+              <strong>GitHub</strong>
+              <p class="body-sm">github.com/greek-zzf</p>
+            </div>
+            <span class="meta">Code</span>
+          </a>
+          <a class="card contact-card" href="https://wszzf.top/" target="_blank" rel="noopener noreferrer">
+            <div>
+              <strong>个人博客</strong>
+              <p class="body-sm">wszzf.top</p>
+            </div>
+            <span class="meta">Blog</span>
+          </a>
+          <div class="card contact-card">
+            <div>
+              <strong>内容平台</strong>
+              <p class="body-sm">
+                <a href="https://www.xiaohongshu.com/user/profile/64036e820000000010026122" target="_blank" rel="noopener noreferrer">小红书</a>
+                / <a href="https://www.instagram.com/zhaofeng641/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                / <a href="https://felix.garden/index.xml" target="_blank" rel="noopener noreferrer">RSS</a>
+              </p>
+            </div>
+            <span class="meta">Writing</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  <footer class="pagefoot" data-od-id="footer">
+    <div class="container row-between" data-od-id="path-2-0">
+      <span>© 2026 Felix · 全职 AI 独立开发者</span>
+      <span class="meta">做出海产品 · 研究 SEO、增长与 AI 工作流 · 公开构建</span>
     </div>
-  
-  
-  
-  
-</div>
-
   </footer>
 
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+  <div class="toast" role="status" aria-live="polite" data-toast="" data-od-id="path-3"></div>
 
   <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
+    const bioText = "全职 AI 独立开发者。做出海产品，研究 SEO、增长与 AI 工作流，边做边学，公开构建。";
+    const toast = document.querySelector("[data-toast]");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => {
+        toast.classList.remove("is-visible");
+      }, 2200);
+    }
+
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+      const helper = document.createElement("textarea");
+      helper.value = text;
+      helper.setAttribute("readonly", "");
+      helper.style.position = "fixed";
+      helper.style.opacity = "0";
+      document.body.appendChild(helper);
+      helper.select();
+      document.execCommand("copy");
+      helper.remove();
+    }
+
+    document.querySelector("[data-copy-bio]").addEventListener("click", async (event) => {
+      const button = event.currentTarget;
+      const previous = button.textContent;
+      try {
+        await copyText(bioText);
+        button.textContent = "已复制";
+        showToast("一句话介绍已复制，可以直接贴到社交主页。");
+      } catch (error) {
+        showToast("复制失败，请手动选择页面中的介绍。");
+      } finally {
+        window.setTimeout(() => {
+          button.textContent = previous;
+        }, 1600);
+      }
+    });
+
+    document.querySelectorAll("[data-filter]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const selected = button.dataset.filter;
+        document.querySelectorAll("[data-filter]").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+        document.querySelectorAll("[data-category]").forEach((article) => {
+          article.hidden = selected !== "all" && article.dataset.category !== selected;
+        });
+      });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const id = link.getAttribute("href");
+        if (!id || id === "#") return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        event.preventDefault();
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 72;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    });
   </script>
 
 
-<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
-
-
-  
-
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+<script data-od-snapshot-bridge="">(function(){
+  function copyComputedStyle(source, target){
+    if (!source || !target || source.nodeType !== 1 || target.nodeType !== 1) return;
+    var computed = window.getComputedStyle(source);
+    var style = target.getAttribute('style') || '';
+    for (var i = 0; i < computed.length; i++){
+      var prop = computed[i];
+      style += prop + ':' + computed.getPropertyValue(prop) + ';';
+    }
+    target.setAttribute('style', style);
+  }
+  function syncElementState(source, target){
+    var tag = source.tagName ? source.tagName.toLowerCase() : '';
+    if (tag === 'img' && source.currentSrc) target.setAttribute('src', source.currentSrc);
+    if (tag === 'input' || tag === 'textarea') target.setAttribute('value', source.value || '');
+    if (tag === 'canvas') {
+      try {
+        var img = document.createElement('img');
+        img.setAttribute('src', source.toDataURL('image/png'));
+        img.setAttribute('style', target.getAttribute('style') || '');
+        target.parentNode && target.parentNode.replaceChild(img, target);
+      } catch (_) {}
+    }
+  }
+  function inlineSnapshotStyles(originalRoot, cloneRoot){
+    copyComputedStyle(originalRoot, cloneRoot);
+    syncElementState(originalRoot, cloneRoot);
+    var originals = originalRoot.querySelectorAll('*');
+    var clones = cloneRoot.querySelectorAll('*');
+    var count = Math.min(originals.length, clones.length);
+    for (var i = 0; i < count; i++){
+      copyComputedStyle(originals[i], clones[i]);
+      syncElementState(originals[i], clones[i]);
+    }
+    var scripts = cloneRoot.querySelectorAll('script');
+    for (var s = scripts.length - 1; s >= 0; s--) scripts[s].remove();
+  }
+  function waitForImages(){
+    var imgs = Array.prototype.slice.call(document.images || []);
+    return Promise.all(imgs.map(function(img){
+      if (img.complete) return Promise.resolve();
+      return new Promise(function(resolve){
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      });
+    }));
+  }
+  function renderSnapshot(id){
+    var w = Math.max(1, window.innerWidth || document.documentElement.clientWidth || 1);
+    var h = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
+    var dpr = window.devicePixelRatio || 1;
+    var docW = Math.max(w, document.documentElement.scrollWidth || 0, document.body ? document.body.scrollWidth : 0);
+    var docH = Math.max(h, document.documentElement.scrollHeight || 0, document.body ? document.body.scrollHeight : 0);
+    var clone = document.documentElement.cloneNode(true);
+    clone.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+    inlineSnapshotStyles(document.documentElement, clone);
+    var serializer = new XMLSerializer();
+    var html = serializer.serializeToString(clone);
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' +
+      '<foreignObject x="' + (-window.scrollX || 0) + '" y="' + (-window.scrollY || 0) + '" width="' + docW + '" height="' + docH + '">' +
+      html +
+      '</foreignObject></svg>';
+    var img = new Image();
+    img.onload = function(){
+      try {
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.floor(w * dpr));
+        canvas.height = Math.max(1, Math.floor(h * dpr));
+        var ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('no 2d context');
+        ctx.scale(dpr, dpr);
+        ctx.drawImage(img, 0, 0, w, h);
+        window.parent.postMessage({ type: 'od:snapshot:result', id: id, dataUrl: canvas.toDataURL('image/png'), w: canvas.width, h: canvas.height }, '*');
+      } catch (err) {
+        window.parent.postMessage({ type: 'od:snapshot:result', id: id, error: String(err && err.message || err) }, '*');
+      }
+    };
+    img.onerror = function(){
+      window.parent.postMessage({ type: 'od:snapshot:result', id: id, error: 'snapshot image failed' }, '*');
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  window.addEventListener('message', function(ev){
+    var data = ev && ev.data;
+    if (!data || data.type !== 'od:snapshot' || !data.id) return;
+    waitForImages().then(function(){ renderSnapshot(String(data.id)); });
+  });
+})();</script><script data-od-srcdoc-transport-activation="">(function(){
+  window.addEventListener('message', function(ev){
+    var data = ev && ev.data;
+    if (!data || data.type !== 'od:srcdoc-transport-activate' || typeof data.html !== 'string') return;
+    document.open();
+    document.write(data.html);
+    document.close();
+  });
+})();</script></body></html>
