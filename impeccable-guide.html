@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>做网站的九个步骤 · impeccable 使用指南</title>
+<style>
+  :root {
+    --ground: oklch(0.96 0.022 205);
+    --ground-deep: oklch(0.92 0.035 205);
+    --surface: oklch(0.995 0.004 205);
+    --ink: oklch(0.24 0.035 250);
+    --ink-soft: oklch(0.42 0.028 250);
+    --orange: oklch(0.58 0.18 38);
+    --teal: oklch(0.52 0.11 195);
+    --line: oklch(0.82 0.03 205);
+    --why-bg: oklch(0.94 0.055 95);
+    --why-ink: oklch(0.32 0.06 70);
+
+    --sans: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --step-1: clamp(0.94rem, 0.9rem + 0.2vw, 1rem);
+    --step-2: clamp(1.05rem, 1rem + 0.3vw, 1.18rem);
+    --step-4: clamp(1.4rem, 1.2rem + 1vw, 1.85rem);
+    --step-6: clamp(2.2rem, 1.6rem + 3.4vw, 3.5rem);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step-2);
+    line-height: 1.75;
+  }
+
+  .wrap {
+    width: min(100% - 2.5rem, 46rem);
+    margin-inline: auto;
+  }
+
+  /* ---------- 开场 ---------- */
+
+  header {
+    padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--surface);
+    background: var(--teal);
+    padding: 0.3rem 0.7rem;
+    border-radius: 3px;
+  }
+
+  h1 {
+    font-size: var(--step-6);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 800;
+    margin: 1.2rem 0 0;
+    text-wrap: balance;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .lede {
+    font-size: var(--step-4);
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin: 1.4rem 0 0;
+    max-width: 34ch;
+    text-wrap: pretty;
+  }
+
+  .setup {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: clamp(1.2rem, 3vw, 1.8rem);
+  }
+
+  .setup h2 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin: 0 0 0.6rem;
+    color: var(--teal);
+  }
+
+  .setup p { margin: 0.6rem 0 0; }
+  .setup p:first-of-type { margin-top: 0; }
+
+  /* ---------- 流程总览 ---------- */
+
+  .overview {
+    padding: clamp(2rem, 5vw, 3rem) 0;
+  }
+
+  .overview-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin: 0 0 1rem;
+  }
+
+  .chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .chain li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem 0.35rem 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .chain b {
+    display: grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: var(--ground-deep);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chain li.hot {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: oklch(0.99 0.01 60);
+  }
+
+  .chain li.hot b {
+    background: oklch(0.42 0.15 34);
+    color: oklch(0.99 0.01 60);
+  }
+
+  /* ---------- 步骤 ---------- */
+
+  main { padding-bottom: clamp(3rem, 8vw, 6rem); }
+
+  .step {
+    padding: clamp(2.2rem, 5vw, 3.4rem) 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .num {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .step h2 {
+    font-size: var(--step-4);
+    line-height: 1.25;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    margin: 0.5rem 0 0;
+    text-wrap: balance;
+  }
+
+  .like {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--teal);
+    margin: 0.8rem 0 0;
+  }
+
+  .step p { margin: 1rem 0 0; text-wrap: pretty; }
+
+  .step p.tight { margin-top: 0.5rem; }
+
+  strong { font-weight: 800; }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--ground-deep);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  .say {
+    margin: 1.3rem 0 0;
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    background: var(--ink);
+    color: oklch(0.94 0.02 205);
+    padding: 0.9rem 1.1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  .say span { color: oklch(0.78 0.1 100); }
+
+  .why {
+    margin: 1.4rem 0 0;
+    background: var(--why-bg);
+    color: var(--why-ink);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .why h3 {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.5rem;
+    line-height: 1.5;
+  }
+
+  .why h3::before {
+    content: "";
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-right: 0.45rem;
+    background: var(--orange);
+    border-radius: 2px;
+  }
+
+  .why p { margin: 0.7rem 0 0; }
+  .why p:nth-of-type(1) { margin-top: 0; }
+
+  /* ---------- 抽卡示意 ---------- */
+
+  .cards {
+    margin: 1.6rem 0 0;
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .card.picked {
+    border-color: var(--orange);
+    border-width: 2px;
+    padding: calc(1rem - 1px);
+  }
+
+  .card .kicker {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+
+  .card.picked .kicker { color: var(--orange); }
+
+  .card h4 {
+    font-size: 1.02rem;
+    font-weight: 800;
+    margin: 0.35rem 0 0.6rem;
+    line-height: 1.3;
+  }
+
+  .card p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .swatches {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.8rem;
+  }
+
+  .swatches i {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 3px;
+  }
+
+  .dice {
+    display: inline-flex;
+    vertical-align: -0.25em;
+    margin-right: 0.2rem;
+  }
+
+  /* ---------- 列表块 ---------- */
+
+  .plain-list {
+    margin: 1.2rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: pl;
+  }
+
+  .plain-list li {
+    counter-increment: pl;
+    position: relative;
+    padding: 0.85rem 0 0.85rem 2.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .plain-list li::before {
+    content: counter(pl);
+    position: absolute;
+    left: 0;
+    top: 0.85rem;
+    font-weight: 800;
+    color: var(--orange);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .myth {
+    margin: 1.1rem 0 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .myth h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .myth h4 s {
+    color: var(--ink-soft);
+    text-decoration-thickness: 2px;
+  }
+
+  .myth p { margin: 0.5rem 0 0; font-size: 0.98rem; }
+
+  /* ---------- 收尾 ---------- */
+
+  footer {
+    background: var(--ink);
+    color: oklch(0.93 0.02 205);
+    padding: clamp(2.8rem, 7vw, 4.5rem) 0;
+  }
+
+  footer h2 {
+    font-size: var(--step-4);
+    font-weight: 800;
+    margin: 0;
+    color: oklch(0.99 0.01 205);
+    text-wrap: balance;
+  }
+
+  footer p { margin: 1rem 0 0; color: oklch(0.85 0.025 205); }
+
+  footer .say {
+    background: oklch(0.32 0.04 250);
+    margin-top: 1.5rem;
+  }
+
+  a { color: var(--teal); text-decoration-thickness: 2px; text-underline-offset: 2px; }
+  footer a { color: oklch(0.82 0.09 190); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card { transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .card:hover { transform: translateY(-3px); }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <span class="tag">impeccable 使用指南</span>
+  <h1>做一个网站，<br>要经过<em>九个步骤</em></h1>
+  <p class="lede">用一个例子从头讲到尾：给「谁遛狗了」这个小 app 做一个网站。每一步说清楚在做什么、为什么要这样做。</p>
+
+  <div class="setup">
+    <h2>我们要做的东西</h2>
+    <p>假设你养了一只狗，家里四个人轮流带它出去散步，经常搞不清今天到底谁遛过了。于是你想做一个小 app，叫「谁遛狗了」。</p>
+    <p>它要能做三件事：<strong>按一下记录一次散步</strong>、<strong>看这一周谁遛了几次</strong>、<strong>到晚上还没人遛就提醒一下</strong>。另外还要一个网页首页，让别人一看就知道这个 app 是干什么的。</p>
+    <p>你手上已经有一份文档，把这三个功能写清楚了。但是你不知道页面长什么样、东西怎么摆、颜色用什么。<strong>这份指南就是讲，接下来该怎么办。</strong></p>
+  </div>
+</header>
+
+<section class="wrap overview">
+  <p class="overview-title">九个步骤长这样</p>
+  <ol class="chain">
+    <li><b>1</b>填身份卡</li>
+    <li><b>2</b>先盖哪间房</li>
+    <li class="hot"><b>3</b>抽卡片挑设计</li>
+    <li><b>4</b>贴在墙上</li>
+    <li><b>5</b>照着画</li>
+    <li><b>6</b>请人来批</li>
+    <li><b>7</b>记小本子</li>
+    <li><b>8</b>第二个页面</li>
+    <li><b>9</b>加小东西</li>
+  </ol>
+</section>
+
+<main class="wrap">
+
+  <!-- 1 -->
+  <section class="step">
+    <span class="num">第 1 步</span>
+    <h2>填一张身份卡</h2>
+    <p class="like">就像盖房子之前，先说清楚这房子给谁住。</p>
+    <p>你要对它说的第一句话是这个：</p>
+    <div class="say">/impeccable init <span>以 docs/我的功能说明.md 为准</span></div>
+    <p>它会先自己把你的文档和整个文件夹翻一遍，然后问你几个问题。<strong>最多问三轮，每轮两三个问题</strong>，不会一口气丢给你一张问卷。</p>
+    <p>它问的是这种问题：谁会用这个 app？他在什么时候用？那一刻他手上在忙什么？这个 app 有什么地方是别人做不出来的？</p>
+    <p>回答的时候有个诀窍：<strong>答得越具体越好。</strong>「用户在手机上看」这种答案没用。「爸爸下班回家，一手拎着菜，另一只手要在门口按一下记录，光线很暗」这种答案，才真的能改变最后做出来的东西。</p>
+    <p>问完它会写出一份 <code>PRODUCT.md</code>，这是这个产品的「身份卡」。以后每次你找它干活，它都会自动看一眼这张卡，你不用再重复说一遍。</p>
+
+    <div class="why">
+      <h3>为什么要先做这一步？</h3>
+      <p>因为如果不说清楚房子给谁住，工人就会按自己的习惯盖。它会盖出一个「一般的 app」，而不是你的 app。</p>
+      <p>还有一件事你可能会觉得奇怪：<strong>这一步它绝对不会问你喜欢什么颜色、想要什么风格。</strong>这是故意的。因为你现在随口说的「我想要蓝色简约风」，其实只是你脑子里最先冒出来的那个念头。等到第 3 步你真的看到几张画好的样子，你很可能会发现自己更想要橙色。所以挑好看的事情，留到能看见图的时候再决定。</p>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step">
+    <span class="num">第 2 步</span>
+    <h2>决定先盖哪一间房</h2>
+    <p class="like">一栋房子有客厅有卧室，你得先盖一间，剩下的都要跟它配。</p>
+    <p>你这个例子里有两种页面：一个是<strong>记录散步的操作界面</strong>（按按钮、看这周的记录），一个是<strong>介绍这个 app 的网页首页</strong>（让别人知道这是干什么的）。</p>
+    <p>这两种页面的性格完全不一样。操作界面的目标是「让人一秒钟就找到那个按钮」，首页的目标是「让人看完想用」。所以要分开做，一次做一个。</p>
+    <p>那先做哪个？<strong>看你这个产品的主体是什么。</strong>「谁遛狗了」的主体明显是那个天天要按的操作界面，所以先做它。首页放到后面。</p>
+
+    <div class="why">
+      <h3>为什么这一步这么重要？</h3>
+      <p>因为<strong>整个产品的样子，是在第一个页面上定下来的</strong>，后面所有页面都跟着它走。</p>
+      <p>如果反过来，先做首页，挑了一套颜色特别浓、字特别大、很有气势的样子，然后拿这套样子去做那个要塞进一周记录的操作界面，就会打架——气势归气势，密密麻麻的数字塞不进去。所以要在「最难、最常用」的那个页面上定样子，之后往外扩就轻松了。</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="step">
+    <span class="num">第 3 步 · 你最关心的一步</span>
+    <h2>它端出几种设计，你用眼睛挑</h2>
+    <p class="like">就像点菜之前，服务员先端出几盘样品让你尝。</p>
+    <p>你只需要说一句话：</p>
+    <div class="say">做记录散步的主界面</div>
+    <p>然后它会做三件事。</p>
+    <p><strong>第一件：去找灵感，而且不许只翻最明显的那个抽屉。</strong>做遛狗 app，最容易想到的就是「卡通小狗图案」，对不对？这就是最明显的抽屉。它的规矩是必须找出<strong>七个</strong>不同的灵感来源，而且要跨好几个完全不同的方向——比如牵引绳的编织纹路、公园里路牌的字体、狗牌上敲出来的字、散步路线地图的画法。找完七个才能往下走。</p>
+    <p><strong>第二件：掷骰子。</strong>七个里面挑哪个？它不自己挑，它<span class="dice"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="1" y="1" width="16" height="16" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="5.5" cy="5.5" r="1.5" fill="currentColor"/><circle cx="9" cy="9" r="1.5" fill="currentColor"/><circle cx="12.5" cy="12.5" r="1.5" fill="currentColor"/></svg></span>掷骰子决定。</p>
+    <p><strong>第三件：把结果画成卡片，开一个网页给你看。</strong>你的电脑上会自动打开一个页面，长得差不多像这样：</p>
+
+    <div class="cards">
+      <div class="card picked">
+        <span class="kicker">骰子选中的</span>
+        <h4>牵引绳编织</h4>
+        <p>用绳子的编织纹路当底，按钮像绳扣。按一下有拉紧的感觉。</p>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:oklch(0.35 0.06 40)"></i>
+          <i style="background:oklch(0.68 0.15 60)"></i>
+          <i style="background:oklch(0.94 0.02 60)"></i>
+        </div>
+      </div>
+      <div class="card">
+        <span class="kicker">更大胆的</span>
+        <h4>公园路牌</h4>
+        <p>整页就是一块深绿指示牌，字很大很粗，远远就能看清。</p>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:oklch(0.32 0.09 155)"></i>
+          <i style="background:oklch(0.85 0.16 95)"></i>
+          <i style="background:oklch(0.97 0.01 155)"></i>
+        </div>
+      </div>
+      <div class="card">
+        <span class="kicker">最普通那种</span>
+        <h4>常规做法</h4>
+        <p>市面上这类 app 的标准长相，但做到最好的水准。</p>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:oklch(0.55 0.16 255)"></i>
+          <i style="background:oklch(0.75 0.05 255)"></i>
+          <i style="background:oklch(0.98 0.005 255)"></i>
+        </div>
+      </div>
+    </div>
+
+    <p>每张卡片上会写：这个设计的<strong>一句话主张</strong>、用什么颜色、用什么材料感觉、<strong>你打开第一眼会看到什么</strong>、老实说它有什么风险、还有一栏很关键——<strong>这套样子能不能用到别的页面上</strong>。你挑的时候要盯着最后这一栏看，因为后面所有页面都要跟着它。</p>
+    <p>如果你在第 1 步选了「先看图」的模式，每张卡片上还会有一张真的画出来的效果图，你是<strong>看着图片挑</strong>，不是看着文字猜。</p>
+    <p>这个页面上还有三个按钮，你一定要知道：</p>
+    <ul class="plain-list">
+      <li><strong>重新发牌。</strong>都不喜欢？点一下，换一批全新的。而且可以指定要「更保险的」还是「更大胆的」。</li>
+      <li><strong>说一句话调整。</strong>比如「太冷冰冰了，我想要更手工一点的感觉」，它会照着这句话重新发。</li>
+      <li><strong>最普通那种。</strong>永远有这个选项。它按规矩不会主动推荐这个，但它一直在那儿——你要是就想要个正常好用的样子，选它完全没问题，它会把「正常」做到最好。</li>
+    </ul>
+    <p class="tight">挑好一张，点确定。<strong>样子就定下来了。</strong></p>
+
+    <div class="why">
+      <h3>为什么要掷骰子？这不是瞎搞吗？</h3>
+      <p>恰恰相反，这是整套流程里最聪明的一个设计。</p>
+      <p>你想一下：如果每次都让同一个人从七个里挑一个，他会挑哪个？他会挑他最熟、最有把握的那个。就像每次都点番茄炒蛋。<strong>结果就是，全世界所有人用它做出来的东西，长得都一样。</strong></p>
+      <p>掷骰子，是为了让那些「不那么显然、但可能更好」的方案也有机会被你看到。而且决定权始终在你手上——你可以一直重新发牌，直到看到喜欢的。骰子只负责端菜，不负责替你吃。</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="step">
+    <span class="num">第 4 步</span>
+    <h2>把选中的方案贴在墙上</h2>
+    <p class="like">装修师傅干活的时候，设计图要贴在墙上，抬头就能看见。</p>
+    <p>你挑完之后，它不会马上开始写代码。它会先把选定的方案写成一小段说明，<strong>钉在这个页面文件的最上面</strong>。里面写六件事：这个页面的核心主张是什么、用什么颜色和材料、想让人明白什么、第一眼看到的画面具体是什么样、灵感来自哪里、以及做完之后必须做哪些检查。</p>
+
+    <div class="why">
+      <h3>为什么要写下来？</h3>
+      <p>因为做到一半特别容易跑偏。一个页面要写几百行代码，做到后面就忘了当初为什么这么定，然后不知不觉又变回那个最普通的样子了。</p>
+      <p>贴在墙上的好处是：<strong>做完以后能对账。</strong>后面第 6 步要检查的时候，就是拿做出来的东西对着墙上这张纸看——说好要做的，到底做到了没有。</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step">
+    <span class="num">第 5 步</span>
+    <h2>照着画，先画像，再让它动起来</h2>
+    <p class="like">临摹一幅画：先把形状画准，最后才加会闪的东西。</p>
+    <p>这一步分两个阶段，顺序不能反。</p>
+    <p><strong>第一阶段只做一件事：像。</strong>把选中那张效果图照着做出来，然后截一张图，跟原来那张效果图<strong>并排放在一起对比</strong>，一直改到几乎分不出来。只允许三件事不一样：字体找最接近的、图标找最接近的、以及效果图本身画错的地方（比如把字写错了）。别的都得一样。</p>
+    <p>第一眼看到的那块画完，还要单独存一张截图当检查点。这块过关了，才能往下做。</p>
+    <p><strong>第二阶段才是：让它动起来。</strong>按钮按下去有反馈、切换的时候有过渡、手机上和电脑上都好看。</p>
+
+    <div class="why">
+      <h3>为什么非要并排比？为什么要分两个阶段？</h3>
+      <p>因为「我觉得挺像了」这句话，特别不可靠。自己画的时候总觉得像，真的放在一起比，才会发现差得远。所以规矩是<strong>必须真的把两张图摆在一起看，不能凭感觉</strong>。</p>
+      <p>分两个阶段的原因很实在：如果一边画形状一边加特效，画到最后发现形状根本不对，那些特效全都白做了。先把形状钉死，再往上加东西，才不浪费。</p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="step">
+    <span class="num">第 6 步</span>
+    <h2>请一个没看过你干活的人来批改</h2>
+    <p class="like">就像作业写完，找一个不知道你写得多辛苦的人来挑错。</p>
+    <p>做完之后，它先自己检查：截电脑上的样子和手机上的样子，看一轮、把问题一次性改掉、再确认一轮。<strong>最多两轮，然后必须停手。</strong></p>
+    <p>接着是关键的一步：它会<strong>叫来另一个完全没参与刚才干活过程的检查员</strong>。这个检查员看不到之前的任何对话，只看做出来的东西、贴在墙上的方案、和几张截图。</p>
+    <p>检查员只会给出四种结论中的一种：</p>
+    <ul class="plain-list">
+      <li><strong>可以交了。</strong>没问题，继续下一步。</li>
+      <li><strong>改这几处。</strong>给一张清单，一次性改完再回来打分。</li>
+      <li><strong>这块重做。</strong>不是小毛病，是整块做偏了，得重来。</li>
+      <li><strong>截图不合格，重拍。</strong>你交上来的截图本身是花的或者是空的，没法看。</li>
+    </ul>
+
+    <div class="why">
+      <h3>为什么要找「没看过过程」的人？</h3>
+      <p>这是整套流程里最容易被忽略、但特别重要的一条。</p>
+      <p>你自己检查自己的作业，会心软。因为你知道哪一块费了多大劲，你会想「这里差不多了吧」。旁边看着你辛苦的人，也会心软。</p>
+      <p>但一个只看结果、不知道你花了多少力气的人，就不会心软。原话说得很直白：<strong>继承了干活过程的人，会一起继承干活时的乐观。</strong>所以要专门找一个干净的人来批。</p>
+      <p>「最多自己检查两轮」也是同样的道理——自己没完没了地找毛病，又慢又找不准，还不如交给专门的检查员。</p>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="step">
+    <span class="num">第 7 步</span>
+    <h2>做完了，把这次用了什么记进小本子</h2>
+    <p class="like">就像做完一道菜，把用了多少盐记下来，下次照着做。</p>
+    <p>检查通过之后，会再叫来一个专门记录的帮手，把这个页面<strong>实际用了什么</strong>写成一份 <code>DESIGN.md</code>：用了哪几个颜色、字多大、圆角多圆、按钮长什么样、间距怎么排。</p>
+    <p>这份文件从这一刻起，就是你这个产品的「设计规范」。</p>
+
+    <div class="why">
+      <h3>为什么是做完才记，不是一开始就写好？</h3>
+      <p>这一点最反直觉，很多人以为设计规范应该一开始就定好。</p>
+      <p>但想一想：如果一开始就写好一大堆规矩，做的时候就会<strong>为了守规矩而硬掰</strong>——明明这里换个颜色更好看，但规矩上写着不能换，于是就变成对着规矩辩护，而不是把东西做好。</p>
+      <p>做完再记，记下来的是<strong>真实做出来的东西</strong>，不是当初的想象。这样后面照着做的时候，照的是一个真的存在、真的好看的东西。</p>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="step">
+    <span class="num">第 8 步</span>
+    <h2>做第二个页面：只挑摆法，不再挑风格</h2>
+    <p class="like">第一间房定了装修风格，第二间房只要决定床和桌子怎么摆。</p>
+    <p>现在你说「做这周的记录页」或者「做首页」。这次流程完全不一样了：</p>
+    <p><strong>颜色、字体、按钮长相全部锁死不动，直接用小本子上记的。</strong>它只会想这一个页面的<strong>东西怎么摆</strong>——比如这周的记录是做成一条时间线、一张日历、还是四个人并排的柱子？它会想出五到七种摆法，掷骰子发三种给你挑。</p>
+    <p>卡片上不再有颜色可选了，只讲摆法。因为样子已经定了。</p>
+    <p>如果开着「先看图」模式，这三张效果图会<strong>拿你已经做好的那个页面的截图当参照</strong>去画，保证新页面跟老页面是一家人。</p>
+
+    <div class="why">
+      <h3>为什么第二个页面就不让挑风格了？</h3>
+      <p>因为如果每个页面都重新挑一次风格，你的产品就会变成一个大杂烩——首页是绿的，记录页是蓝的，看起来像三个不同的 app 拼起来的。</p>
+      <p>风格只挑一次，摆法每个页面挑一次。<strong>这正好对应你真正的需求：我不知道功能怎么布局，但我希望整体是一套。</strong></p>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="step">
+    <span class="num">第 9 步</span>
+    <h2>加一个小东西：直接跟着来，不用挑</h2>
+    <p class="like">房间里加一个书架，不需要重新装修一遍。</p>
+    <p>如果你只是想在已有页面上加一个小东西——加一个按钮、加一个「还没有任何记录」的提示、加一个加载中的样子——它连挑选环节都不开，直接照着这个页面已有的样子做。也不会去改小本子。</p>
+
+    <div class="why">
+      <h3>为什么？</h3>
+      <p>它的规矩里有一句话说得特别好：<strong>绝对不要把「加一个小东西」变成一次重新设计。</strong></p>
+      <p>加个按钮就重新挑一遍风格，是最常见的浪费，而且每次都会让产品变得更不统一。</p>
+    </div>
+  </section>
+
+  <!-- 你要开口的地方 -->
+  <section class="step">
+    <span class="num">总结一</span>
+    <h2>整个过程里，你只需要在四个地方开口</h2>
+    <p>看着步骤挺多，但需要你做决定的地方其实很少：</p>
+    <ul class="plain-list">
+      <li><strong>第 1 步，回答几个关于「谁在用、什么场景」的问题。</strong>还有两个一次性的选择：用什么技术做（不懂就说「你定」）、以及要不要「先看图再做」（想用眼睛挑设计就选它）。</li>
+      <li><strong>第 2 步，说先做哪个页面。</strong></li>
+      <li><strong>第 3 步，在那个网页上挑一张卡片。</strong>不满意就一直重新发牌。</li>
+      <li><strong>第 6 步之后，如果检查员列出的问题改了两轮还没改干净，由你决定是就这样交、还是再改一轮。</strong></li>
+    </ul>
+    <p class="tight">其余的时间你都不用管。</p>
+  </section>
+
+  <!-- 误会 -->
+  <section class="step">
+    <span class="num">总结二</span>
+    <h2>四个最常见的误会</h2>
+
+    <div class="myth">
+      <h4><s>一开始就告诉它「我要蓝色简约风」</s></h4>
+      <p>它的规矩是「你说了算」，你说死了它就照办，第 3 步的挑选环节直接跳过。而「浅米色底 + 大衬线字」这种随口说出来的组合，恰好是它文档里点名的、所有 AI 都会做成的那几种长相之一。<strong>把挑好看的权力留到能看见图的时候。</strong></p>
+    </div>
+
+    <div class="myth">
+      <h4><s>「把整个网站所有页面一次做完」</s></h4>
+      <p>整条流程（贴墙上 → 照着画 → 检查两轮 → 找人批 → 记小本子）是<strong>按单个页面</strong>跑的。一次一个。第一个页面要格外慢，因为后面每个页面都会继承它的水准，包括它的不足。</p>
+    </div>
+
+    <div class="myth">
+      <h4><s>「它会帮我把功能也做出来」</s></h4>
+      <p>它管的是<strong>看得见的部分</strong>：页面长什么样、按下去什么反应、手机上好不好用。数据存在哪、怎么发提醒、账号怎么登录，这些要另外提需求。</p>
+    </div>
+
+    <div class="myth">
+      <h4><s>「设计规范要先写好才能开始」</s></h4>
+      <p>反了。规范是第 7 步的<strong>产出物</strong>，不是第 1 步的输入。新产品一开始根本没有规范，第一个页面做完才有。</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>所以，第一句话该怎么说？</h2>
+    <p>就这一句，剩下的它会问你：</p>
+    <div class="say">/impeccable init <span>以 &lt;你的功能说明文档路径&gt; 为准建立产品记录</span></div>
+    <p>它会先把你的文档读完，然后开始问「谁在用、什么场景」。答得越具体，做出来的东西越像你的东西。</p>
+    <p>再提醒一句：<strong>如果你的文档正好叫 <code>product.md</code>，先改个名字</strong>，比如 <code>docs/product-spec.md</code>。因为 Mac 不区分大小写，它会跟流程里要生成的 <code>PRODUCT.md</code> 撞成同一个文件，把你的原稿覆盖掉。</p>
+  </div>
+</footer>
+
+</body>
+</html>
