@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Songless · 曲库、选歌与搜索</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,650&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0f23;
+      --surface: #181836;
+      --raised: #29295c;
+      --ink: #f8fafc;
+      --muted: #9aa8bd;
+      --line: #000;
+      --green: #22c55e;
+      --sky: #38bdf8;
+      --gold: #facc15;
+      --rose: #fb7185;
+      --deezer: #a91054;
+      --apple: #f5f5f7;
+      --apple-ink: #111;
+      --songless: #22c55e;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1200px 500px at 10% -10%, #1c3d2e 0%, transparent 55%),
+        radial-gradient(900px 420px at 100% 0%, #1a2744 0%, transparent 50%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans SC", "IBM Plex Mono", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    a { color: var(--sky); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 80px; }
+    header.hero {
+      border: 4px solid #000;
+      background: linear-gradient(135deg, #143224, #0f2e3a 42%, var(--surface));
+      box-shadow: 8px 8px 0 #000;
+      padding: 28px 28px 24px;
+      margin-bottom: 22px;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #000;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border: 2px solid #000;
+    }
+    h1 {
+      font-family: Newsreader, Georgia, serif;
+      font-size: clamp(34px, 6vw, 58px);
+      font-weight: 650;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      margin: 16px 0 10px;
+      text-transform: uppercase;
+    }
+    h1 span { color: var(--green); }
+    .lede { max-width: 46rem; color: #dbe7f3; font-size: 17px; }
+    nav.toc {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px 0 14px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    nav.toc a, .chip {
+      border: 2px solid #000;
+      background: var(--surface);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 8px 10px;
+    }
+    .chip { cursor: pointer; font-family: inherit; }
+    .chip.active { background: var(--green); color: #000; }
+    h2 {
+      font-family: Newsreader, Georgia, serif;
+      font-size: 32px;
+      margin: 42px 0 8px;
+      letter-spacing: -.02em;
+    }
+    h3 { font-size: 18px; margin: 26px 0 8px; text-transform: uppercase; letter-spacing: .04em; }
+    p.note { color: var(--muted); margin-top: 0; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 860px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--surface);
+      border: 3px solid #000;
+      box-shadow: 5px 5px 0 #000;
+      padding: 16px 16px 14px;
+    }
+    .card h3 { margin-top: 0; }
+    .tag {
+      display: inline-block;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      padding: 2px 7px;
+      border: 2px solid #000;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .tag.dz { background: var(--deezer); color: #fff; }
+    .tag.am { background: var(--apple); color: var(--apple-ink); }
+    .tag.it { background: #ffb000; color: #111; }
+    .tag.sl { background: var(--green); color: #000; }
+    .tag.loc { background: var(--raised); }
+    .tag.api { background: var(--sky); color: #041018; }
+    .tag.st { background: var(--gold); color: #111; }
+    .tag.jsonp { background: var(--rose); color: #111; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: var(--surface);
+      border: 3px solid #000;
+      box-shadow: 5px 5px 0 #000;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 10px 11px;
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: var(--raised);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    td code, p code, li code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12.5px;
+      background: #0b0b1c;
+      padding: 1px 5px;
+      border: 1px solid #2a2a55;
+    }
+    pre {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12.5px;
+      background: #090918;
+      border: 3px solid #000;
+      padding: 14px;
+      overflow: auto;
+      line-height: 1.45;
+      color: #d7ffe6;
+      box-shadow: 5px 5px 0 #000;
+    }
+    .mode { margin: 18px 0 28px; }
+    .mode .card { margin-top: 10px; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+    .web-only { outline: 2px dashed color-mix(in srgb, var(--sky) 60%, transparent); }
+    .app-only { outline: 2px dashed color-mix(in srgb, var(--green) 60%, transparent); }
+    .hidden { display: none !important; }
+    ul.tight { margin: 8px 0 0; padding-left: 1.15rem; }
+    ul.tight li { margin: 4px 0; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 18px; }
+    footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="kicker">Songless catalog map · Web + iOS</div>
+      <h1>哪首歌从哪来<br /><span>Deezer · iTunes · Apple Music</span></h1>
+      <p class="lede">
+        分类 / Daily / Unlimited / Survival / Singer 走 <b>Deezer</b>。艺人、艺人 Mix、艺人搜索走 Apple 体系。
+        关键分叉：<b>Web 用公开 iTunes Search API</b>（<code>itunes.apple.com</code>），
+        <b>App 用 MusicKit Apple Music Catalog</b>（<code>api.music.apple.com</code>）。
+        两者不是同一个接口。
+      </p>
+    </header>
+
+    <nav class="toc">
+      <button class="chip active" data-view="all">全部</button>
+      <button class="chip" data-view="web">只看 Web</button>
+      <button class="chip" data-view="app">只看 App</button>
+      <a href="#sources">两套曲库</a>
+      <a href="#api-vs-stitch">API vs 拼接</a>
+      <a href="#modes">每个模式</a>
+      <a href="#search">搜索怎么做</a>
+    </nav>
+
+    <section id="sources">
+      <h2>1. 两套曲库，一条规则</h2>
+      <p class="note">按「这局歌从哪抽」分，不要按产品名混。Apple 在 Web 和 App 上不是同一条路。</p>
+      <div class="grid-3">
+        <article class="card">
+          <span class="tag dz">Deezer</span>
+          <h3>分类曲库</h3>
+          <p>Daily、Unlimited、Categories、All Songs、Survival、Guess the Singer / Artist、Archive、分类挑战。曲目来自打包好的 Deezer playlist ID。</p>
+          <pre>https://api.deezer.com/search?q=
+https://api.deezer.com/playlist/{id}
+https://api.deezer.com/playlist/{id}/tracks
+https://api.deezer.com/track/{id}</pre>
+        </article>
+        <article class="card web-only">
+          <span class="tag it">iTunes Search</span>
+          <span class="tag">Web only</span>
+          <h3>Web 艺人曲库</h3>
+          <p>Artist、Mix、艺人搜索、Artist Fan Challenge。浏览器或服务端直接打公开 Search / Lookup，<b>不走 Apple Music Catalog</b>。</p>
+          <pre>https://itunes.apple.com/search
+  ?term=...&entity=song|musicArtist
+https://itunes.apple.com/lookup?id=</pre>
+        </article>
+        <article class="card app-only">
+          <span class="tag am">Apple Music</span>
+          <span class="tag">App only</span>
+          <h3>iOS 艺人曲库</h3>
+          <p>Artist、Mix、艺人搜索。经 MusicKit <code>MusicDataRequest</code> 打 Catalog，需要 MusicKit 授权，不是拼接 iTunes 链接。</p>
+          <pre>https://api.music.apple.com/v1/catalog/{sf}/search
+https://api.music.apple.com/v1/catalog/{sf}
+  /artists/{id}/view/top-songs</pre>
+        </article>
+      </div>
+
+      <div class="legend">
+        <span class="tag dz">Deezer</span>
+        <span class="tag it">iTunes Search · Web</span>
+        <span class="tag am">Apple Music Catalog · App</span>
+        <span class="tag sl">Songless 后端</span>
+        <span class="tag loc">本地逻辑</span>
+        <span class="tag api">正规 API 请求</span>
+        <span class="tag jsonp">JSONP 拼 script</span>
+        <span class="tag st">URL 拼接 / 改尺寸</span>
+      </div>
+    </section>
+
+    <section id="api-vs-stitch">
+      <h2>2. 哪些是 API，哪些是拼接链接</h2>
+      <p class="note">「拼接」= 把 path / query / 回调名 / 图片尺寸写进 URL。预览 MP3 从不自己拼，一律用接口返回的 <code>preview</code> / <code>previewUrl</code>。</p>
+      <table>
+        <thead>
+          <tr>
+            <th>用途</th>
+            <th>端</th>
+            <th>类型</th>
+            <th>实际怎么打</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Deezer 搜索 / 列表 / 单曲</td>
+            <td>Web 服务端</td>
+            <td><span class="tag api">API</span></td>
+            <td><code>GET https://api.deezer.com{path}</code>。path 是拼出来的（<code>/search?q=</code>、<code>/playlist/248297032</code>），但是标准 REST。失败再打 RapidAPI 同源 path：<code>https://deezerdevs-deezer.p.rapidapi.com{path}</code>。</td>
+          </tr>
+          <tr>
+            <td>Deezer 搜索 / 列表 / 单曲</td>
+            <td>Web 浏览器</td>
+            <td><span class="tag jsonp">JSONP 拼接</span></td>
+            <td>Deezer 没有 CORS。前端把 URL 拼成 <code>https://api.deezer.com/search?q=yellow&amp;output=jsonp&amp;callback=dzcb_...</code>，插 <code>&lt;script src&gt;</code>。2 秒超时或失败，再 fetch 自家 <code>/api/deezer?action=search&amp;q=</code>。</td>
+          </tr>
+          <tr>
+            <td>Deezer 搜索 / playlist tracks</td>
+            <td>iOS</td>
+            <td><span class="tag api">API</span></td>
+            <td>设备直连 <code>api.deezer.com</code>。搜索 <code>/search?q=&amp;limit=25</code>；分类 <code>/playlist/{id}/tracks?limit=100</code>。没有 JSONP，也没有 RapidAPI。</td>
+          </tr>
+          <tr>
+            <td>iTunes 搜歌 / 搜艺人 / lookup</td>
+            <td>Web</td>
+            <td><span class="tag api">API</span></td>
+            <td><code>new URL('https://itunes.apple.com/search')</code> 再 <code>searchParams.set(term/entity/limit/country)</code>。客户端组件直接 fetch；也有服务端代理 <code>/api/itunes?action=artist_songs|artists|artist_lookup</code>。</td>
+          </tr>
+          <tr>
+            <td>Apple Music 搜歌 / 搜艺人 / Top Songs</td>
+            <td>iOS</td>
+            <td><span class="tag api">API</span></td>
+            <td><code>URLComponents</code> 拼 Catalog path，真正发请求的是 MusicKit <code>MusicDataRequest</code>，不是裸 URLSession 无鉴权。</td>
+          </tr>
+          <tr>
+            <td>iTunes 封面放大</td>
+            <td>Web</td>
+            <td><span class="tag st">拼接</span></td>
+            <td>接口给 <code>artworkUrl100</code>，正则把 <code>/100x100bb.jpg</code> 换成 <code>/1200x1200bb.jpg</code>。</td>
+          </tr>
+          <tr>
+            <td>Apple Music 封面尺寸</td>
+            <td>iOS</td>
+            <td><span class="tag st">拼接</span></td>
+            <td>Catalog 给模板 <code>.../{w}x{h}bb.jpg</code>，本地把 <code>{w}{h}</code> 替换成 600 或 1200。</td>
+          </tr>
+          <tr>
+            <td>Deezer 封面</td>
+            <td>两边</td>
+            <td><span class="tag api">API 字段</span></td>
+            <td>用返回的 <code>cover_xl → cover_big → cover_medium → cover</code>，不改尺寸字符串。</td>
+          </tr>
+          <tr>
+            <td>试听 MP3</td>
+            <td>两边</td>
+            <td><span class="tag api">API 字段</span></td>
+            <td>Deezer <code>preview</code>（带 <code>hdnea=exp=</code>，约 15 分钟过期）；iTunes <code>previewUrl</code>；Apple Music <code>attributes.previews[].url</code>。过期时 Web 再 <code>GET /track/{id}</code> 刷新。</td>
+          </tr>
+          <tr>
+            <td>Songless 游戏接口</td>
+            <td>两边</td>
+            <td><span class="tag sl">自家 API</span></td>
+            <td><code>songless.pro/api/game/...</code> 和 <code>/api/party/...</code>。只负责 Daily 权威关卡、成绩、挑战链接、Party Demo 资格，不出艺人曲库。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Deezer 浏览器这条链路（Web 特有）</h3>
+      <pre>输入 "yellow"
+  → 拼 path  /search?q=yellow
+  → 拼 JSONP https://api.deezer.com/search?q=yellow&output=jsonp&callback=dzcb_m8k2
+  → document.head.appendChild(&lt;script src=...&gt;)
+  → 失败 / 超时
+  → GET /api/deezer?action=search&q=yellow
+       → 服务端 GET https://api.deezer.com/search?q=yellow
+       → 再失败 → RapidAPI 同源 path</pre>
+    </section>
+
+    <section id="modes">
+      <h2>3. 每个模式：选歌 + 搜索</h2>
+      <p class="note">同一玩法在 Web / App 上曲库来源可能不同。搜索分两种：远程搜目录，或在已经拉下来的艺人曲池里本地过滤。</p>
+
+      <article class="mode" id="mode-daily">
+        <h3>Daily · 今日谜题</h3>
+        <div class="split">
+          <div class="card">
+            <span class="tag sl">Web</span><span class="tag dz">Deezer</span>
+            <b>选歌</b>
+            <ul class="tight">
+              <li>服务端 <code>ensureDailyChallenge</code>。当天还没有就从固定 playlist 池抽一首写入数据库。</li>
+              <li>playlist 顺序：<code>md5(日期:playlist-order)</code> 决定从哪张列表开始。</li>
+              <li>曲目下标：<code>md5(日期:playlistId:track) % 可播放数</code>。同一天全服同一首。</li>
+              <li>日语站换日本市场 playlist。preview 快过期时 <code>GET /track/{id}</code> 刷新。</li>
+              <li>前端只 <code>GET /api/game/daily?locale=</code>，不自己抽。</li>
+            </ul>
+            <b>搜索</b>
+            <ul class="tight">
+              <li>输入非空 → 浏览器 JSONP Deezer <code>/search?q=</code>，失败走 <code>/api/deezer?action=search</code>。</li>
+              <li>联想列表去重后展示；提交时在本地比对歌名 / 艺人。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="tag sl">App</span><span class="tag dz">Deezer 搜索</span>
+            <b>选歌</b>
+            <ul class="tight">
+              <li>只消费 Web 权威关卡：<code>GET https://songless.pro/api/game/daily</code>。</li>
+              <li>iOS 不抽 playlist，也不打 Deezer playlist。</li>
+            </ul>
+            <b>搜索</b>
+            <ul class="tight">
+              <li>≥2 字符，350ms debounce。</li>
+              <li>设备直连 <code>GET https://api.deezer.com/search?q=&amp;limit=25</code>。</li>
+              <li>判题本地。结束后 <code>POST /api/game/daily/attempt</code>。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="mode web-only" id="mode-archive">
+        <h3>Archive · 往日 Daily（仅 Web）</h3>
+        <div class="card">
+          <span class="tag sl">Web API</span><span class="tag dz">Deezer</span>
+          <p>选日期 → <code>GET /api/game/archive?date=YYYY-MM-DD</code> → 同一套 <code>ensureDailyChallenge</code>，只允许早于今天。搜索与 Daily 相同（Deezer 远程搜）。App 没有 Archive。</p>
+        </div>
+      </article>
+
+      <article class="mode" id="mode-unlimited">
+        <h3>Unlimited / Categories / All Songs</h3>
+        <div class="split">
+          <div class="card">
+            <span class="tag">Web</span><span class="tag dz">Deezer</span><span class="tag loc">本地抽</span>
+            <b>选歌</b>
+            <ul class="tight">
+              <li>分类目录在仓库 <code>music-categories</code>，每类一组 Deezer playlist ID。</li>
+              <li>浏览器 <code>loadUnlimitedRound</code>：shuffle 列表，JSONP 拉 <code>/playlist/{id}</code>，丢掉无 preview，避开最近 150 首，随机一首。preview 过期再 <code>/track/{id}</code>。</li>
+              <li>仍保留服务端 <code>POST /api/game/unlimited/round</code>（同类逻辑），但主路径已是浏览器直连。</li>
+            </ul>
+            <b>搜索</b>
+            <ul class="tight">
+              <li>远程 Deezer <code>/search</code>（JSONP → <code>/api/deezer</code>）。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="tag">App</span><span class="tag dz">Deezer</span><span class="tag loc">本地抽</span>
+            <b>选歌</b>
+            <ul class="tight">
+              <li>分类来自 App 内 <code>categories-seed.json</code>，禁止再打 <code>/api/game/categories</code>。</li>
+              <li>All Songs 只在 Library。首页横滑是前 8 个分类。</li>
+              <li><code>loadPlaylistSongs</code>：<code>GET api.deezer.com/playlist/{id}/tracks?limit=100</code>，缓存进内存池，本地 <code>FreePlayRoundSelector</code> 抽。</li>
+              <li>代码里不允许出现 <code>/api/game/unlimited/round</code>。</li>
+            </ul>
+            <b>搜索</b>
+            <ul class="tight">
+              <li>远程 Deezer <code>/search</code>，与 Daily 同一函数 <code>searchSongs</code>。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="mode" id="mode-survival">
+        <h3>Survival</h3>
+        <div class="split">
+          <div class="card">
+            <span class="tag">Web</span>
+            <p>就是 Unlimited 引擎 + 3 条命。选歌 / 搜索与 All Songs 相同（Deezer playlist + Deezer search）。局内 lives 本地算。</p>
+          </div>
+          <div class="card">
+            <span class="tag">App</span>
+            <p>同样用 All Songs 池。lives、第一线索连对加命全在 <code>SurvivalRunState</code>。结束才 <code>POST /api/game/survival/run</code> 换排行。搜索仍是 Deezer 远程搜。</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mode" id="mode-singer">
+        <h3>Guess the Artist / Guess The Singer</h3>
+        <div class="split">
+          <div class="card">
+            <span class="tag">Web</span><span class="tag dz">Deezer</span>
+            <p><code>answer_mode: 'artist'</code>。曲库仍是分类 / All Songs 的 Deezer playlist。搜索打 Deezer，但结果按艺人去重，UI 只显示艺人名。本地比对艺人而不是歌名。</p>
+          </div>
+          <div class="card">
+            <span class="tag">App</span><span class="tag dz">Deezer</span>
+            <p><code>UnlimitedGameView(initialCategory: .all, answerMode: .artist)</code>。抽歌同 All Songs。搜索走 Deezer，再 <code>uniqueArtistResults</code> 收成艺人列表。</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mode" id="mode-artist">
+        <h3>Artist · 单艺人</h3>
+        <div class="split">
+          <div class="card">
+            <span class="tag it">iTunes</span>
+            <b>选歌 · Web</b>
+            <ul class="tight">
+              <li>浏览器直接 <code>searchITunesArtistSongs(term, 200, country)</code>。</li>
+              <li>请求：<code>GET itunes.apple.com/search?term=...&amp;entity=song&amp;limit=200&amp;country=XX</code>。</li>
+              <li>过滤：必须有 <code>previewUrl</code>；艺人名匹配；去掉翻唱类；按「歌名:艺人」去重。</li>
+              <li>在池里随机抽下一首，避开已玩过的 track id。</li>
+            </ul>
+            <b>搜索 · Web</b>
+            <ul class="tight">
+              <li><b>不再打 Deezer。</b> 在已下载的 <code>artistSongPool</code> 里本地 <code>includes</code> 过滤，最多 12 条。</li>
+            </ul>
+            <b>找艺人 · Web</b>
+            <ul class="tight">
+              <li>Artists 页 / Mix 构建器：<code>searchITunesArtists(term, 6~8, country)</code> → <code>entity=musicArtist</code>。</li>
+              <li>缺头像时再搜一遍 <code>entity=song</code> 用封面当 hint，并把 <code>100x100</code> 换成 <code>1200x1200</code>。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="tag am">Apple Music</span>
+            <b>选歌 · App</b>
+            <ul class="tight">
+              <li>有 <code>catalogArtistID</code>：<code>GET .../catalog/{storefront}/artists/{id}/view/top-songs?limit=25</code>。</li>
+              <li>没有：<code>GET .../catalog/{sf}/search?term=&amp;types=songs&amp;limit=25</code>，再按艺人名过滤。</li>
+              <li>MusicKit 发请求。storefront：默认 <code>us</code>，CN→HK，RU→US。</li>
+              <li>池缓存后本地随机，避开最近 track。</li>
+            </ul>
+            <b>搜索 · App</b>
+            <ul class="tight">
+              <li>进了艺人局：在 <code>artistSongPool</code> 本地过滤，不打 Deezer。</li>
+            </ul>
+            <b>找艺人 · App</b>
+            <ul class="tight">
+              <li><code>search?types=artists</code>。封面把模板 <code>{w}x{h}</code> 换成 1200。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="mode" id="mode-mix">
+        <h3>Artist Mix</h3>
+        <div class="card">
+          <p>选 2–10 个艺人。每个艺人按上面的 Artist 路径拉自己的池（Web=iTunes songs，App=Apple Music top/search）。每回合先随机一个艺人，再从该艺人池抽一首。搜索与单艺人相同：只在合并后的池里本地过滤。</p>
+        </div>
+      </article>
+
+      <article class="mode web-only" id="mode-fan">
+        <h3>Artist Fan Challenge（仅 Web）</h3>
+        <div class="card">
+          <span class="tag it">iTunes</span>
+          <p>开局浏览器 <code>searchITunesArtistSongs(artist.itunes.term, poolLimit, country)</code>，去重后按难度切出 N 首 shuffle。联想搜索用同一池本地过滤。另有服务端 <code>GET /api/game/artist-fan-challenge/rounds</code> 做同样的 iTunes 拉歌，当前主 UI 走客户端直连。</p>
+        </div>
+      </article>
+
+      <article class="mode" id="mode-challenge">
+        <h3>Friend Challenge / 分享挑战</h3>
+        <div class="split">
+          <div class="card">
+            <span class="tag sl">Web 创建</span>
+            <p><code>POST /api/game/challenge/create</code>。分类池：服务端 Deezer playlist；艺人池：服务端 iTunes search。被挑战者打开 slug，歌曲已经在挑战对象里，前端不再抽。猜歌搜索：分类挑战走 Deezer 远程搜；艺人挑战走本地池。</p>
+          </div>
+          <div class="card">
+            <span class="tag sl">App 分享</span>
+            <p>打完 Daily / Unlimited / Artist 后 <code>POST /api/game/challenge/create</code> 换可分享 URL。App 自己不玩「挑战模式对局」。</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mode app-only" id="mode-party">
+        <h3>Party（可玩的是 App；Web 只做资格接口）</h3>
+        <div class="card">
+          <b>选歌 · App 本地组局</b>
+          <ul class="tight">
+            <li>分类：manifest playlist ID → Deezer <code>/playlist/{id}/tracks</code>，凑满 5（Demo）或 10（Plus）首可播放。</li>
+            <li>艺人 / Mix：Apple Music 拉每个艺人的歌，轮流各取，去重。</li>
+            <li>没有 <code>/api/party/session/start</code> 出题。Web 上这个接口只回答「有没有 Songless+」。</li>
+          </ul>
+          <b>搜索</b>
+          <p>Party 不搜歌名。它是传手机、听完亮答案。Web 的 <code>POST /api/party/demo/prepare|consume</code> 只发 / 核销 <code>demoId</code>。</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="search">
+      <h2>4. 搜索实现对照</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>场景</th>
+            <th>Web</th>
+            <th>App</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Daily / Unlimited / Survival / Singer 猜歌框</td>
+            <td>远程 Deezer JSONP <code>/search?q=</code>，失败 <code>/api/deezer?action=search</code>。Singer 模式把结果收成艺人。</td>
+            <td>远程 Deezer REST <code>/search?q=&amp;limit=25</code>。Singer 再本地 unique 艺人。</td>
+          </tr>
+          <tr>
+            <td>Artist / Mix / Fan Challenge 猜歌框</td>
+            <td>不联网。在本局已经拉到的 iTunes 曲池里对 title / artist 做 normalize + includes，最多 12 条。</td>
+            <td>不联网。在 Apple Music 曲池里同样本地过滤。</td>
+          </tr>
+          <tr>
+            <td>找艺人（目录页、Mix 构建器）</td>
+            <td><code>itunes.apple.com/search?entity=musicArtist</code>。封面可能二次搜 song 再改 100→1200。</td>
+            <td><code>api.music.apple.com/.../search?types=artists</code>，MusicKit。封面替换 <code>{w}{h}</code>。</td>
+          </tr>
+          <tr>
+            <td>判题</td>
+            <td colspan="2">两边都是本地字符串比对（去音调、大小写、feat./with 拆分）。搜索接口不负责判定对错。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Web 猜歌框分支（heardle-game）</h3>
+      <pre>query.trim() 为空 → 清空
+若当前是 Artist / Mix：
+    过滤 artistSongPool（iTunes 已下载）
+    artist 模式只比艺人名
+否则：
+    searchDeezerTracks(query)   // JSONP → /api/deezer
+    artist 模式按 artist.id / 艺人名去重</pre>
+
+      <h3>App 猜歌框分支（Unlimited / Daily）</h3>
+      <pre>query.count &lt; 2 → 清空
+350ms debounce
+若 selectedArtist != nil：
+    过滤 artistSongPool（Apple Music 已下载）
+否则：
+    apiClient.searchSongs(query)  // api.deezer.com/search
+    answerMode == .artist → uniqueArtistResults</pre>
+    </section>
+
+    <section id="matrix">
+      <h2>5. 一张总表</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>模式</th>
+            <th>Web 选歌</th>
+            <th>App 选歌</th>
+            <th>猜歌搜索</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Daily</td>
+            <td>Songless 库里的当天 Deezer 曲</td>
+            <td>同一接口</td>
+            <td>Deezer 远程</td>
+          </tr>
+          <tr>
+            <td>Archive</td>
+            <td>同一套 Daily 生成器</td>
+            <td>—</td>
+            <td>Deezer 远程</td>
+          </tr>
+          <tr>
+            <td>Unlimited / Category</td>
+            <td>浏览器抽 Deezer playlist</td>
+            <td>设备抽 Deezer playlist</td>
+            <td>Deezer 远程</td>
+          </tr>
+          <tr>
+            <td>Survival</td>
+            <td>同上</td>
+            <td>同上 + 上报 run</td>
+            <td>Deezer 远程</td>
+          </tr>
+          <tr>
+            <td>Guess Artist / Singer</td>
+            <td>Deezer playlist</td>
+            <td>Deezer playlist</td>
+            <td>Deezer 远程，结果收成艺人</td>
+          </tr>
+          <tr>
+            <td>Artist</td>
+            <td>iTunes search entity=song</td>
+            <td>Apple Music top-songs / search songs</td>
+            <td>本地过滤曲池</td>
+          </tr>
+          <tr>
+            <td>Artist Mix</td>
+            <td>每个艺人 iTunes</td>
+            <td>每个艺人 Apple Music</td>
+            <td>本地过滤曲池</td>
+          </tr>
+          <tr>
+            <td>Fan Challenge</td>
+            <td>iTunes 拉池再 shuffle</td>
+            <td>—</td>
+            <td>本地过滤曲池</td>
+          </tr>
+          <tr>
+            <td>Friend Challenge</td>
+            <td>创建时 Deezer 或 iTunes</td>
+            <td>只生成链接</td>
+            <td>分类=Deezer；艺人=本地池</td>
+          </tr>
+          <tr>
+            <td>Party</td>
+            <td>只有资格 API</td>
+            <td>分类 Deezer / 艺人 Apple Music</td>
+            <td>无搜索</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      依据仓库当前实现：Web <code>src/shared/services/{deezer,deezer-browser,deezer-api,itunes}.ts</code>、
+      <code>heardle-game.tsx</code>；App <code>SonglessAPIClient.swift</code>、<code>AppleMusicCatalog.swift</code>、
+      <code>UnlimitedGameViewModel.swift</code>。RapidAPI 只做 Web 服务端 / JSONP 失败后的兜底，App 不用。
+    </footer>
+  </div>
+  <script>
+    const chips = document.querySelectorAll('.chip[data-view]');
+    const webNodes = document.querySelectorAll('.web-only');
+    const appNodes = document.querySelectorAll('.app-only');
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+        const view = chip.dataset.view;
+        webNodes.forEach((n) => n.classList.toggle('hidden', view === 'app'));
+        appNodes.forEach((n) => n.classList.toggle('hidden', view === 'web'));
+      });
+    });
+  </script>
+</body>
+</html>
