@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Health Export 支持 · Felix</title>
+  <meta name="description" content="Health Export 支持与常见问题：授权 Apple 健康数据、后台同步，以及连接 Google Drive、Notion 与 Webhook。">
+  <link rel="canonical" href="https://greek-zzf.github.io/health-export/support">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?v=beach-avatar">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=beach-avatar">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/icon-512.png?v=beach-avatar">
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --fg: #111111;
+      --muted: #6b6b6b;
+      --border: #e5e5e5;
+      --accent: #2f6feb;
+      --accent-on: #ffffff;
+      --accent-hover: color-mix(in oklab, var(--accent), black 8%);
+      --font-display: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "Iowan Old Style", Georgia, serif;
+      --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
+      --font-mono: "SFMono-Regular", ui-monospace, "JetBrains Mono", Menlo, monospace;
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 20px;
+      --text-xl: 24px;
+      --text-2xl: 32px;
+      --text-3xl: 48px;
+      --leading-body: 1.62;
+      --leading-tight: 1.16;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --focus-ring: 0 0 0 3px color-mix(in oklab, var(--accent), transparent 70%);
+      --motion-fast: 150ms;
+      --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+      --container-max: 1200px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-body);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent); }
+    a:focus-visible, .btn:focus-visible {
+      outline: 0;
+      box-shadow: var(--focus-ring);
+    }
+    p { margin: 0; text-wrap: pretty; }
+    h1, h2, h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      line-height: var(--leading-tight);
+      text-wrap: balance;
+      font-weight: 500;
+    }
+    h1 { font-size: clamp(var(--text-2xl), 5vw, var(--text-3xl)); }
+    h2 { font-size: clamp(var(--text-xl), 3vw, var(--text-2xl)); }
+    h3 { font-size: var(--text-lg); font-weight: 600; }
+    .container {
+      width: min(100% - 48px, var(--container-max));
+      margin-inline: auto;
+    }
+    .doc { max-width: 760px; }
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in oklab, var(--bg), transparent 8%);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .topnav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      gap: var(--space-5);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .topnav nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+    .topnav nav a {
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .topnav nav a[aria-current="page"] { color: var(--fg); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: var(--accent-on);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--accent-hover); color: var(--accent-on); }
+    .page {
+      padding-block: 80px 48px;
+    }
+    .eyebrow {
+      margin: 0 0 var(--space-4);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .lang-jump {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .lang-jump a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+    .lede {
+      margin-top: var(--space-6);
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: var(--text-lg);
+    }
+    .contact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-5);
+      margin-top: var(--space-8);
+      padding: var(--space-5);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .contact a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .meta {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--muted);
+    }
+    .section-title { margin: 64px 0 var(--space-5); }
+    .faq {
+      display: grid;
+      gap: var(--space-4);
+    }
+    .faq article {
+      padding: var(--space-5);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .faq h3 { margin-bottom: var(--space-3); }
+    .faq p + p { margin-top: var(--space-3); }
+    .faq ol, .faq ul {
+      margin: var(--space-3) 0 0;
+      padding-left: 1.2em;
+    }
+    .faq li + li { margin-top: var(--space-2); }
+    .lang-en {
+      margin-top: 80px;
+      padding-top: 64px;
+      border-top: 1px solid var(--border);
+    }
+    .pagefoot {
+      border-top: 1px solid var(--border);
+      padding-block: var(--space-8);
+      color: var(--muted);
+      font-size: var(--text-sm);
+    }
+    .pagefoot .row {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .pagefoot a { text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 720px) {
+      .container { width: min(100% - 24px, var(--container-max)); }
+      .page { padding-block: 32px 24px; }
+      .topnav nav { gap: var(--space-4); }
+      .topnav .btn { display: none; }
+      .contact { flex-direction: column; align-items: flex-start; }
+      .lede { font-size: var(--text-base); }
+    }
+  </style>
+</head>
+<body>
+  <header class="topnav">
+    <div class="container topnav-inner">
+      <a class="logo" href="/">Felix</a>
+      <nav aria-label="Health Export">
+        <a href="/health-export/support" aria-current="page">支持</a>
+        <a href="/health-export/privacy">隐私</a>
+      </nav>
+      <a class="btn" href="mailto:felixzhou@mail.grokbot.com">联系</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container doc">
+      <section id="zh" lang="zh-CN">
+        <p class="eyebrow">Health Export · Support</p>
+        <h1>支持</h1>
+        <p class="lang-jump"><a href="#zh">中文</a><a href="#en">English</a></p>
+        <p class="lede">Health Export 会自动把 Apple 健康数据导出到「文件」、iCloud、Obsidian、Google Drive、Notion 或 Webhook，格式为 CSV、JSON 或每日 Markdown。</p>
+        <div class="contact">
+          <div>
+            <strong>联系邮箱</strong>
+            <p><a href="mailto:felixzhou@mail.grokbot.com">felixzhou@mail.grokbot.com</a></p>
+          </div>
+          <span class="meta">Email</span>
+        </div>
+
+        <h2 class="section-title">常见问题</h2>
+        <div class="faq">
+          <article>
+            <h3>如何授予健康数据访问权限？</h3>
+            <p>打开系统「设置」&gt;「健康」&gt;「数据访问与设备」（Settings &gt; Health &gt; Data Access &amp; Devices），选择 Health Export，然后打开需要导出的数据类型。</p>
+          </article>
+          <article>
+            <h3>后台同步没有运行怎么办？</h3>
+            <p>iOS 会限制后台送达，所以同步不一定会在你锁上屏幕后马上发生。可以按下面几步提高成功率：</p>
+            <ol>
+              <li>不要强制退出 Health Export。从 App 切换器里上滑关掉后，系统就不会再把它唤醒。</li>
+              <li>同步时解锁设备。设备一直锁屏时，后台任务经常被推迟。</li>
+              <li>打开「后台 App 刷新」（Background App Refresh）。</li>
+              <li>如果需要固定时间导出，打开「快捷指令」，新建一个个人自动化，在固定时间运行名为 Export Health Data 的操作。</li>
+            </ol>
+          </article>
+          <article>
+            <h3>如何连接 Google Drive、Notion 和 Webhook？</h3>
+            <p>数据只会发到你自己选的目的地。</p>
+            <ul>
+              <li>Google Drive：在 Health Export 里把导出目的地选为 Google Drive，并完成账号连接。CSV、JSON 或每日 Markdown 会保存到你授权的云端硬盘。</li>
+              <li>Notion：在 Notion 中创建一个集成，复制集成令牌（integration token）填入 Health Export，然后把要写入的数据库分享给这个集成。</li>
+              <li>Webhook：在 Health Export 里填写你自己的 Webhook 地址。导出内容只会发到这个地址。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="lang-en" id="en" lang="en">
+        <p class="eyebrow">Health Export · Support</p>
+        <h1>Support</h1>
+        <p class="lede">Health Export automatically exports Apple Health data to Files, iCloud, Obsidian, Google Drive, Notion, or a Webhook as CSV, JSON, or daily Markdown.</p>
+        <div class="contact">
+          <div>
+            <strong>Contact</strong>
+            <p><a href="mailto:felixzhou@mail.grokbot.com">felixzhou@mail.grokbot.com</a></p>
+          </div>
+          <span class="meta">Email</span>
+        </div>
+
+        <h2 class="section-title">FAQ</h2>
+        <div class="faq">
+          <article>
+            <h3>How do I grant access to Health data?</h3>
+            <p>Open Settings &gt; Health &gt; Data Access &amp; Devices, select Health Export, and turn on the data types you want to export.</p>
+          </article>
+          <article>
+            <h3>What if background sync does not run?</h3>
+            <p>iOS limits background delivery, so an export may not run the moment you lock the screen. These steps make it more likely:</p>
+            <ol>
+              <li>Do not force-quit Health Export. Swiping it away in the app switcher stops iOS from waking it.</li>
+              <li>Unlock the device when you expect a sync. Background work is often deferred while the device stays locked.</li>
+              <li>Enable Background App Refresh.</li>
+              <li>For a fixed time, create a Personal Automation in Shortcuts and run the Export Health Data action.</li>
+            </ol>
+          </article>
+          <article>
+            <h3>How do I connect Google Drive, Notion, and a Webhook?</h3>
+            <p>Data is sent only to a destination you choose.</p>
+            <ul>
+              <li>Google Drive: choose Google Drive as the export destination in Health Export and finish connecting the account. CSV, JSON, or daily Markdown files are saved to the Drive you authorize.</li>
+              <li>Notion: create an integration in Notion, paste its integration token into Health Export, and share the destination database with that integration.</li>
+              <li>Webhook: enter your own Webhook address in Health Export. Exports are sent only to that address.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="pagefoot">
+    <div class="container row">
+      <span>© 2026 Felix · Health Export</span>
+      <span class="meta"><a href="/health-export/privacy">隐私政策</a> · <a href="/">回到首页</a></span>
+    </div>
+  </footer>
+</body>
+</html>
